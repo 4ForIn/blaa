@@ -11,11 +11,12 @@ _$_Word _$$_WordFromJson(Map<String, dynamic> json) => _$_Word(
       created: json['created'] as String,
       clue: json['clue'] as String?,
       imageAsString: json['imageAsString'] as String?,
-      imageUrl: json['imageUrl'] as String?,
+      inNative: json['inNative'] as String,
+      inTranslation: json['inTranslation'] as String,
       isFavorite: json['isFavorite'] as int? ?? 0,
+      langToLearn: json['langToLearn'] as String,
       nativeLang: json['nativeLang'] as String,
       points: json['points'] as int? ?? 0,
-      translation: json['translation'] as String,
       uid: json['uid'] as String,
     );
 
@@ -24,10 +25,11 @@ Map<String, dynamic> _$$_WordToJson(_$_Word instance) => <String, dynamic>{
       'created': instance.created,
       'clue': instance.clue,
       'imageAsString': instance.imageAsString,
-      'imageUrl': instance.imageUrl,
+      'inNative': instance.inNative,
+      'inTranslation': instance.inTranslation,
       'isFavorite': instance.isFavorite,
+      'langToLearn': instance.langToLearn,
       'nativeLang': instance.nativeLang,
       'points': instance.points,
-      'translation': instance.translation,
       'uid': instance.uid,
     };

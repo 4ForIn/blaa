@@ -10,11 +10,12 @@ class Word with _$Word {
     required String created,
     String? clue,
     String? imageAsString,
-    String? imageUrl,
+    required String inNative,
+    required String inTranslation,
     @Default(0) int isFavorite,
+    required String langToLearn,
     required String nativeLang,
     @Default(0) int points,
-    required String translation,
     required String uid,
   }) = _Word;
 

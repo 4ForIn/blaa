@@ -12,7 +12,7 @@ class RootView extends StatelessWidget {
       backgroundColor: Colors.amber,
       routes: bottomTabs,
       appBarBuilder: (_, tRouter) => AppBar(
-        // toolbarHeight: 40,
+        toolbarHeight: 40,
         elevation: 0.0,
         leading: const AutoBackButton(
           color: Colors.black,
@@ -26,6 +26,7 @@ class RootView extends StatelessWidget {
             items: bottomBarItems);
       },
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.grey.shade400,
         onPressed: () => _showAddWordDialog(context, const AddNewWord()),
         // onPressed: () => showAddWordGeneralDialog(context),
         child: Column(
@@ -58,6 +59,7 @@ class RootView extends StatelessWidget {
               child: Opacity(
                 opacity: a1.value,
                 child: AlertDialog(
+                  scrollable: true,
                   shape: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16.0)),
                   title: const Text('Add new word'),

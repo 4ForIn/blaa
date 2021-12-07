@@ -26,22 +26,24 @@ class _$WordTearOff {
       required String created,
       String? clue,
       String? imageAsString,
-      String? imageUrl,
+      required String inNative,
+      required String inTranslation,
       int isFavorite = 0,
+      required String langToLearn,
       required String nativeLang,
       int points = 0,
-      required String translation,
       required String uid}) {
     return _Word(
       category: category,
       created: created,
       clue: clue,
       imageAsString: imageAsString,
-      imageUrl: imageUrl,
+      inNative: inNative,
+      inTranslation: inTranslation,
       isFavorite: isFavorite,
+      langToLearn: langToLearn,
       nativeLang: nativeLang,
       points: points,
-      translation: translation,
       uid: uid,
     );
   }
@@ -60,11 +62,12 @@ mixin _$Word {
   String get created => throw _privateConstructorUsedError;
   String? get clue => throw _privateConstructorUsedError;
   String? get imageAsString => throw _privateConstructorUsedError;
-  String? get imageUrl => throw _privateConstructorUsedError;
+  String get inNative => throw _privateConstructorUsedError;
+  String get inTranslation => throw _privateConstructorUsedError;
   int get isFavorite => throw _privateConstructorUsedError;
+  String get langToLearn => throw _privateConstructorUsedError;
   String get nativeLang => throw _privateConstructorUsedError;
   int get points => throw _privateConstructorUsedError;
-  String get translation => throw _privateConstructorUsedError;
   String get uid => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -81,11 +84,12 @@ abstract class $WordCopyWith<$Res> {
       String created,
       String? clue,
       String? imageAsString,
-      String? imageUrl,
+      String inNative,
+      String inTranslation,
       int isFavorite,
+      String langToLearn,
       String nativeLang,
       int points,
-      String translation,
       String uid});
 }
 
@@ -103,11 +107,12 @@ class _$WordCopyWithImpl<$Res> implements $WordCopyWith<$Res> {
     Object? created = freezed,
     Object? clue = freezed,
     Object? imageAsString = freezed,
-    Object? imageUrl = freezed,
+    Object? inNative = freezed,
+    Object? inTranslation = freezed,
     Object? isFavorite = freezed,
+    Object? langToLearn = freezed,
     Object? nativeLang = freezed,
     Object? points = freezed,
-    Object? translation = freezed,
     Object? uid = freezed,
   }) {
     return _then(_value.copyWith(
@@ -127,14 +132,22 @@ class _$WordCopyWithImpl<$Res> implements $WordCopyWith<$Res> {
           ? _value.imageAsString
           : imageAsString // ignore: cast_nullable_to_non_nullable
               as String?,
-      imageUrl: imageUrl == freezed
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
+      inNative: inNative == freezed
+          ? _value.inNative
+          : inNative // ignore: cast_nullable_to_non_nullable
+              as String,
+      inTranslation: inTranslation == freezed
+          ? _value.inTranslation
+          : inTranslation // ignore: cast_nullable_to_non_nullable
+              as String,
       isFavorite: isFavorite == freezed
           ? _value.isFavorite
           : isFavorite // ignore: cast_nullable_to_non_nullable
               as int,
+      langToLearn: langToLearn == freezed
+          ? _value.langToLearn
+          : langToLearn // ignore: cast_nullable_to_non_nullable
+              as String,
       nativeLang: nativeLang == freezed
           ? _value.nativeLang
           : nativeLang // ignore: cast_nullable_to_non_nullable
@@ -143,10 +156,6 @@ class _$WordCopyWithImpl<$Res> implements $WordCopyWith<$Res> {
           ? _value.points
           : points // ignore: cast_nullable_to_non_nullable
               as int,
-      translation: translation == freezed
-          ? _value.translation
-          : translation // ignore: cast_nullable_to_non_nullable
-              as String,
       uid: uid == freezed
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
@@ -165,11 +174,12 @@ abstract class _$WordCopyWith<$Res> implements $WordCopyWith<$Res> {
       String created,
       String? clue,
       String? imageAsString,
-      String? imageUrl,
+      String inNative,
+      String inTranslation,
       int isFavorite,
+      String langToLearn,
       String nativeLang,
       int points,
-      String translation,
       String uid});
 }
 
@@ -188,11 +198,12 @@ class __$WordCopyWithImpl<$Res> extends _$WordCopyWithImpl<$Res>
     Object? created = freezed,
     Object? clue = freezed,
     Object? imageAsString = freezed,
-    Object? imageUrl = freezed,
+    Object? inNative = freezed,
+    Object? inTranslation = freezed,
     Object? isFavorite = freezed,
+    Object? langToLearn = freezed,
     Object? nativeLang = freezed,
     Object? points = freezed,
-    Object? translation = freezed,
     Object? uid = freezed,
   }) {
     return _then(_Word(
@@ -212,14 +223,22 @@ class __$WordCopyWithImpl<$Res> extends _$WordCopyWithImpl<$Res>
           ? _value.imageAsString
           : imageAsString // ignore: cast_nullable_to_non_nullable
               as String?,
-      imageUrl: imageUrl == freezed
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
+      inNative: inNative == freezed
+          ? _value.inNative
+          : inNative // ignore: cast_nullable_to_non_nullable
+              as String,
+      inTranslation: inTranslation == freezed
+          ? _value.inTranslation
+          : inTranslation // ignore: cast_nullable_to_non_nullable
+              as String,
       isFavorite: isFavorite == freezed
           ? _value.isFavorite
           : isFavorite // ignore: cast_nullable_to_non_nullable
               as int,
+      langToLearn: langToLearn == freezed
+          ? _value.langToLearn
+          : langToLearn // ignore: cast_nullable_to_non_nullable
+              as String,
       nativeLang: nativeLang == freezed
           ? _value.nativeLang
           : nativeLang // ignore: cast_nullable_to_non_nullable
@@ -228,10 +247,6 @@ class __$WordCopyWithImpl<$Res> extends _$WordCopyWithImpl<$Res>
           ? _value.points
           : points // ignore: cast_nullable_to_non_nullable
               as int,
-      translation: translation == freezed
-          ? _value.translation
-          : translation // ignore: cast_nullable_to_non_nullable
-              as String,
       uid: uid == freezed
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
@@ -248,11 +263,12 @@ class _$_Word implements _Word {
       required this.created,
       this.clue,
       this.imageAsString,
-      this.imageUrl,
+      required this.inNative,
+      required this.inTranslation,
       this.isFavorite = 0,
+      required this.langToLearn,
       required this.nativeLang,
       this.points = 0,
-      required this.translation,
       required this.uid});
 
   factory _$_Word.fromJson(Map<String, dynamic> json) => _$$_WordFromJson(json);
@@ -266,23 +282,25 @@ class _$_Word implements _Word {
   @override
   final String? imageAsString;
   @override
-  final String? imageUrl;
+  final String inNative;
+  @override
+  final String inTranslation;
   @JsonKey(defaultValue: 0)
   @override
   final int isFavorite;
+  @override
+  final String langToLearn;
   @override
   final String nativeLang;
   @JsonKey(defaultValue: 0)
   @override
   final int points;
   @override
-  final String translation;
-  @override
   final String uid;
 
   @override
   String toString() {
-    return 'Word(category: $category, created: $created, clue: $clue, imageAsString: $imageAsString, imageUrl: $imageUrl, isFavorite: $isFavorite, nativeLang: $nativeLang, points: $points, translation: $translation, uid: $uid)';
+    return 'Word(category: $category, created: $created, clue: $clue, imageAsString: $imageAsString, inNative: $inNative, inTranslation: $inTranslation, isFavorite: $isFavorite, langToLearn: $langToLearn, nativeLang: $nativeLang, points: $points, uid: $uid)';
   }
 
   @override
@@ -296,15 +314,17 @@ class _$_Word implements _Word {
             (identical(other.clue, clue) || other.clue == clue) &&
             (identical(other.imageAsString, imageAsString) ||
                 other.imageAsString == imageAsString) &&
-            (identical(other.imageUrl, imageUrl) ||
-                other.imageUrl == imageUrl) &&
+            (identical(other.inNative, inNative) ||
+                other.inNative == inNative) &&
+            (identical(other.inTranslation, inTranslation) ||
+                other.inTranslation == inTranslation) &&
             (identical(other.isFavorite, isFavorite) ||
                 other.isFavorite == isFavorite) &&
+            (identical(other.langToLearn, langToLearn) ||
+                other.langToLearn == langToLearn) &&
             (identical(other.nativeLang, nativeLang) ||
                 other.nativeLang == nativeLang) &&
             (identical(other.points, points) || other.points == points) &&
-            (identical(other.translation, translation) ||
-                other.translation == translation) &&
             (identical(other.uid, uid) || other.uid == uid));
   }
 
@@ -315,11 +335,12 @@ class _$_Word implements _Word {
       created,
       clue,
       imageAsString,
-      imageUrl,
+      inNative,
+      inTranslation,
       isFavorite,
+      langToLearn,
       nativeLang,
       points,
-      translation,
       uid);
 
   @JsonKey(ignore: true)
@@ -339,11 +360,12 @@ abstract class _Word implements Word {
       required String created,
       String? clue,
       String? imageAsString,
-      String? imageUrl,
+      required String inNative,
+      required String inTranslation,
       int isFavorite,
+      required String langToLearn,
       required String nativeLang,
       int points,
-      required String translation,
       required String uid}) = _$_Word;
 
   factory _Word.fromJson(Map<String, dynamic> json) = _$_Word.fromJson;
@@ -357,15 +379,17 @@ abstract class _Word implements Word {
   @override
   String? get imageAsString;
   @override
-  String? get imageUrl;
+  String get inNative;
+  @override
+  String get inTranslation;
   @override
   int get isFavorite;
+  @override
+  String get langToLearn;
   @override
   String get nativeLang;
   @override
   int get points;
-  @override
-  String get translation;
   @override
   String get uid;
   @override

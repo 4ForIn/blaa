@@ -1,15 +1,22 @@
-/*const words2 = <WordModel>[
-  WordModel(
+import 'package:blaa/data/model/word_m/word_m.dart';
+import 'package:blaa/utils/constants/languages.dart';
+
+const dummyWords2 = <Word>[
+  Word(
     created: '11855',
-    id: '1',
-    wordNative: 'home',
-    wordTranslation: 'trHome',
+    uid: '1',
+    inNative: 'home',
+    inTranslation: 'trHome',
+    langToLearn: Languages.tr,
+    nativeLang: Languages.en,
   ),
-  WordModel(
+  Word(
     created: '11887',
     category: 'animal',
-    id: '2',
-    wordNative: 'dog',
-    wordTranslation: 'trDog',
+    uid: '2',
+    inNative: 'dog',
+    inTranslation: 'trDog',
+    langToLearn: Languages.tr,
+    nativeLang: Languages.en,
   ),
-];*/
+];
