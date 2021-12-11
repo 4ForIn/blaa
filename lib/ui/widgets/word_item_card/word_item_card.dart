@@ -1,23 +1,7 @@
-import 'package:blaa/ui/widgets/word_item_card/word_item_card.dart';
+import 'package:blaa/utils/constants/img_const.dart';
 import 'package:flutter/material.dart';
 
-class WordsList extends StatelessWidget {
-  const WordsList({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 4,
-      itemBuilder: (BuildContext context, int index) {
-        return const WordItemCard();
-      },
-    );
-  }
-}
-
-/*class WordItemCard extends StatelessWidget {
+class WordItemCard extends StatelessWidget {
   const WordItemCard({
     Key? key,
   }) : super(key: key);
@@ -61,4 +45,4 @@ class WordsList extends StatelessWidget {
       ),
     );
   }
-}*/
+}

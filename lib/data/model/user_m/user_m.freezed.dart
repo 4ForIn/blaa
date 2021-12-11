@@ -271,25 +271,32 @@ class _$_User implements _User {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _User &&
-            (identical(other.created, created) || other.created == created) &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.imageAsString, imageAsString) ||
-                other.imageAsString == imageAsString) &&
-            (identical(other.imageUrl, imageUrl) ||
-                other.imageUrl == imageUrl) &&
-            (identical(other.langToLearn, langToLearn) ||
-                other.langToLearn == langToLearn) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.nativeLang, nativeLang) ||
-                other.nativeLang == nativeLang) &&
-            (identical(other.password, password) ||
-                other.password == password) &&
-            (identical(other.uid, uid) || other.uid == uid));
+            const DeepCollectionEquality().equals(other.created, created) &&
+            const DeepCollectionEquality().equals(other.email, email) &&
+            const DeepCollectionEquality()
+                .equals(other.imageAsString, imageAsString) &&
+            const DeepCollectionEquality().equals(other.imageUrl, imageUrl) &&
+            const DeepCollectionEquality()
+                .equals(other.langToLearn, langToLearn) &&
+            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality()
+                .equals(other.nativeLang, nativeLang) &&
+            const DeepCollectionEquality().equals(other.password, password) &&
+            const DeepCollectionEquality().equals(other.uid, uid));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, created, email, imageAsString,
-      imageUrl, langToLearn, name, nativeLang, password, uid);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(created),
+      const DeepCollectionEquality().hash(email),
+      const DeepCollectionEquality().hash(imageAsString),
+      const DeepCollectionEquality().hash(imageUrl),
+      const DeepCollectionEquality().hash(langToLearn),
+      const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(nativeLang),
+      const DeepCollectionEquality().hash(password),
+      const DeepCollectionEquality().hash(uid));
 
   @JsonKey(ignore: true)
   @override

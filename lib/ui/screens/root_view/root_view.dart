@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:blaa/ui/modals/add_new_word.dart';
+import 'package:blaa/ui/router/blaa_router.gr.dart';
 import 'package:blaa/ui/router/tabs_routes.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class RootView extends StatelessWidget {
       ),
       bottomNavigationBuilder: (_, tRouter) {
         return BottomNavigationBar(
-          backgroundColor: Colors.grey[300],
+            backgroundColor: Colors.grey[300],
             currentIndex: tRouter.activeIndex,
             onTap: tRouter.setActiveIndex,
             items: bottomBarItems);
@@ -28,7 +29,6 @@ class RootView extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.grey.shade400,
         onPressed: () => _showAddWordDialog(context, const AddNewWord()),
-        // onPressed: () => showAddWordGeneralDialog(context),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: const <Widget>[

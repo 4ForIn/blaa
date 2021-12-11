@@ -13,6 +13,10 @@ class StudyScreen extends StatelessWidget {
             'All Your words', Icons.assignment_outlined),
         _buildBtn(() => _noPageDialog(context), 'Let\'s do exercises',
             Icons.accessibility_new),
+        _buildBtn(
+            () => context.navigateTo(const HomeRouter(children: [DemoRoute()])),
+            'Demo',
+            Icons.device_unknown),
       ],
     );
   }

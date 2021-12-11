@@ -308,40 +308,38 @@ class _$_Word implements _Word {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Word &&
-            (identical(other.category, category) ||
-                other.category == category) &&
-            (identical(other.created, created) || other.created == created) &&
-            (identical(other.clue, clue) || other.clue == clue) &&
-            (identical(other.imageAsString, imageAsString) ||
-                other.imageAsString == imageAsString) &&
-            (identical(other.inNative, inNative) ||
-                other.inNative == inNative) &&
-            (identical(other.inTranslation, inTranslation) ||
-                other.inTranslation == inTranslation) &&
-            (identical(other.isFavorite, isFavorite) ||
-                other.isFavorite == isFavorite) &&
-            (identical(other.langToLearn, langToLearn) ||
-                other.langToLearn == langToLearn) &&
-            (identical(other.nativeLang, nativeLang) ||
-                other.nativeLang == nativeLang) &&
-            (identical(other.points, points) || other.points == points) &&
-            (identical(other.uid, uid) || other.uid == uid));
+            const DeepCollectionEquality().equals(other.category, category) &&
+            const DeepCollectionEquality().equals(other.created, created) &&
+            const DeepCollectionEquality().equals(other.clue, clue) &&
+            const DeepCollectionEquality()
+                .equals(other.imageAsString, imageAsString) &&
+            const DeepCollectionEquality().equals(other.inNative, inNative) &&
+            const DeepCollectionEquality()
+                .equals(other.inTranslation, inTranslation) &&
+            const DeepCollectionEquality()
+                .equals(other.isFavorite, isFavorite) &&
+            const DeepCollectionEquality()
+                .equals(other.langToLearn, langToLearn) &&
+            const DeepCollectionEquality()
+                .equals(other.nativeLang, nativeLang) &&
+            const DeepCollectionEquality().equals(other.points, points) &&
+            const DeepCollectionEquality().equals(other.uid, uid));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      category,
-      created,
-      clue,
-      imageAsString,
-      inNative,
-      inTranslation,
-      isFavorite,
-      langToLearn,
-      nativeLang,
-      points,
-      uid);
+      const DeepCollectionEquality().hash(category),
+      const DeepCollectionEquality().hash(created),
+      const DeepCollectionEquality().hash(clue),
+      const DeepCollectionEquality().hash(imageAsString),
+      const DeepCollectionEquality().hash(inNative),
+      const DeepCollectionEquality().hash(inTranslation),
+      const DeepCollectionEquality().hash(isFavorite),
+      const DeepCollectionEquality().hash(langToLearn),
+      const DeepCollectionEquality().hash(nativeLang),
+      const DeepCollectionEquality().hash(points),
+      const DeepCollectionEquality().hash(uid));
 
   @JsonKey(ignore: true)
   @override

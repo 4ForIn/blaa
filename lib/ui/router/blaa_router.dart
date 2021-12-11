@@ -10,8 +10,8 @@ import 'package:blaa/ui/screens/words_list_screen/words_list_screen.dart';
 
 @MaterialAutoRouter(replaceInRouteName: 'Screen,Route', routes: [
   AutoRoute(path: PathConst.root, page: RootView, children: [
-    AutoRoute(path: PathConst.home, page: EmptyRouterPage, name: 'HomeRouter', children: [
-      AutoRoute(page: HomeScreen, initial: true),
+    AutoRoute(name: 'HomeRouter', path: PathConst.home, page: EmptyRouterPage, children: [
+      AutoRoute(path: '', page: HomeScreen),
       AutoRoute(path: PathConst.demo, page: DemoScreen),
     ]),
     AutoRoute(path: PathConst.study, page: EmptyRouterPage, name: 'StudyRouter', children: [
