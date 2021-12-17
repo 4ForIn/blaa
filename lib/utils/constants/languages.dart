@@ -1,6 +1,6 @@
-class Languages {
-  static const String en = 'english';
-  static const String bg = 'bulgarian';
-  static const String pl = 'polish';
-  static const String tr = 'turkish';
+class SupportedLanguages {
+  static const String en = 'English';
+  static const String bg = 'Bulgarian';
+  static const String pl = 'Polish';
+  static const String tr = 'Turkish';
 }

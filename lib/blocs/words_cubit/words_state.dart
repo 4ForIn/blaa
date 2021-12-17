@@ -1,43 +1,26 @@
 part of 'words_cubit.dart';
 
-abstract class WordsState extends Equatable {
-  const WordsState();
-}
+enum WordsStateStatus { loading, success, failure }
 
-class WordsInitial extends WordsState {
-  const WordsInitial();
-
-  @override
-  List<Object> get props => [];
-}
-
-class WordsLoading extends WordsState {
-  const WordsLoading();
-
-  @override
-  List<Object> get props => [];
-}
-
-class WordsLoaded extends WordsState {
-  const WordsLoaded(this.words);
+class WordsState extends Equatable {
+  const WordsState._({
+    this.words = const <Word>[],
+    this.status = WordsStateStatus.loading,
+    this.errorText,
+  });
 
   final List<Word> words;
+  final WordsStateStatus status;
+  final String? errorText;
 
-  /*WordsLoaded copyWith({List<Word>? demoWords, List<Word>? words}) {
-    return WordsLoaded(
-        demoWords: demoWords ?? this.demoWords, words: words ?? this.words);
-  }*/
+  const WordsState.loading() : this._();
 
-  @override
-  List<Object> get props => [words];
-}
+  const WordsState.success(List<Word> i)
+      : this._(status: WordsStateStatus.success, words: i);
 
-class WordsError extends WordsState {
-  const WordsError(this.code, this.message);
-
-  final int code;
-  final String message;
+  const WordsState.failure(String? message)
+      : this._(status: WordsStateStatus.failure, errorText: message);
 
   @override
-  List<Object> get props => [code, message];
+  List<Object> get props => [words, status];
 }

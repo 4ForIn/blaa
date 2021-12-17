@@ -14,7 +14,7 @@ _$_User _$$_UserFromJson(Map<String, dynamic> json) => _$_User(
       langToLearn: json['langToLearn'] as String,
       name: json['name'] as String? ?? 'User',
       nativeLang: json['nativeLang'] as String,
-      password: json['password'] as String,
+      password: json['password'] as String?,
       uid: json['uid'] as String,
     );
 

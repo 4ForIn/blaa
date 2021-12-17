@@ -12,11 +12,12 @@ import 'package:blaa/ui/screens/words_list_screen/words_list_screen.dart';
   AutoRoute(path: PathConst.root, page: RootView, children: [
     AutoRoute(name: 'HomeRouter', path: PathConst.home, page: EmptyRouterPage, children: [
       AutoRoute(path: '', page: HomeScreen),
-      AutoRoute(path: PathConst.demo, page: DemoScreen),
+
     ]),
     AutoRoute(path: PathConst.study, page: EmptyRouterPage, name: 'StudyRouter', children: [
       AutoRoute(page: StudyScreen, initial: true),
       AutoRoute(path: PathConst.words, page: WordsListScreen),
+      AutoRoute(path: PathConst.demo, page: DemoScreen),
     ]),
     AutoRoute(path: PathConst.settings, page: EmptyRouterPage, name: 'SettingsRouter', children: [
       AutoRoute(page: SettingsScreen, initial: true),
@@ -27,7 +28,7 @@ import 'package:blaa/ui/screens/words_list_screen/words_list_screen.dart';
 class $BlaaRouter {}
 
 /*
-
+flutter pub run build_runner build --delete-conflicting-outputs
 class RoutesConst {
   static const String add = 'add';
   static const String auth = 'auth';

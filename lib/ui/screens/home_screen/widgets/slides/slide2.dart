@@ -1,4 +1,4 @@
-import 'package:blaa/utils/constants/img_const.dart';
+import 'package:blaa/utils/constants/assets_const.dart';
 import 'package:flutter/material.dart';
 
 class Slide2 extends StatelessWidget {
@@ -34,19 +34,18 @@ class Slide2 extends StatelessWidget {
                         children: [
                           Expanded(
                               flex: 1,
-                              child: Image.asset(ImgConst.bag['path']!,
-                                  semanticLabel: ImgConst.bag['description'],
+                              child: Image.asset(AssetsConst.bag['path']!,
+                                  semanticLabel: AssetsConst.bag['description'],
                                   height: 60)),
                           const Expanded(
-                            flex: 2,
-                            child: Text('for work',
-                                style: TextStyle(
-                                    fontSize: 23.0,
-                                    fontWeight: FontWeight.w300,
-                                    color: Color(0XFF3F3D56),
-                                    height: 2.0),
-                                textAlign: TextAlign.center),
-                          )
+                              flex: 2,
+                              child: Text('for work',
+                                  style: TextStyle(
+                                      fontSize: 23.0,
+                                      fontWeight: FontWeight.w300,
+                                      color: Color(0XFF3F3D56),
+                                      height: 2.0),
+                                  textAlign: TextAlign.center))
                         ],
                       ),
                       Padding(
@@ -55,20 +54,19 @@ class Slide2 extends StatelessWidget {
                           children: [
                             Expanded(
                                 flex: 1,
-                                child: Image.asset(ImgConst.chart['path']!,
+                                child: Image.asset(AssetsConst.chart['path']!,
                                     semanticLabel:
-                                        ImgConst.chart['description'],
+                                        AssetsConst.chart['description'],
                                     height: 60)),
                             const Expanded(
-                              flex: 2,
-                              child: Text('up your skills',
-                                  style: TextStyle(
-                                      fontSize: 23.0,
-                                      fontWeight: FontWeight.w300,
-                                      color: Color(0XFF3F3D56),
-                                      height: 2.0),
-                                  textAlign: TextAlign.center),
-                            )
+                                flex: 2,
+                                child: Text('up your skills',
+                                    style: TextStyle(
+                                        fontSize: 23.0,
+                                        fontWeight: FontWeight.w300,
+                                        color: Color(0XFF3F3D56),
+                                        height: 2.0),
+                                    textAlign: TextAlign.center))
                           ],
                         ),
                       ),

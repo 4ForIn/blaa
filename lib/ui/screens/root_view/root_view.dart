@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:blaa/ui/modals/add_new_word.dart';
-import 'package:blaa/ui/router/blaa_router.gr.dart';
 import 'package:blaa/ui/router/tabs_routes.dart';
 import 'package:flutter/material.dart';
 
@@ -29,13 +28,16 @@ class RootView extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.grey.shade400,
         onPressed: () => _showAddWordDialog(context, const AddNewWord()),
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: const <Widget>[
-              Text('new', style: TextStyle(fontSize: 11)),
-              Icon(Icons.add, size: 14),
-              Text('word', style: TextStyle(fontSize: 11))
-            ]),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 3.0),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: const <Widget>[
+                Text('new', style: TextStyle(fontSize: 11)),
+                Icon(Icons.add, size: 14),
+                Text('word', style: TextStyle(fontSize: 11))
+              ]),
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
     );

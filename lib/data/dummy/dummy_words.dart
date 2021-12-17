@@ -8,8 +8,8 @@ const dummyWords2 = <Word>[
     inNative: 'first',
     inTranslation: 'firstTR',
     isFavorite: 0,
-    langToLearn: Languages.tr,
-    nativeLang: Languages.en,
+    langToLearn: SupportedLanguages.tr,
+    nativeLang: SupportedLanguages.en,
   ),
   Word(
     created: '11887',
@@ -18,8 +18,8 @@ const dummyWords2 = <Word>[
     inNative: 'second',
     inTranslation: 'secondTR',
     isFavorite: 1,
-    langToLearn: Languages.tr,
-    nativeLang: Languages.en,
+    langToLearn: SupportedLanguages.tr,
+    nativeLang: SupportedLanguages.en,
   ),
   Word(
     created: '11888',
@@ -27,7 +27,7 @@ const dummyWords2 = <Word>[
     inNative: 'third',
     inTranslation: 'thirdTR',
     isFavorite: 0,
-    langToLearn: Languages.tr,
-    nativeLang: Languages.en,
+    langToLearn: SupportedLanguages.tr,
+    nativeLang: SupportedLanguages.en,
   ),
 ];

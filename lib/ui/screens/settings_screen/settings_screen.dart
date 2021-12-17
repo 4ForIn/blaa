@@ -6,7 +6,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-        mainAxisSize: MainAxisSize.min,
+      mainAxisSize: MainAxisSize.min,
       children: [
         const Divider(),
         Expanded(
@@ -14,13 +14,10 @@ class SettingsScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: MaterialButton(
-                  color: Colors.green.shade200,
-                  onPressed: () {},
-                  child: const Text(
-                    'Sign in',
-                    style: TextStyle(fontSize: 27),
-                  ),
-                ),
+                    color: Colors.green.shade200,
+                    onPressed: () {},
+                    child:
+                        const Text('Sign in', style: TextStyle(fontSize: 27))),
               ),
             ],
           ),
@@ -31,13 +28,10 @@ class SettingsScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: MaterialButton(
-                  color: Colors.grey.shade400,
-                  onPressed: () {},
-                  child: const Text(
-                    'Sign up',
-                    style: TextStyle(fontSize: 27),
-                  ),
-                ),
+                    color: Colors.grey.shade400,
+                    onPressed: () {},
+                    child:
+                        const Text('Sign up', style: TextStyle(fontSize: 27))),
               ),
             ],
           ),
@@ -48,20 +42,15 @@ class SettingsScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: MaterialButton(
-                  color: Colors.red.shade200,
-                  onPressed: () {},
-                  child: const Text(
-                    'Log out',
-                    style: TextStyle(fontSize: 27),
-                  ),
-                ),
+                    color: Colors.red.shade200,
+                    onPressed: () {},
+                    child:
+                        const Text('Sign out', style: TextStyle(fontSize: 27))),
               ),
             ],
           ),
         ),
-        Expanded(
-          flex: 2,
-            child: Container()),
+        Expanded(flex: 2, child: Container()),
       ],
     );
   }

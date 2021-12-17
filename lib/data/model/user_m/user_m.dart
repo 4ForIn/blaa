@@ -13,7 +13,7 @@ class User with _$User {
     required String langToLearn,
     @Default('User') String name,
     required String nativeLang,
-    required String password,
+    String? password,
     required String uid,
   }) = _User;
 

@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:blaa/ui/router/blaa_router.gr.dart';
 import 'package:blaa/ui/screens/home_screen/widgets/slides/slide1.dart';
 import 'package:blaa/ui/screens/home_screen/widgets/slides/slide2.dart';
-import 'package:blaa/utils/constants/img_const.dart';
+import 'package:blaa/utils/constants/assets_const.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {

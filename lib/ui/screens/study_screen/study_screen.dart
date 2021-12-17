@@ -14,7 +14,8 @@ class StudyScreen extends StatelessWidget {
         _buildBtn(() => _noPageDialog(context), 'Let\'s do exercises',
             Icons.accessibility_new),
         _buildBtn(
-            () => context.navigateTo(const HomeRouter(children: [DemoRoute()])),
+            // () => context.navigateTo(const HomeRouter(children: [DemoRoute()])),
+                () => context.navigateTo(const DemoRoute()),
             'Demo',
             Icons.device_unknown),
       ],

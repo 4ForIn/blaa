@@ -12,12 +12,12 @@ import 'package:auto_route/auto_route.dart' as _i2;
 import 'package:flutter/material.dart' as _i9;
 
 import '../screens/auth_screen/auth_screen.dart' as _i8;
-import '../screens/demo_screen/demo_screen.dart' as _i4;
+import '../screens/demo_screen/demo_screen.dart' as _i6;
 import '../screens/home_screen/home_screen.dart' as _i3;
 import '../screens/root_view/root_view.dart' as _i1;
 import '../screens/settings_screen/settings_screen.dart' as _i7;
-import '../screens/study_screen/study_screen.dart' as _i5;
-import '../screens/words_list_screen/words_list_screen.dart' as _i6;
+import '../screens/study_screen/study_screen.dart' as _i4;
+import '../screens/words_list_screen/words_list_screen.dart' as _i5;
 
 class BlaaRouter extends _i2.RootStackRouter {
   BlaaRouter([_i9.GlobalKey<_i9.NavigatorState>? navigatorKey])
@@ -47,17 +47,17 @@ class BlaaRouter extends _i2.RootStackRouter {
       return _i2.MaterialPageX<dynamic>(
           routeData: routeData, child: _i3.HomeScreen(key: args.key));
     },
-    DemoRoute.name: (routeData) {
-      return _i2.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i4.DemoScreen());
-    },
     StudyRoute.name: (routeData) {
       return _i2.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i5.StudyScreen());
+          routeData: routeData, child: const _i4.StudyScreen());
     },
     WordsListRoute.name: (routeData) {
       return _i2.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i6.WordsListScreen());
+          routeData: routeData, child: const _i5.WordsListScreen());
+    },
+    DemoRoute.name: (routeData) {
+      return _i2.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i6.DemoScreen());
     },
     SettingsRoute.name: (routeData) {
       return _i2.MaterialPageX<dynamic>(
@@ -77,9 +77,7 @@ class BlaaRouter extends _i2.RootStackRouter {
               parent: RootView.name,
               children: [
                 _i2.RouteConfig(HomeRoute.name,
-                    path: '', parent: HomeRouter.name),
-                _i2.RouteConfig(DemoRoute.name,
-                    path: 'demo', parent: HomeRouter.name)
+                    path: '', parent: HomeRouter.name)
               ]),
           _i2.RouteConfig(StudyRouter.name,
               path: 'study',
@@ -88,7 +86,9 @@ class BlaaRouter extends _i2.RootStackRouter {
                 _i2.RouteConfig(StudyRoute.name,
                     path: '', parent: StudyRouter.name),
                 _i2.RouteConfig(WordsListRoute.name,
-                    path: 'words', parent: StudyRouter.name)
+                    path: 'words', parent: StudyRouter.name),
+                _i2.RouteConfig(DemoRoute.name,
+                    path: 'demo', parent: StudyRouter.name)
               ]),
           _i2.RouteConfig(SettingsRouter.name,
               path: 'settings',
@@ -154,25 +154,25 @@ class HomeRouteArgs {
   }
 }
 
-/// generated route for [_i4.DemoScreen]
-class DemoRoute extends _i2.PageRouteInfo<void> {
-  const DemoRoute() : super(name, path: 'demo');
-
-  static const String name = 'DemoRoute';
-}
-
-/// generated route for [_i5.StudyScreen]
+/// generated route for [_i4.StudyScreen]
 class StudyRoute extends _i2.PageRouteInfo<void> {
   const StudyRoute() : super(name, path: '');
 
   static const String name = 'StudyRoute';
 }
 
-/// generated route for [_i6.WordsListScreen]
+/// generated route for [_i5.WordsListScreen]
 class WordsListRoute extends _i2.PageRouteInfo<void> {
   const WordsListRoute() : super(name, path: 'words');
 
   static const String name = 'WordsListRoute';
+}
+
+/// generated route for [_i6.DemoScreen]
+class DemoRoute extends _i2.PageRouteInfo<void> {
+  const DemoRoute() : super(name, path: 'demo');
+
+  static const String name = 'DemoRoute';
 }
 
 /// generated route for [_i7.SettingsScreen]

@@ -29,7 +29,7 @@ class _$UserTearOff {
       required String langToLearn,
       String name = 'User',
       required String nativeLang,
-      required String password,
+      String? password,
       required String uid}) {
     return _User(
       created: created,
@@ -61,7 +61,7 @@ mixin _$User {
   String get langToLearn => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get nativeLang => throw _privateConstructorUsedError;
-  String get password => throw _privateConstructorUsedError;
+  String? get password => throw _privateConstructorUsedError;
   String get uid => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -81,7 +81,7 @@ abstract class $UserCopyWith<$Res> {
       String langToLearn,
       String name,
       String nativeLang,
-      String password,
+      String? password,
       String uid});
 }
 
@@ -137,7 +137,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
       password: password == freezed
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       uid: uid == freezed
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
@@ -159,7 +159,7 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String langToLearn,
       String name,
       String nativeLang,
-      String password,
+      String? password,
       String uid});
 }
 
@@ -216,7 +216,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
       password: password == freezed
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       uid: uid == freezed
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
@@ -236,7 +236,7 @@ class _$_User implements _User {
       required this.langToLearn,
       this.name = 'User',
       required this.nativeLang,
-      required this.password,
+      this.password,
       required this.uid});
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
@@ -257,7 +257,7 @@ class _$_User implements _User {
   @override
   final String nativeLang;
   @override
-  final String password;
+  final String? password;
   @override
   final String uid;
 
@@ -318,7 +318,7 @@ abstract class _User implements User {
       required String langToLearn,
       String name,
       required String nativeLang,
-      required String password,
+      String? password,
       required String uid}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
@@ -338,7 +338,7 @@ abstract class _User implements User {
   @override
   String get nativeLang;
   @override
-  String get password;
+  String? get password;
   @override
   String get uid;
   @override
