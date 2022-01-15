@@ -7,16 +7,17 @@ part 'word_m.g.dart';
 class Word with _$Word {
   const factory Word({
     String? category,
-    required String created,
+    String? created,
     String? clue,
+    int? id,
     String? imageAsString,
     required String inNative,
     required String inTranslation,
     @Default(0) int isFavorite,
-    required String langToLearn,
-    required String nativeLang,
+    @Default('Polish') String langToLearn,
+    @Default('English') String nativeLang,
     @Default(0) int points,
-    required String uid,
+    String? user, // identify user by email
   }) = _Word;
 
   factory Word.fromJson(Map<String, dynamic> json) =>

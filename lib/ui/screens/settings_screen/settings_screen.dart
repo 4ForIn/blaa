@@ -1,4 +1,6 @@
+import 'package:blaa/ui/router/blaa_router.gr.dart';
 import 'package:flutter/material.dart';
+import 'package:auto_route/auto_route.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -15,7 +17,7 @@ class SettingsScreen extends StatelessWidget {
               Expanded(
                 child: MaterialButton(
                     color: Colors.green.shade200,
-                    onPressed: () {},
+                    onPressed: () => context.router.push(const LoginRoute()),
                     child:
                         const Text('Sign in', style: TextStyle(fontSize: 27))),
               ),
@@ -29,7 +31,7 @@ class SettingsScreen extends StatelessWidget {
               Expanded(
                 child: MaterialButton(
                     color: Colors.grey.shade400,
-                    onPressed: () {},
+                    onPressed: () => context.router.push(const RegistrationRoute()),
                     child:
                         const Text('Sign up', style: TextStyle(fontSize: 27))),
               ),

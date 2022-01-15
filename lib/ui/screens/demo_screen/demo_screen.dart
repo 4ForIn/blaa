@@ -1,16 +1,20 @@
 import 'package:blaa/blocs/words_cubit/words_cubit.dart';
 import 'package:blaa/data/model/word_m/word_m.dart';
+import 'package:blaa/data/repositories/demo_words_repository.dart';
 import 'package:blaa/ui/widgets/empty_words_list_info/empty_words_list_info.dart';
 import 'package:blaa/ui/widgets/words_list_item/words_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'bloc/demo_cubit.dart';
+
 class DemoScreen extends StatelessWidget {
   const DemoScreen({Key? key}) : super(key: key);
 
+  static final TextEditingController _controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _controller = TextEditingController();
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       Expanded(
         flex: 1,
@@ -18,8 +22,8 @@ class DemoScreen extends StatelessWidget {
             key: const Key('DemoScreen-searching-control-topBar'),
             children: [
               Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 20.0, vertical: 8),
                   child: Column(children: [
                     _buildSearchTexInput(_controller),
                     _buildSearchRadioBtn(),
@@ -38,16 +42,16 @@ class DemoScreen extends StatelessWidget {
       ),
       Expanded(
         flex: 3,
-        child: BlocBuilder<WordsCubit, WordsState>(
-            builder: (BuildContext context, WordsState state) {
+        child: BlocBuilder<DemoCubit, DemoState>(
+            builder: (BuildContext context, DemoState state) {
           switch (state.status) {
-            case WordsStateStatus.loading:
+            case DemoStateStatus.loading:
               return Center(
                 child: Column(children: const <Widget>[
                   CircularProgressIndicator(color: Colors.green)
                 ]),
               );
-            case WordsStateStatus.success:
+            case DemoStateStatus.success:
               final List<Word> _list = state.words;
               final int _c = _list.length;
               return ListView.builder(
@@ -61,12 +65,14 @@ class DemoScreen extends StatelessWidget {
                     } else {
                       final Word _word = _list[index];
                       return WordsListItem(
-                        key: Key('DemoScreen-wordsListItem-${_word.uid}'),
+                        key: Key('DemoScreen-wordsListItem-${_word.id}'),
                         item: _word,
+                        favHandle: () => context.read<DemoCubit>().triggerFavorite(_word),
+                        deleteHandle: () => context.read<DemoCubit>().delete(_word.id!),
                       );
                     }
                   });
-            case WordsStateStatus.failure:
+            case DemoStateStatus.failure:
               return Center(
                 child: Column(
                   children: const <Widget>[

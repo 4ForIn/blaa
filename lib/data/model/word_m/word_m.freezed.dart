@@ -23,20 +23,22 @@ class _$WordTearOff {
 
   _Word call(
       {String? category,
-      required String created,
+      String? created,
       String? clue,
+      int? id,
       String? imageAsString,
       required String inNative,
       required String inTranslation,
       int isFavorite = 0,
-      required String langToLearn,
-      required String nativeLang,
+      String langToLearn = 'Polish',
+      String nativeLang = 'English',
       int points = 0,
-      required String uid}) {
+      String? user}) {
     return _Word(
       category: category,
       created: created,
       clue: clue,
+      id: id,
       imageAsString: imageAsString,
       inNative: inNative,
       inTranslation: inTranslation,
@@ -44,7 +46,7 @@ class _$WordTearOff {
       langToLearn: langToLearn,
       nativeLang: nativeLang,
       points: points,
-      uid: uid,
+      user: user,
     );
   }
 
@@ -59,8 +61,9 @@ const $Word = _$WordTearOff();
 /// @nodoc
 mixin _$Word {
   String? get category => throw _privateConstructorUsedError;
-  String get created => throw _privateConstructorUsedError;
+  String? get created => throw _privateConstructorUsedError;
   String? get clue => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   String? get imageAsString => throw _privateConstructorUsedError;
   String get inNative => throw _privateConstructorUsedError;
   String get inTranslation => throw _privateConstructorUsedError;
@@ -68,7 +71,7 @@ mixin _$Word {
   String get langToLearn => throw _privateConstructorUsedError;
   String get nativeLang => throw _privateConstructorUsedError;
   int get points => throw _privateConstructorUsedError;
-  String get uid => throw _privateConstructorUsedError;
+  String? get user => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -81,8 +84,9 @@ abstract class $WordCopyWith<$Res> {
       _$WordCopyWithImpl<$Res>;
   $Res call(
       {String? category,
-      String created,
+      String? created,
       String? clue,
+      int? id,
       String? imageAsString,
       String inNative,
       String inTranslation,
@@ -90,7 +94,7 @@ abstract class $WordCopyWith<$Res> {
       String langToLearn,
       String nativeLang,
       int points,
-      String uid});
+      String? user});
 }
 
 /// @nodoc
@@ -106,6 +110,7 @@ class _$WordCopyWithImpl<$Res> implements $WordCopyWith<$Res> {
     Object? category = freezed,
     Object? created = freezed,
     Object? clue = freezed,
+    Object? id = freezed,
     Object? imageAsString = freezed,
     Object? inNative = freezed,
     Object? inTranslation = freezed,
@@ -113,7 +118,7 @@ class _$WordCopyWithImpl<$Res> implements $WordCopyWith<$Res> {
     Object? langToLearn = freezed,
     Object? nativeLang = freezed,
     Object? points = freezed,
-    Object? uid = freezed,
+    Object? user = freezed,
   }) {
     return _then(_value.copyWith(
       category: category == freezed
@@ -123,11 +128,15 @@ class _$WordCopyWithImpl<$Res> implements $WordCopyWith<$Res> {
       created: created == freezed
           ? _value.created
           : created // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       clue: clue == freezed
           ? _value.clue
           : clue // ignore: cast_nullable_to_non_nullable
               as String?,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       imageAsString: imageAsString == freezed
           ? _value.imageAsString
           : imageAsString // ignore: cast_nullable_to_non_nullable
@@ -156,10 +165,10 @@ class _$WordCopyWithImpl<$Res> implements $WordCopyWith<$Res> {
           ? _value.points
           : points // ignore: cast_nullable_to_non_nullable
               as int,
-      uid: uid == freezed
-          ? _value.uid
-          : uid // ignore: cast_nullable_to_non_nullable
-              as String,
+      user: user == freezed
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -171,8 +180,9 @@ abstract class _$WordCopyWith<$Res> implements $WordCopyWith<$Res> {
   @override
   $Res call(
       {String? category,
-      String created,
+      String? created,
       String? clue,
+      int? id,
       String? imageAsString,
       String inNative,
       String inTranslation,
@@ -180,7 +190,7 @@ abstract class _$WordCopyWith<$Res> implements $WordCopyWith<$Res> {
       String langToLearn,
       String nativeLang,
       int points,
-      String uid});
+      String? user});
 }
 
 /// @nodoc
@@ -197,6 +207,7 @@ class __$WordCopyWithImpl<$Res> extends _$WordCopyWithImpl<$Res>
     Object? category = freezed,
     Object? created = freezed,
     Object? clue = freezed,
+    Object? id = freezed,
     Object? imageAsString = freezed,
     Object? inNative = freezed,
     Object? inTranslation = freezed,
@@ -204,7 +215,7 @@ class __$WordCopyWithImpl<$Res> extends _$WordCopyWithImpl<$Res>
     Object? langToLearn = freezed,
     Object? nativeLang = freezed,
     Object? points = freezed,
-    Object? uid = freezed,
+    Object? user = freezed,
   }) {
     return _then(_Word(
       category: category == freezed
@@ -214,11 +225,15 @@ class __$WordCopyWithImpl<$Res> extends _$WordCopyWithImpl<$Res>
       created: created == freezed
           ? _value.created
           : created // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       clue: clue == freezed
           ? _value.clue
           : clue // ignore: cast_nullable_to_non_nullable
               as String?,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       imageAsString: imageAsString == freezed
           ? _value.imageAsString
           : imageAsString // ignore: cast_nullable_to_non_nullable
@@ -247,10 +262,10 @@ class __$WordCopyWithImpl<$Res> extends _$WordCopyWithImpl<$Res>
           ? _value.points
           : points // ignore: cast_nullable_to_non_nullable
               as int,
-      uid: uid == freezed
-          ? _value.uid
-          : uid // ignore: cast_nullable_to_non_nullable
-              as String,
+      user: user == freezed
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -260,25 +275,28 @@ class __$WordCopyWithImpl<$Res> extends _$WordCopyWithImpl<$Res>
 class _$_Word implements _Word {
   const _$_Word(
       {this.category,
-      required this.created,
+      this.created,
       this.clue,
+      this.id,
       this.imageAsString,
       required this.inNative,
       required this.inTranslation,
       this.isFavorite = 0,
-      required this.langToLearn,
-      required this.nativeLang,
+      this.langToLearn = 'Polish',
+      this.nativeLang = 'English',
       this.points = 0,
-      required this.uid});
+      this.user});
 
   factory _$_Word.fromJson(Map<String, dynamic> json) => _$$_WordFromJson(json);
 
   @override
   final String? category;
   @override
-  final String created;
+  final String? created;
   @override
   final String? clue;
+  @override
+  final int? id;
   @override
   final String? imageAsString;
   @override
@@ -288,19 +306,21 @@ class _$_Word implements _Word {
   @JsonKey(defaultValue: 0)
   @override
   final int isFavorite;
+  @JsonKey(defaultValue: 'Polish')
   @override
   final String langToLearn;
+  @JsonKey(defaultValue: 'English')
   @override
   final String nativeLang;
   @JsonKey(defaultValue: 0)
   @override
   final int points;
   @override
-  final String uid;
+  final String? user;
 
   @override
   String toString() {
-    return 'Word(category: $category, created: $created, clue: $clue, imageAsString: $imageAsString, inNative: $inNative, inTranslation: $inTranslation, isFavorite: $isFavorite, langToLearn: $langToLearn, nativeLang: $nativeLang, points: $points, uid: $uid)';
+    return 'Word(category: $category, created: $created, clue: $clue, id: $id, imageAsString: $imageAsString, inNative: $inNative, inTranslation: $inTranslation, isFavorite: $isFavorite, langToLearn: $langToLearn, nativeLang: $nativeLang, points: $points, user: $user)';
   }
 
   @override
@@ -311,6 +331,7 @@ class _$_Word implements _Word {
             const DeepCollectionEquality().equals(other.category, category) &&
             const DeepCollectionEquality().equals(other.created, created) &&
             const DeepCollectionEquality().equals(other.clue, clue) &&
+            const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality()
                 .equals(other.imageAsString, imageAsString) &&
             const DeepCollectionEquality().equals(other.inNative, inNative) &&
@@ -323,7 +344,7 @@ class _$_Word implements _Word {
             const DeepCollectionEquality()
                 .equals(other.nativeLang, nativeLang) &&
             const DeepCollectionEquality().equals(other.points, points) &&
-            const DeepCollectionEquality().equals(other.uid, uid));
+            const DeepCollectionEquality().equals(other.user, user));
   }
 
   @override
@@ -332,6 +353,7 @@ class _$_Word implements _Word {
       const DeepCollectionEquality().hash(category),
       const DeepCollectionEquality().hash(created),
       const DeepCollectionEquality().hash(clue),
+      const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(imageAsString),
       const DeepCollectionEquality().hash(inNative),
       const DeepCollectionEquality().hash(inTranslation),
@@ -339,7 +361,7 @@ class _$_Word implements _Word {
       const DeepCollectionEquality().hash(langToLearn),
       const DeepCollectionEquality().hash(nativeLang),
       const DeepCollectionEquality().hash(points),
-      const DeepCollectionEquality().hash(uid));
+      const DeepCollectionEquality().hash(user));
 
   @JsonKey(ignore: true)
   @override
@@ -355,25 +377,28 @@ class _$_Word implements _Word {
 abstract class _Word implements Word {
   const factory _Word(
       {String? category,
-      required String created,
+      String? created,
       String? clue,
+      int? id,
       String? imageAsString,
       required String inNative,
       required String inTranslation,
       int isFavorite,
-      required String langToLearn,
-      required String nativeLang,
+      String langToLearn,
+      String nativeLang,
       int points,
-      required String uid}) = _$_Word;
+      String? user}) = _$_Word;
 
   factory _Word.fromJson(Map<String, dynamic> json) = _$_Word.fromJson;
 
   @override
   String? get category;
   @override
-  String get created;
+  String? get created;
   @override
   String? get clue;
+  @override
+  int? get id;
   @override
   String? get imageAsString;
   @override
@@ -389,7 +414,7 @@ abstract class _Word implements Word {
   @override
   int get points;
   @override
-  String get uid;
+  String? get user;
   @override
   @JsonKey(ignore: true)
   _$WordCopyWith<_Word> get copyWith => throw _privateConstructorUsedError;

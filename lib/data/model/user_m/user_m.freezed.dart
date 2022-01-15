@@ -22,25 +22,27 @@ class _$UserTearOff {
   const _$UserTearOff();
 
   _User call(
-      {required String created,
-      required String email,
+      {String? created,
+      String email = 'demo@user',
+      int? id,
       String? imageAsString,
       String? imageUrl,
-      required String langToLearn,
-      String name = 'User',
-      required String nativeLang,
+      String langToLearn = 'Polish',
+      String name = 'Demo',
+      String nativeLang = 'English',
       String? password,
-      required String uid}) {
+      String? token}) {
     return _User(
       created: created,
       email: email,
+      id: id,
       imageAsString: imageAsString,
       imageUrl: imageUrl,
       langToLearn: langToLearn,
       name: name,
       nativeLang: nativeLang,
       password: password,
-      uid: uid,
+      token: token,
     );
   }
 
@@ -54,15 +56,16 @@ const $User = _$UserTearOff();
 
 /// @nodoc
 mixin _$User {
-  String get created => throw _privateConstructorUsedError;
+  String? get created => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   String? get imageAsString => throw _privateConstructorUsedError;
   String? get imageUrl => throw _privateConstructorUsedError;
   String get langToLearn => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get nativeLang => throw _privateConstructorUsedError;
   String? get password => throw _privateConstructorUsedError;
-  String get uid => throw _privateConstructorUsedError;
+  String? get token => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -74,15 +77,16 @@ abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res>;
   $Res call(
-      {String created,
+      {String? created,
       String email,
+      int? id,
       String? imageAsString,
       String? imageUrl,
       String langToLearn,
       String name,
       String nativeLang,
       String? password,
-      String uid});
+      String? token});
 }
 
 /// @nodoc
@@ -97,23 +101,28 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
   $Res call({
     Object? created = freezed,
     Object? email = freezed,
+    Object? id = freezed,
     Object? imageAsString = freezed,
     Object? imageUrl = freezed,
     Object? langToLearn = freezed,
     Object? name = freezed,
     Object? nativeLang = freezed,
     Object? password = freezed,
-    Object? uid = freezed,
+    Object? token = freezed,
   }) {
     return _then(_value.copyWith(
       created: created == freezed
           ? _value.created
           : created // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       email: email == freezed
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       imageAsString: imageAsString == freezed
           ? _value.imageAsString
           : imageAsString // ignore: cast_nullable_to_non_nullable
@@ -138,10 +147,10 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String?,
-      uid: uid == freezed
-          ? _value.uid
-          : uid // ignore: cast_nullable_to_non_nullable
-              as String,
+      token: token == freezed
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -152,15 +161,16 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       __$UserCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String created,
+      {String? created,
       String email,
+      int? id,
       String? imageAsString,
       String? imageUrl,
       String langToLearn,
       String name,
       String nativeLang,
       String? password,
-      String uid});
+      String? token});
 }
 
 /// @nodoc
@@ -176,23 +186,28 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
   $Res call({
     Object? created = freezed,
     Object? email = freezed,
+    Object? id = freezed,
     Object? imageAsString = freezed,
     Object? imageUrl = freezed,
     Object? langToLearn = freezed,
     Object? name = freezed,
     Object? nativeLang = freezed,
     Object? password = freezed,
-    Object? uid = freezed,
+    Object? token = freezed,
   }) {
     return _then(_User(
       created: created == freezed
           ? _value.created
           : created // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       email: email == freezed
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       imageAsString: imageAsString == freezed
           ? _value.imageAsString
           : imageAsString // ignore: cast_nullable_to_non_nullable
@@ -217,10 +232,10 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String?,
-      uid: uid == freezed
-          ? _value.uid
-          : uid // ignore: cast_nullable_to_non_nullable
-              as String,
+      token: token == freezed
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -229,41 +244,47 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_User implements _User {
   const _$_User(
-      {required this.created,
-      required this.email,
+      {this.created,
+      this.email = 'demo@user',
+      this.id,
       this.imageAsString,
       this.imageUrl,
-      required this.langToLearn,
-      this.name = 'User',
-      required this.nativeLang,
+      this.langToLearn = 'Polish',
+      this.name = 'Demo',
+      this.nativeLang = 'English',
       this.password,
-      required this.uid});
+      this.token});
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
 
   @override
-  final String created;
+  final String? created;
+  @JsonKey(defaultValue: 'demo@user')
   @override
   final String email;
+  @override
+  final int? id;
   @override
   final String? imageAsString;
   @override
   final String? imageUrl;
+  @JsonKey(defaultValue: 'Polish')
   @override
   final String langToLearn;
-  @JsonKey(defaultValue: 'User')
+  @JsonKey(defaultValue: 'Demo')
   @override
   final String name;
+  @JsonKey(defaultValue: 'English')
   @override
   final String nativeLang;
   @override
   final String? password;
   @override
-  final String uid;
+  final String? token;
 
   @override
   String toString() {
-    return 'User(created: $created, email: $email, imageAsString: $imageAsString, imageUrl: $imageUrl, langToLearn: $langToLearn, name: $name, nativeLang: $nativeLang, password: $password, uid: $uid)';
+    return 'User(created: $created, email: $email, id: $id, imageAsString: $imageAsString, imageUrl: $imageUrl, langToLearn: $langToLearn, name: $name, nativeLang: $nativeLang, password: $password, token: $token)';
   }
 
   @override
@@ -273,6 +294,7 @@ class _$_User implements _User {
             other is _User &&
             const DeepCollectionEquality().equals(other.created, created) &&
             const DeepCollectionEquality().equals(other.email, email) &&
+            const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality()
                 .equals(other.imageAsString, imageAsString) &&
             const DeepCollectionEquality().equals(other.imageUrl, imageUrl) &&
@@ -282,7 +304,7 @@ class _$_User implements _User {
             const DeepCollectionEquality()
                 .equals(other.nativeLang, nativeLang) &&
             const DeepCollectionEquality().equals(other.password, password) &&
-            const DeepCollectionEquality().equals(other.uid, uid));
+            const DeepCollectionEquality().equals(other.token, token));
   }
 
   @override
@@ -290,13 +312,14 @@ class _$_User implements _User {
       runtimeType,
       const DeepCollectionEquality().hash(created),
       const DeepCollectionEquality().hash(email),
+      const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(imageAsString),
       const DeepCollectionEquality().hash(imageUrl),
       const DeepCollectionEquality().hash(langToLearn),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(nativeLang),
       const DeepCollectionEquality().hash(password),
-      const DeepCollectionEquality().hash(uid));
+      const DeepCollectionEquality().hash(token));
 
   @JsonKey(ignore: true)
   @override
@@ -311,22 +334,25 @@ class _$_User implements _User {
 
 abstract class _User implements User {
   const factory _User(
-      {required String created,
-      required String email,
+      {String? created,
+      String email,
+      int? id,
       String? imageAsString,
       String? imageUrl,
-      required String langToLearn,
+      String langToLearn,
       String name,
-      required String nativeLang,
+      String nativeLang,
       String? password,
-      required String uid}) = _$_User;
+      String? token}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
   @override
-  String get created;
+  String? get created;
   @override
   String get email;
+  @override
+  int? get id;
   @override
   String? get imageAsString;
   @override
@@ -340,7 +366,7 @@ abstract class _User implements User {
   @override
   String? get password;
   @override
-  String get uid;
+  String? get token;
   @override
   @JsonKey(ignore: true)
   _$UserCopyWith<_User> get copyWith => throw _privateConstructorUsedError;

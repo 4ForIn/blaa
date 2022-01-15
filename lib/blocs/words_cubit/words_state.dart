@@ -3,15 +3,49 @@ part of 'words_cubit.dart';
 enum WordsStateStatus { loading, success, failure }
 
 class WordsState extends Equatable {
-  const WordsState._({
+  const WordsState({
     this.words = const <Word>[],
     this.status = WordsStateStatus.loading,
     this.errorText,
+    this.currentUser = const User(),
   });
 
   final List<Word> words;
   final WordsStateStatus status;
   final String? errorText;
+  final User currentUser;
+
+  WordsState copyWith({
+    List<Word>? words,
+    WordsStateStatus? status,
+    String? errorText,
+    User? currentUser,
+  }) {
+    return WordsState(
+      words: words ?? this.words,
+      status: status ?? this.status,
+      errorText: errorText ?? this.errorText,
+      currentUser: currentUser ?? this.currentUser,
+    );
+  }
+
+  @override
+  List<Object?> get props => [currentUser, errorText, words, status];
+}
+
+/*
+class WordsState extends Equatable {
+  const WordsState._({
+    this.words = const <Word>[],
+    this.status = WordsStateStatus.loading,
+    this.errorText,
+    this.currentUser = const User(),
+  });
+
+  final List<Word> words;
+  final WordsStateStatus status;
+  final String? errorText;
+  final User currentUser;
 
   const WordsState.loading() : this._();
 
@@ -22,5 +56,6 @@ class WordsState extends Equatable {
       : this._(status: WordsStateStatus.failure, errorText: message);
 
   @override
-  List<Object> get props => [words, status];
+  List<Object?> get props => [currentUser, errorText, words, status];
 }
+ */

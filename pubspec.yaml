@@ -34,9 +34,10 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.0.0
   flutter_dotenv: ^5.0.2
+  flutter_secure_storage: ^5.0.2
   freezed_annotation: ^1.0.0
   # json_annotation: ^4.4.0
-  # sqflite: ^2.0.0+4
+  sqflite: ^2.0.2
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -123,10 +124,27 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: Source Sans Pro
+      fonts:
+        - asset: fonts/source_sans_pro/SourceSansPro-Black.ttf
+          weight: 900
+        - asset: fonts/source_sans_pro/SourceSansPro-BlackItalic.ttf
+          style: italic
+        - asset: fonts/source_sans_pro/SourceSansPro-Bold.ttf
+          style: normal
+        - asset: fonts/source_sans_pro/SourceSansPro-BoldItalic.ttf
+          style: italic
+        - asset: fonts/source_sans_pro/SourceSansPro-Italic.ttf
+          style: italic
+        - asset: fonts/source_sans_pro/SourceSansPro-Light.ttf
+          weight: 300
+        - asset: fonts/source_sans_pro/SourceSansPro-Regular.ttf
+        - asset: fonts/source_sans_pro/SourceSansPro-SemiBold.ttf
+          weight: 600
+        - asset: fonts/source_sans_pro/SourceSansPro-ExtraLight.ttf
+          weight: 200
+
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

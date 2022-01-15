@@ -9,18 +9,20 @@
 // **************************************************************************
 
 import 'package:auto_route/auto_route.dart' as _i2;
-import 'package:flutter/material.dart' as _i9;
+import 'package:flutter/cupertino.dart' as _i11;
+import 'package:flutter/material.dart' as _i10;
 
-import '../screens/auth_screen/auth_screen.dart' as _i8;
 import '../screens/demo_screen/demo_screen.dart' as _i6;
 import '../screens/home_screen/home_screen.dart' as _i3;
+import '../screens/login_screen/login_screen.dart' as _i8;
+import '../screens/registration_screen/registration_screen.dart' as _i9;
 import '../screens/root_view/root_view.dart' as _i1;
 import '../screens/settings_screen/settings_screen.dart' as _i7;
 import '../screens/study_screen/study_screen.dart' as _i4;
 import '../screens/words_list_screen/words_list_screen.dart' as _i5;
 
 class BlaaRouter extends _i2.RootStackRouter {
-  BlaaRouter([_i9.GlobalKey<_i9.NavigatorState>? navigatorKey])
+  BlaaRouter([_i10.GlobalKey<_i10.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
@@ -63,9 +65,13 @@ class BlaaRouter extends _i2.RootStackRouter {
       return _i2.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i7.SettingsScreen());
     },
-    AuthRoute.name: (routeData) {
+    LoginRoute.name: (routeData) {
       return _i2.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i8.AuthScreen());
+          routeData: routeData, child: const _i8.LoginScreen());
+    },
+    RegistrationRoute.name: (routeData) {
+      return _i2.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i9.RegistrationScreen());
     }
   };
 
@@ -96,8 +102,10 @@ class BlaaRouter extends _i2.RootStackRouter {
               children: [
                 _i2.RouteConfig(SettingsRoute.name,
                     path: '', parent: SettingsRouter.name),
-                _i2.RouteConfig(AuthRoute.name,
-                    path: 'auth', parent: SettingsRouter.name)
+                _i2.RouteConfig(LoginRoute.name,
+                    path: 'login', parent: SettingsRouter.name),
+                _i2.RouteConfig(RegistrationRoute.name,
+                    path: 'sign-up', parent: SettingsRouter.name)
               ])
         ])
       ];
@@ -137,7 +145,7 @@ class SettingsRouter extends _i2.PageRouteInfo<void> {
 
 /// generated route for [_i3.HomeScreen]
 class HomeRoute extends _i2.PageRouteInfo<HomeRouteArgs> {
-  HomeRoute({_i9.Key? key})
+  HomeRoute({_i11.Key? key})
       : super(name, path: '', args: HomeRouteArgs(key: key));
 
   static const String name = 'HomeRoute';
@@ -146,7 +154,7 @@ class HomeRoute extends _i2.PageRouteInfo<HomeRouteArgs> {
 class HomeRouteArgs {
   const HomeRouteArgs({this.key});
 
-  final _i9.Key? key;
+  final _i11.Key? key;
 
   @override
   String toString() {
@@ -182,9 +190,16 @@ class SettingsRoute extends _i2.PageRouteInfo<void> {
   static const String name = 'SettingsRoute';
 }
 
-/// generated route for [_i8.AuthScreen]
-class AuthRoute extends _i2.PageRouteInfo<void> {
-  const AuthRoute() : super(name, path: 'auth');
+/// generated route for [_i8.LoginScreen]
+class LoginRoute extends _i2.PageRouteInfo<void> {
+  const LoginRoute() : super(name, path: 'login');
 
-  static const String name = 'AuthRoute';
+  static const String name = 'LoginRoute';
+}
+
+/// generated route for [_i9.RegistrationScreen]
+class RegistrationRoute extends _i2.PageRouteInfo<void> {
+  const RegistrationRoute() : super(name, path: 'sign-up');
+
+  static const String name = 'RegistrationRoute';
 }

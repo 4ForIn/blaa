@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:blaa/blocs/user_cubit/user_cubit.dart';
+import 'package:blaa/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:blaa/blocs/words_cubit/words_cubit.dart';
 import 'package:blaa/data/model/word_m/word_m.dart';
+import 'package:blaa/ui/screens/demo_screen/bloc/demo_cubit.dart';
+import 'package:blaa/utils/enums/authentication_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,17 +19,15 @@ class _AddNewWordState extends State<AddNewWord> {
   final TextEditingController _translationCtrl = TextEditingController();
   final TextEditingController _categoryCtrl = TextEditingController();
   final TextEditingController _clueCtrl = TextEditingController();
+  final GlobalKey<FormState> _addNewWordModalFormKey = GlobalKey<FormState>();
 
-  Word _handleSubmit(String toLearn, String inNative) {
+  Word _handleSubmit() {
     Word item = Word(
-        created: DateTime.now().toString(),
         category: _categoryCtrl.value.text,
         clue: _clueCtrl.value.text,
         inNative: _wordCtrl.value.text,
         inTranslation: _translationCtrl.value.text,
-        langToLearn: toLearn,
-        nativeLang: inNative,
-        uid: DateTime.now().millisecondsSinceEpoch.toString());
+        ); // temporary
     context.router.pop();
     return item;
   }
@@ -43,14 +43,19 @@ class _AddNewWordState extends State<AddNewWord> {
 
   @override
   Widget build(BuildContext context) {
+    final AuthStatus _st = context.read<AuthenticationBloc>().state.status;
+    final bool _isAuthenticated =
+        context.read<AuthenticationBloc>().state.status ==
+                AuthStatus.authenticated
+            ? true
+            : false;
     return Form(
+      key: _addNewWordModalFormKey,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildFormField(
-              context.read<UserCubit>().state.user.langToLearn, _wordCtrl),
-          _buildFormField(context.read<UserCubit>().state.user.nativeLang,
-              _translationCtrl),
+          _buildFormField('Polish', _wordCtrl),
+          _buildFormField('English', _translationCtrl),
           _buildFormField('category', _categoryCtrl),
           _buildFormField('clue', _clueCtrl),
           const SizedBox(height: 15),
@@ -71,10 +76,15 @@ class _AddNewWordState extends State<AddNewWord> {
                   onPressed: () => context.router.pop(),
                   child: const Text('Cancel')),
               TextButton(
-                  onPressed: () => context.read<WordsCubit>().addNewWord(
-                      _handleSubmit(
-                          context.read<UserCubit>().state.user.langToLearn,
-                          context.read<UserCubit>().state.user.nativeLang)),
+                  // onPressed: () => context.read<WordsCubit>().addNewWord(
+                  //     _handleSubmit()),
+                  onPressed: () {
+                    if (_isAuthenticated) {
+                      context.read<WordsCubit>().addNewWord(_handleSubmit());
+                    } else {
+                      context.read<DemoCubit>().addNewWord(_handleSubmit());
+                    }
+                  },
                   child: const Text('Submit')),
             ],
           ),

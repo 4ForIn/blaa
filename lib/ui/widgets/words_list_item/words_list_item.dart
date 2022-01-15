@@ -3,12 +3,21 @@ import 'package:blaa/data/model/word_m/word_m.dart';
 import 'package:blaa/utils/constants/assets_const.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:provider/src/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WordsListItem extends StatelessWidget {
-  const WordsListItem({Key? key, required this.item}) : super(key: key);
+  const WordsListItem(
+      {Key? key,
+      required this.item,
+      this.favHandle,
+      this.deleteHandle,
+      this.onTapHandle})
+      : super(key: key);
 
   final Word item;
+  final VoidCallback? favHandle;
+  final VoidCallback? deleteHandle;
+  final VoidCallback? onTapHandle;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +31,7 @@ class WordsListItem extends StatelessWidget {
       child: ListTile(
           contentPadding: const EdgeInsets.symmetric(horizontal: 10),
           leading: Hero(
-            tag: item.uid,
+            tag: item.id!,
             child: _buildHeroChild(),
           ),
           title: Text(item.inTranslation),
@@ -62,8 +71,13 @@ class WordsListItem extends StatelessWidget {
           Expanded(
               flex: 2,
               child: IconButton(
-                  onPressed: () =>
-                      context.read<WordsCubit>().triggerFavorite(item),
+                  onPressed: () {
+                    if (favHandle != null) {
+                      favHandle!();
+                    }
+                  },
+                  // onPressed: () =>
+                  //     context.read<WordsCubit>().triggerFavorite(item),
                   icon: isFavorite
                       ? Image.asset(AssetsConst.iconHeartRed['path']!)
                       : Image.asset(AssetsConst.iconHeart['path']!))),
@@ -101,9 +115,12 @@ class WordsListItem extends StatelessWidget {
           ),
           actions: [
             TextButton(
-              onPressed: () => {
-                context.read<WordsCubit>().delete(item.uid),
-                context.router.pop()
+              onPressed: () {
+                // context.read<WordsCubit>().delete(item.id),
+                if (deleteHandle != null) {
+                  deleteHandle!();
+                }
+                context.router.pop();
               },
               child: const Text('Yes, delete',
                   style: TextStyle(color: Colors.red)),

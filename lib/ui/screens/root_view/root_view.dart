@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:blaa/ui/modals/add_new_word.dart';
 import 'package:blaa/ui/router/tabs_routes.dart';
+import 'package:blaa/utils/constants/root_scaffold_key.dart';
 import 'package:flutter/material.dart';
 
 class RootView extends StatelessWidget {
@@ -9,6 +10,7 @@ class RootView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
+      key: rootScaffoldKey,
       backgroundColor: Colors.amber,
       routes: bottomTabs,
       appBarBuilder: (_, tRouter) => AppBar(
