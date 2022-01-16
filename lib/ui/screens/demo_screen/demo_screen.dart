@@ -1,13 +1,20 @@
-import 'package:blaa/blocs/words_cubit/words_cubit.dart';
 import 'package:blaa/data/model/word_m/word_m.dart';
-import 'package:blaa/data/repositories/demo_words_repository.dart';
+import 'package:blaa/ui/screens/demo_screen/widgets/search_input_decoration/search_input_decoration.dart';
 import 'package:blaa/ui/widgets/empty_words_list_info/empty_words_list_info.dart';
+import 'package:blaa/ui/widgets/list_ordering_wrapper/list_ordering_wrapper.dart';
 import 'package:blaa/ui/widgets/words_list_item/words_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'bloc/demo_cubit.dart';
 
+/*
+DemoScreen is shown only when user is not authenticated (no logged in user)
+"+ new word" floating button adds new created word only to DemoCubit state
+in this case created by user words are not saved into local database!
+Words list items are supplied from DemoCubit state.words
+To use the functionality of persist the words in the database, the user must log in!
+ */
 class DemoScreen extends StatelessWidget {
   const DemoScreen({Key? key}) : super(key: key);
 
@@ -22,11 +29,27 @@ class DemoScreen extends StatelessWidget {
             key: const Key('DemoScreen-searching-control-topBar'),
             children: [
               Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 20.0, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8),
                   child: Column(children: [
                     _buildSearchTexInput(_controller),
-                    _buildSearchRadioBtn(),
+                    ListOrderingWrapper(
+                      onlyFavoriteCheckbox: Checkbox(
+                        activeColor: Colors.green.shade400,
+                        value: true,
+                        onChanged: (bool? value) {},
+                      ),
+                      fromNewestRadio: Radio(
+                          activeColor: Colors.green,
+                          value: 1,
+                          groupValue: 1,
+                          onChanged: (v) {}),
+                      fromOldestRadio: Radio(
+                          activeColor: Colors.indigo,
+                          value: 0,
+                          groupValue: 1,
+                          onChanged: (v) {}),
+                    ),
                     // const SizedBox(height: 10),
                     const Padding(
                         padding: EdgeInsets.only(top: 15.0),
@@ -67,8 +90,10 @@ class DemoScreen extends StatelessWidget {
                       return WordsListItem(
                         key: Key('DemoScreen-wordsListItem-${_word.id}'),
                         item: _word,
-                        favHandle: () => context.read<DemoCubit>().triggerFavorite(_word),
-                        deleteHandle: () => context.read<DemoCubit>().delete(_word.id!),
+                        favHandle: () =>
+                            context.read<DemoCubit>().triggerFavorite(_word),
+                        deleteHandle: () =>
+                            context.read<DemoCubit>().delete(_word.id!),
                       );
                     }
                   });
@@ -97,95 +122,11 @@ class DemoScreen extends StatelessWidget {
     ]);
   }
 
-  Widget _buildSearchRadioBtn() {
-    return Row(children: [
-      Expanded(
-          flex: 3,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(0.0, 4.0, 4.0, 0.0),
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-                border: Border.all(),
-              ),
-              child: Row(children: [
-                const Expanded(
-                    flex: 4,
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 4.0),
-                      child: Text('Only favorites'),
-                    )),
-                Expanded(
-                    flex: 1,
-                    child: Padding(
-                        padding: const EdgeInsets.only(right: 2.0),
-                        child: Checkbox(
-                          activeColor: Colors.green.shade400,
-                          value: true,
-                          onChanged: (bool? value) {},
-                        )))
-              ]),
-            ),
-          )),
-      const Expanded(
-          flex: 2,
-          child: Text.rich(TextSpan(
-              style: TextStyle(fontWeight: FontWeight.bold),
-              text: 'First:  ',
-              children: <InlineSpan>[
-                TextSpan(
-                    style: TextStyle(
-                      fontWeight: FontWeight.normal,
-                      color: Colors.green,
-                    ),
-                    text: 'newest')
-              ]))),
-      Padding(
-        padding: const EdgeInsets.only(right: 5.0),
-        child: Radio(
-            activeColor: Colors.green,
-            value: 1,
-            groupValue: 1,
-            onChanged: (v) {}),
-      ),
-      const Expanded(
-          flex: 1,
-          child: Padding(
-            padding: EdgeInsets.only(left: 4.0),
-            child: Text('oldest', style: TextStyle(color: Colors.indigo)),
-          )),
-      Expanded(
-        flex: 1,
-        child: Radio(
-            activeColor: Colors.indigo,
-            value: 0,
-            groupValue: 1,
-            onChanged: (v) {}),
-      )
-    ]);
-  }
-
   TextFormField _buildSearchTexInput(TextEditingController _controller) {
     return TextFormField(
         autofocus: false,
         cursorColor: Colors.black,
         controller: _controller,
-        decoration: const InputDecoration(
-          floatingLabelBehavior: FloatingLabelBehavior.auto,
-          contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            borderSide: BorderSide(color: Color(0xff0E9447), width: 2.0),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            borderSide: BorderSide(color: Color(0xff0E9447), width: 2.0),
-          ),
-          label: Text('Find the word you looking for'),
-          labelStyle: TextStyle(letterSpacing: 2.0),
-          floatingLabelStyle:
-              TextStyle(color: Colors.green, decorationThickness: 5),
-          // labelText: 'word')
-        ));
+        decoration: buildSearchInputDecoration());
   }
 }
