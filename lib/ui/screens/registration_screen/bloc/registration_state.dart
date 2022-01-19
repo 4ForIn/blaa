@@ -4,17 +4,19 @@ enum FormSubmissionStatus { initial, submitting, success, failed }
 
 class RegistrationState extends Equatable {
   const RegistrationState(
-      {this.nativeLang = '',
+      {this.nativeLang = 'English',
       this.username = '',
       this.email = '',
       this.errorMessage,
       this.password = '',
-      this.langToLearn = '',
+      this.langToLearn = 'Polish',
       this.formStatus = FormSubmissionStatus.initial});
 
   bool get isUsernameValid => username.length > 4;
   bool get isEmailValid => email.length > 4 && email.contains('@');
-  bool get isPasswordValid => username.length > 4;
+  bool get isPasswordValid => password.length > 4;
+  bool get isLangToLearnValid => langToLearn != '';
+  bool get isNativeLangValid => nativeLang != '';
 
   final String username;
   final String email;

@@ -16,7 +16,8 @@ MultiBlocProvider buildMultiBlocProvider(BuildContext context, Widget child) {
     BlocProvider<AuthenticationBloc>(
       create: (BuildContext context) => AuthenticationBloc(
           aRepo: context.read<AuthRepoI<AuthStatus>>(),
-          uRepo: context.read<UserRepoI<User>>()),
+          uRepo: context.read<UserRepoI<User>>())
+        ..add(AuthenticationAtAppStart()),
       lazy: false,
     ),
     BlocProvider<WordsCubit>(

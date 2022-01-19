@@ -18,7 +18,7 @@ InputDecoration inputDecoration(
             width: 3,
           ),
     floatingLabelBehavior: FloatingLabelBehavior.auto,
-    contentPadding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+    contentPadding: const EdgeInsets.fromLTRB(25.0, 10.0, 20.0, 10.0),
     enabledBorder: const OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(32.0)),
       borderSide: BorderSide(color: Color(0xff0E9447), width: 2.0),

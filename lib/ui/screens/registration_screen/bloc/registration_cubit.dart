@@ -37,10 +37,12 @@ class RegistrationCubit extends Cubit<RegistrationState> {
   }
 
   void onLangToLearnChanged(String value) {
+    print('onLangToLearnChanged: $value');
     emit(state.copyWith(langToLearn: value));
   }
 
   void onNativeLangChanged(String value) {
+    print('onNativeLangChanged: $value');
     emit(state.copyWith(nativeLang: value));
   }
 
@@ -50,6 +52,7 @@ class RegistrationCubit extends Cubit<RegistrationState> {
 
   void onFormSubmit() async {
     emit(state.copyWith(formStatus: FormSubmissionStatus.submitting));
+    /// TODO: validate form fields!
     try {
       await authenticationRepository.signUp(
           email: state.email,

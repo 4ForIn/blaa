@@ -52,7 +52,11 @@ class StorageSecured implements StorageSecInterface {
 
   @override
   Future<String?> getEmail() async {
-    return await _storage.read(key: _emailKey);
+    String? ee = await _storage.read(key: _emailKey);
+    String ee2 = ee.toString();
+    print('SS getEmail: $ee2');
+    // return await _storage.read(key: _emailKey);
+    return ee2;
   }
 
   @override

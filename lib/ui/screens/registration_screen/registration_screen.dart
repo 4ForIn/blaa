@@ -1,10 +1,11 @@
 import 'package:blaa/domain/repository/auth_repo_i.dart';
 import 'package:blaa/ui/router/blaa_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:blaa/ui/widgets/language_select/language_dropdown/language_dropdown.dart';
 import 'package:blaa/ui/widgets/snack/show_custom_snack.dart';
 import 'package:blaa/utils/authentication/build_input_decoration.dart';
 import 'package:blaa/utils/constants/assets_const.dart';
-import 'package:blaa/utils/constants/root_scaffold_key.dart';
+import 'package:blaa/utils/constants/languages.dart';
 import 'package:blaa/utils/enums/authentication_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,15 +21,15 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final TextEditingController _nameCtrl = TextEditingController();
   final TextEditingController _emailCtrl = TextEditingController();
-  final TextEditingController _langToLearnCtrl = TextEditingController();
-  final TextEditingController _nativeLangCtrl = TextEditingController();
   final TextEditingController _passwordCtrl = TextEditingController();
   final GlobalKey<FormState> _registerFormKye = GlobalKey<FormState>();
+
+  //final GlobalKey<FormFieldState> _myLangDropdownKey = GlobalKey<FormFieldState>();
+  // final LocalKey _wantLearnDropdownKey = LocalKey();
   bool _isHidden = true;
 
   @override
   void dispose() {
-    // _passwordCtrl.value.copyWith(text: '');
     _passwordCtrl.clear();
     super.dispose();
   }
@@ -65,15 +66,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     child: Image.asset(AssetsConst.bulbTr['path']!),
                   ),
                 ),
-                const SizedBox(height: 40.0),
+                const SizedBox(height: 20.0),
                 _nameField('Name', _nameCtrl),
                 const SizedBox(height: 8.0),
                 _emailField('Email', _emailCtrl),
                 const SizedBox(height: 8.0),
                 _passwordField('Password', _passwordCtrl),
-                _nativeField('Your language', _nativeLangCtrl),
-                _languageField('Language you want to learn', _langToLearnCtrl),
-                const SizedBox(height: 20.0),
+                const SizedBox(height: 15.0),
+                const Text('Please select your native language',
+                    style: TextStyle(color: Colors.white),
+                    textAlign: TextAlign.center),
+                _buildMyLanguageDropdown(context),
+                const SizedBox(height: 8.0),
+                const Text('Please select language You want to learn',
+                    style: TextStyle(color: Colors.white),
+                    textAlign: TextAlign.center),
+                _buildWantLearnDropdown(context),
                 Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: 16.0, horizontal: 35),
@@ -86,24 +94,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             color: Colors.grey,
                           ));
                         } else {
-                          return MaterialButton(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(24),
-                              ),
-                              onPressed: () {
-                                if (_registerFormKye.currentState!.validate()) {
-                                  context
-                                      .read<RegistrationCubit>()
-                                      .onFormSubmit();
-                                  // If the form is valid, display a snack. In the real world,
-                                  // you'd often call a server or save the information in a database.
-
-                                }
-                              },
-                              padding: const EdgeInsets.all(12),
-                              color: Colors.lightBlueAccent,
-                              child: const Text('Sign Up',
-                                  style: TextStyle(color: Colors.white)));
+                          return _buildSubmitBtn(context);
                         }
                       },
                     )),
@@ -136,106 +127,109 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   Widget _emailField(String label, TextEditingController ctrl) {
     return BlocBuilder<RegistrationCubit, RegistrationState>(
-      builder: (context, state) {
-        return Container(
-          padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15),
-          child: TextFormField(
-              onChanged: (val) =>
-                  context.read<RegistrationCubit>().onEmailChanged(val),
-              validator: (v) => state.isEmailValid ? null : 'Email is invalid',
-              keyboardType: TextInputType.emailAddress,
-              obscureText: false,
-              controller: ctrl,
-              decoration: inputDecoration(label: label)),
-        );
-      },
-    );
+        builder: (context, state) {
+      return Container(
+        padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15),
+        child: TextFormField(
+            onChanged: (val) =>
+                context.read<RegistrationCubit>().onEmailChanged(val),
+            validator: (v) => state.isEmailValid ? null : 'Email is invalid',
+            keyboardType: TextInputType.emailAddress,
+            obscureText: false,
+            controller: ctrl,
+            decoration: inputDecoration(label: label)),
+      );
+    });
   }
 
   Widget _passwordField(String label, TextEditingController ctrl) {
     return BlocBuilder<RegistrationCubit, RegistrationState>(
-      builder: (context, state) {
-        return Container(
-          padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15),
-          child: TextFormField(
-              onChanged: (val) =>
-                  context.read<RegistrationCubit>().onPasswordChanged(val),
-              validator: (v) {
-                if (v == null || v.length < 5) {
-                  return 'password must have min. 5 characters';
-                }
-                return null;
-              },
-              keyboardType: TextInputType.visiblePassword,
-              obscureText: _isHidden,
-              controller: ctrl,
-              decoration: inputDecoration(
-                  label: label,
-                  togglePassVisibility: _togglePasswordView,
-                  isPassHidden: _isHidden)),
-        );
-      },
-    );
+        builder: (context, state) {
+      return Container(
+        padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15),
+        child: TextFormField(
+            onChanged: (val) =>
+                context.read<RegistrationCubit>().onPasswordChanged(val),
+            validator: (v) {
+              if (v == null || v.length < 5) {
+                return 'Min. 5 characters';
+              }
+              return null;
+            },
+            keyboardType: TextInputType.visiblePassword,
+            obscureText: _isHidden,
+            controller: ctrl,
+            decoration: inputDecoration(
+                label: label,
+                togglePassVisibility: _togglePasswordView,
+                isPassHidden: _isHidden)),
+      );
+    });
   }
 
-  Widget _nativeField(String label, TextEditingController ctrl) {
+  Widget _buildMyLanguageDropdown(BuildContext context) {
     return BlocBuilder<RegistrationCubit, RegistrationState>(
-      builder: (context, state) {
-        return Container(
-          padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15),
-          child: TextFormField(
-              onChanged: (val) =>
-                  context.read<RegistrationCubit>().onNativeLangChanged(val),
-              validator: (v) {
-                if (v == null || v.isEmpty) {
-                  return 'cannot be empty';
-                }
-                return null;
-              },
-              keyboardType: TextInputType.text,
-              obscureText: false,
-              controller: ctrl,
-              decoration: inputDecoration(label: label)),
-        );
-      },
-    );
+        builder: (context, state) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 3.0, horizontal: 35),
+        child: LanguageDropdown<String>(
+            hintText: 'My language',
+            options: [...SupportedLanguages.names],
+            value: state.nativeLang,
+            onChanged: (String? newValue) {
+              context.read<RegistrationCubit>().onNativeLangChanged(newValue!);
+            },
+            getLabel: (String value) => value,
+            key: const Key('LanguageDropdown-My language')),
+      );
+    });
   }
 
-  Widget _languageField(String label, TextEditingController ctrl) {
+  Widget _buildWantLearnDropdown(BuildContext context) {
     return BlocBuilder<RegistrationCubit, RegistrationState>(
-      builder: (context, state) {
-        return Container(
-          padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15),
-          child: TextFormField(
-              onChanged: (val) =>
-                  context.read<RegistrationCubit>().onLangToLearnChanged(val),
-              validator: (v) {
-                if (v == null || v.isEmpty) {
-                  return 'cannot be empty';
-                }
-                return null;
-              },
-              keyboardType: TextInputType.text,
-              obscureText: false,
-              controller: ctrl,
-              decoration: inputDecoration(label: label)),
-        );
-      },
-    );
+        builder: (context, state) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 3.0, horizontal: 35),
+        child: LanguageDropdown<String>(
+            hintText: 'I want to want to learn',
+            options: [...SupportedLanguages.names],
+            value: state.langToLearn,
+            onChanged: (String? newValue) {
+              context.read<RegistrationCubit>().onLangToLearnChanged(newValue!);
+            },
+            getLabel: (String value) => value,
+            key: const Key('LanguageDropdown-I want to want to learn')),
+      );
+    });
+  }
+
+  MaterialButton _buildSubmitBtn(BuildContext context) {
+    return MaterialButton(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        onPressed: () {
+          if (_registerFormKye.currentState!.validate()) {
+            // _wantLearnDropdownKey.currentState!.validate() &&
+            //_myLangDropdownKey.currentState!.validate()) {
+            context.read<RegistrationCubit>().onFormSubmit();
+          }
+        },
+        padding: const EdgeInsets.all(12),
+        color: Colors.lightBlueAccent,
+        child: const Text('Sign Up', style: TextStyle(color: Colors.white)));
   }
 
   Padding _buildSignInBtn(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: MediaQuery.of(context).size.width * 34.0 / 100),
-      child: TextButton(
-        child: const Text(
-          'Sign In',
-          style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
-          textAlign: TextAlign.center,
-        ),
-        onPressed: () => context.router.replace(const LoginRoute()),
-      ),
-    );
+        padding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.width * 34.0 / 100),
+        child: TextButton(
+          child: const Text(
+            'Sign In',
+            style:
+                TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+          onPressed: () => context.router.replace(const LoginRoute()),
+        ));
   }
 }

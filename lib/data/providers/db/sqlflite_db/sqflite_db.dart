@@ -12,9 +12,7 @@ class SqfliteDb {
   SqfliteDb._init();
 
   Future<Database> get database async {
-    print('Future<Database> get database');
     if (_db != null) return _db!;
-
     _db = await _initDB('blaa.db');
     return _db!;
   }
@@ -26,8 +24,7 @@ class SqfliteDb {
     return await openDatabase(_path, version: 1, onCreate: _onCreate);
   }
 
-  Future  _onCreate(Database db, int ver) async {
-    print('SqfliteDb _initDB _onCreate');
+  Future _onCreate(Database db, int ver) async {
     await db.execute(DbConst.createWordsTableStatement);
     await db.execute(DbConst.createUsersTableStatement);
   }

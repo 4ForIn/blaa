@@ -1,15 +1,15 @@
 import 'package:blaa/data/model/word_m/word_m.dart';
 import 'package:blaa/utils/constants/languages.dart';
 
-const demoWordsList = <Word>[
+final demoWordsList = <Word>[
   Word(
     created: '11855',
     id: 1,
     inNative: 'first',
     inTranslation: 'firstTR',
     isFavorite: 0,
-    langToLearn: SupportedLanguages.tr,
-    nativeLang: SupportedLanguages.en,
+    langToLearn: SupportedLanguages.list[2].shortcut,
+    nativeLang: SupportedLanguages.list[0].shortcut,
   ),
   Word(
     created: '11887',
@@ -18,8 +18,8 @@ const demoWordsList = <Word>[
     inNative: 'second',
     inTranslation: 'secondTR',
     isFavorite: 1,
-    langToLearn: SupportedLanguages.tr,
-    nativeLang: SupportedLanguages.en,
+    langToLearn: SupportedLanguages.list[2].shortcut,
+    nativeLang: SupportedLanguages.list[0].shortcut,
   ),
   Word(
     created: '11888',
@@ -27,8 +27,8 @@ const demoWordsList = <Word>[
     inNative: 'third',
     inTranslation: 'thirdTR',
     isFavorite: 0,
-    langToLearn: SupportedLanguages.tr,
-    nativeLang: SupportedLanguages.en,
+    langToLearn: SupportedLanguages.list[2].shortcut,
+    nativeLang: SupportedLanguages.list[0].shortcut,
   ),
   Word(
     created: '1222',
@@ -36,8 +36,8 @@ const demoWordsList = <Word>[
     inNative: 'third kll',
     inTranslation: 'thirdfff TR',
     isFavorite: 0,
-    langToLearn: SupportedLanguages.tr,
-    nativeLang: SupportedLanguages.en,
+    langToLearn: SupportedLanguages.list[2].shortcut,
+    nativeLang: SupportedLanguages.list[0].shortcut,
   ),
   Word(
     created: '1223',
@@ -45,7 +45,7 @@ const demoWordsList = <Word>[
     inNative: 'zz jk',
     inTranslation: 'zzjjjm',
     isFavorite: 0,
-    langToLearn: SupportedLanguages.tr,
-    nativeLang: SupportedLanguages.en,
+    langToLearn: SupportedLanguages.list[2].shortcut,
+    nativeLang: SupportedLanguages.list[0].shortcut,
   ),
 ];

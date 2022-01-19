@@ -88,7 +88,7 @@ class AuthRepo implements AuthRepoI<AuthStatus> {
       if (_res != null) {
         await _storage.persistEmailAndToken(email, password);
         _controller.add(AuthStatus.authenticated);
-        // when state is registered, AuthBloc will perform call to
+        // when state is authenticated, AuthBloc will perform call to
         // userRepo for user detail info.
       } else {
         _controller.add(AuthStatus.unauthenticated);
@@ -115,11 +115,8 @@ class AuthRepo implements AuthRepoI<AuthStatus> {
       String? _tk = await _storage.getToken();
       String? _em = await _storage.getEmail();
       if (_em != null && _tk != null) {
-        /// TODO: check for more data in database
-        await Future.delayed(
-          const Duration(milliseconds: 300),
-          () => _controller.add(AuthStatus.authenticated),
-        );
+        await userRepository.getUser(_em.toString());
+        _controller.add(AuthStatus.authenticated);
       } else {
         // in secure storage there is no token or email
         // can not login

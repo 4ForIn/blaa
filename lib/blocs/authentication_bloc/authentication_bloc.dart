@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:blaa/data/model/user_m/user_m.dart';
-import 'package:blaa/data/repositories/auth_repo.dart';
 import 'package:blaa/domain/repository/auth_repo_i.dart';
 import 'package:blaa/domain/repository/user_repo_i.dart';
 import 'package:blaa/utils/enums/authentication_status.dart';
