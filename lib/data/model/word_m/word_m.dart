@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+
 part 'word_m.freezed.dart';
 part 'word_m.g.dart';
 

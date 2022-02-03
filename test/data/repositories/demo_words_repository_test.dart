@@ -8,11 +8,11 @@ class MockDemoWordsRepo extends Mock implements DemoWordsRepo {}
 
 void main() {
   EquatableConfig.stringify = true;
-  late DemoWordsRepo dwR;
+  //late DemoWordsRepo dwR;
   tearDown(() {});
   group('DemoWordsRepository should', () {
     setUp(() {
-      dwR = MockDemoWordsRepo();
+      // dwR = MockDemoWordsRepo();
       // const List _empty = [];
     });
     test('return empty array', () {
