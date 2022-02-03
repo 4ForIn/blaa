@@ -8,6 +8,7 @@ import 'package:blaa/utils/constants/assets_const.dart';
 import 'package:blaa/utils/enums/authentication_status.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/login_bloc.dart';
 
@@ -55,46 +56,61 @@ class _LoginScreenState extends State<LoginScreen> {
               showBanner(context, _msg);
             }
           },
-          child: Form(
-            key: _loginFormKey,
-            child: Center(
-              child: ListView(
-                shrinkWrap: true,
-                padding: const EdgeInsets.only(left: 24.0, right: 24.0),
-                children: <Widget>[
-                  const Text('Welcome back',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 18.0)),
-                  const SizedBox(height: 40.0),
-                  _emailField('Email', _emailCtrl),
-                  const SizedBox(height: 8.0),
-                  _passwordField('Password', _passwordCtrl),
-                  const SizedBox(height: 20.0),
-                  Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 16.0, horizontal: 35),
-                      child: MaterialButton(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(24)),
-                          onPressed: () {
-                            if (_loginFormKey.currentState!.validate()) {
-                              context
-                                  .read<LoginBloc>()
-                                  .add(const SignInFormSubmitted());
-                              // If the form is valid, display a snack. In the real world,
-                              // you'd often call a server or save the information in a database.
+          child: BlocBuilder<LoginBloc, LoginState>(
+            builder: (context, state) {
+              if (state.status == LoginStatus.success) {
+                return Center(
+                    child: Column(
+                  children: [
+                    const Text('WELCOME'),
+                    Text('You are signed in with email: ${state.email}'),
+                    const Text('Let`s go...'),
+                  ],
+                ));
+              } else {
+                return Form(
+                  key: _loginFormKey,
+                  child: Center(
+                    child: ListView(
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.only(left: 24.0, right: 24.0),
+                      children: <Widget>[
+                        const Text('Welcome back',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 18.0)),
+                        const SizedBox(height: 40.0),
+                        _emailField('Email', _emailCtrl),
+                        const SizedBox(height: 8.0),
+                        _passwordField('Password', _passwordCtrl),
+                        const SizedBox(height: 20.0),
+                        Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 16.0, horizontal: 35),
+                            child: MaterialButton(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(24)),
+                                onPressed: () {
+                                  if (_loginFormKey.currentState!.validate()) {
+                                    context
+                                        .read<LoginBloc>()
+                                        .add(const SignInFormSubmitted());
+                                    // If the form is valid, display a snack. In the real world,
+                                    // you'd often call a server or save the information in a database.
 
-                            }
-                          },
-                          padding: const EdgeInsets.all(12),
-                          color: Colors.lightBlueAccent,
-                          child: const Text('Sign In',
-                              style: TextStyle(color: Colors.white)))),
-                  _buildForgotPasswordBtn(context),
-                  _buildSignUpBtn(context)
-                ],
-              ),
-            ),
+                                  }
+                                },
+                                padding: const EdgeInsets.all(12),
+                                color: Colors.lightBlueAccent,
+                                child: const Text('Sign In',
+                                    style: TextStyle(color: Colors.white)))),
+                        _buildForgotPasswordBtn(context),
+                        _buildSignUpBtn(context)
+                      ],
+                    ),
+                  ),
+                );
+              }
+            },
           ),
         );
       }),
@@ -110,7 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
               onChanged: (pass) =>
                   context.read<LoginBloc>().add(LoginPasswordChanged(pass)),
               validator: (v) {
-                if (v == null || v.length < 4) {
+                if (v == null || v.length < 3) {
                   return 'Password is to short';
                 }
                 return null;
@@ -133,11 +149,20 @@ class _LoginScreenState extends State<LoginScreen> {
         return Container(
           padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15),
           child: TextFormField(
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.deny(
+                    RegExp("['+;=?!*^%#([)<>/&/,\":]"),
+                    replacementString: '-not allowed ')
+              ],
               onChanged: (e) =>
                   context.read<LoginBloc>().add(LoginEmailChanged(e)),
               validator: (v) {
-                if (v == null || v.length < 6 || !v.contains('@')) {
-                  return 'not a valid email';
+                if (v == null || v.length < 4 || !v.contains('@')) {
+                  String _msg = '${_emailCtrl.value.text}" is not valid email';
+                  setState(() {
+                    _passwordCtrl.clear();
+                  });
+                  return _msg;
                 }
                 return null;
               },

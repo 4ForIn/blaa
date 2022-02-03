@@ -10,7 +10,7 @@ class LanguageDropdown<T> extends StatelessWidget {
 
   const LanguageDropdown({
     required Key key,
-    this.hintText = 'Please select an Option',
+    this.hintText = 'Please select language',
     this.options = const [],
     required this.getLabel,
     required this.value,
@@ -24,7 +24,7 @@ class LanguageDropdown<T> extends StatelessWidget {
       builder: (FormFieldState<T> state) {
         return InputDecorator(
           decoration: inputDecoration(label: hintText),
-          isEmpty: value == null || value == '',
+          // isEmpty: value == null || value == '',
           child: DropdownButtonHideUnderline(
             child: DropdownButton<T>(
               dropdownColor: Colors.amberAccent,
@@ -35,6 +35,7 @@ class LanguageDropdown<T> extends StatelessWidget {
               onChanged: onChanged,
               items: options.map<DropdownMenuItem<T>>((T value) {
                 return DropdownMenuItem<T>(
+                  key: Key('DropdownMenuItem-$value'),
                   value: value,
                   child: Text(getLabel(value)),
                 );
@@ -43,14 +44,8 @@ class LanguageDropdown<T> extends StatelessWidget {
           ),
         );
       },
-      autovalidateMode: AutovalidateMode.always,
-      validator: (T? v) {
-        if(v == null || v == ''|| v == ' ') {
-          return 'Please choose language';
-        } else {
-          return null;
-        }
-      },
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: (v) => (value == null || value == '') ? 'Please choose language' : null,
     );
   }
 }

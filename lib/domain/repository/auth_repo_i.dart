@@ -5,7 +5,9 @@ import 'dart:async';
 abstract class AuthRepoI<T> {
   // final _controller = StreamController<T>();
 
-  Future<String?> signIn({required String email, required String password});
+  // returns current user id or null
+  Future<int?> signIn({required String email, required String password});
+
 // returns created user id or null
   Future<int?> signUp(
       {required String email,

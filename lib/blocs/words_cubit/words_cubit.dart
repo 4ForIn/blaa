@@ -35,7 +35,7 @@ class WordsCubit extends Cubit<WordsState> {
   void fetchWords() {
     List<Word> _newState = [];
     if (state.words.isEmpty) {
-      final List<Word> _dummyList = demoWordsList;
+      final List<Word> _dummyList = demo5WordsList;
       _newState = [..._dummyList];
     }
     emit(state.copyWith(status: WordsStateStatus.loading));

@@ -1,7 +1,7 @@
 import 'package:blaa/data/model/word_m/word_m.dart';
 import 'package:blaa/utils/constants/languages.dart';
 
-final demoWordsList = <Word>[
+final demo5WordsList = <Word>[
   Word(
     created: '11855',
     id: 1,
@@ -48,4 +48,15 @@ final demoWordsList = <Word>[
     langToLearn: SupportedLanguages.list[2].shortcut,
     nativeLang: SupportedLanguages.list[0].shortcut,
   ),
+];
+final demo1WordList = <Word>[
+  Word(
+    created: '11855',
+    id: 1,
+    inNative: 'first',
+    inTranslation: 'firstTR',
+    isFavorite: 0,
+    langToLearn: SupportedLanguages.list[2].shortcut,
+    nativeLang: SupportedLanguages.list[0].shortcut,
+  )
 ];

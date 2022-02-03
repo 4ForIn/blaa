@@ -12,11 +12,11 @@ class RegistrationState extends Equatable {
       this.langToLearn = 'Polish',
       this.formStatus = FormSubmissionStatus.initial});
 
-  bool get isUsernameValid => username.length > 4;
+  bool get isUsernameValid => username.isNotEmpty;
   bool get isEmailValid => email.length > 4 && email.contains('@');
   bool get isPasswordValid => password.length > 4;
-  bool get isLangToLearnValid => langToLearn != '';
-  bool get isNativeLangValid => nativeLang != '';
+  bool get isLangToLearnValid => langToLearn.isNotEmpty;
+  bool get isNativeLangValid => nativeLang.isNotEmpty;
 
   final String username;
   final String email;
@@ -57,8 +57,3 @@ class RegistrationState extends Equatable {
         username
       ];
 }
-
-// class RegistrationInitial extends RegistrationState {
-//   @override
-//   List<Object> get props => [];
-// }

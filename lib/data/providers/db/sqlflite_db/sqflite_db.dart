@@ -29,12 +29,13 @@ class SqfliteDb {
     await db.execute(DbConst.createUsersTableStatement);
   }
 
-  Future<User> createUser(User newUser) async {
-    final Database db = await instance.database;
-    // newUser.created.toIso861String(); if there is a DateTime
-    final int _id = await db.insert(DbConst.tableUsers, newUser.toJson());
-    print('SqfliteDb user with id: $_id created');
-    /*
+  Future<User?> createUser(User newUser) async {
+    try {
+      final Database db = await instance.database;
+      // newUser.created.toIso861String(); if there is a DateTime
+      final int _id = await db.insert(DbConst.tableUsers, newUser.toJson());
+      print('SqfliteDb user with id: $_id created');
+      /*
      // to get created property from DB:
     final List<Map<String, Object?>> _res = await db.query(DbConst.tableUsers,
         columns: [DbConst.fUCreated],
@@ -43,7 +44,10 @@ class SqfliteDb {
     final String _created = _res.first.entries
         .firstWhere((e) => e.key == DbConst.fUCreated)
         .value as String;*/
-    return newUser.copyWith(id: _id);
+      return newUser.copyWith(id: _id);
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 
   Future<User?> getUserFromDbByEmail(String userEmail) async {
@@ -60,6 +64,26 @@ class SqfliteDb {
       }
       print(
           'SqfliteDb getUserFromDbByEmail: $userEmail. Response id: ${_response?.id}');
+      return _response;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+// for login:
+  Future<int?> hasCreatedUser(String userEmail, String userPassword) async {
+    int? _response;
+    try {
+      final Database db = await instance.database;
+      const List<String> _allColumns = [DbConst.fUId];
+      final List<Map<String, Object?>> res = await db.query(DbConst.tableUsers,
+          columns: _allColumns,
+          where: '${DbConst.fUEmail} = ? AND ${DbConst.fUPassword} = ?',
+          whereArgs: [userEmail, userPassword]);
+      if (res.isNotEmpty) {
+        _response = User.fromJson(res.first).id;
+        ;
+      }
       return _response;
     } catch (e) {
       throw Exception(e);

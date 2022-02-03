@@ -29,6 +29,7 @@ class DemoCubit extends Cubit<DemoState> {
       // emit(DemoState.success(state.words));
     } on Exception {
       emit(const DemoState.failure('Something went wrong. Please try again'));
+
     }
   }
 

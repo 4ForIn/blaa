@@ -4,15 +4,22 @@ import 'package:blaa/data/model/user_m/user_m.dart';
 // user repository interface, domain's contract
 abstract class UserRepoI<T> {
   Future<T?> getUser(String email);
+
   Future<T?> get user;
+
   // returns created user id
   Future<int?> createUser(T newUser);
+
   // returns removed user id
   Future<int?> removeUser(int id);
-  // Future<String?> getName();
-  // Future<String?> getId();
-  // Future<String?> getLangToLearn ();
-  // Future<String?> getNativeLang ();
-  // Future<String?> getToken();
-  // Future<void> deleteToken();
+
+  Future<User?> getUserWithEmailAndPassword(String email, String password);
+  // for login
+  Future<int?> loginUserWithEmailPassword(String email, String password);
+// Future<String?> getName();
+// Future<String?> getId();
+// Future<String?> getLangToLearn ();
+// Future<String?> getNativeLang ();
+// Future<String?> getToken();
+// Future<void> deleteToken();
 }

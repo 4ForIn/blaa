@@ -30,10 +30,18 @@ class WordsRepo implements WordsRepoI<Word> {
 
   @override
   Future<List<Word>> getAllWords(int userId) {
+    // try {
+    //   return Future.delayed(
+    //     const Duration(milliseconds: 300),
+    //         () => [],
+    //   );
+    // } on Exception(e) {
+    //   throw Exception(e)
+    // }
     return Future.delayed(
-      const Duration(milliseconds: 300),
-      () => [],
-    );
+            const Duration(milliseconds: 300),
+                () => [],
+           );
   }
 
   @override

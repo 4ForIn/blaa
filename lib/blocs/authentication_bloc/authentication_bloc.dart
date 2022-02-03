@@ -46,9 +46,7 @@ class AuthenticationBloc
       case AuthStatus.unauthenticated:
         return emit(const AuthenticationState.unauthenticated());
       case AuthStatus.authenticated:
-        final user = await _tryGetUser('');
-        print(
-            '_onAuthStatusChanged/case A.authenticated, user.email ${user?.email}');
+        final User? user = await _userRepo.user;
         return emit(user != null
             ? AuthenticationState.authenticated(user)
             : const AuthenticationState.unauthenticated());
@@ -92,12 +90,12 @@ class AuthenticationBloc
       return null;
     }
   }
-  // Future<void> _cleanIfFirstUseAfterUninstall() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //
-  //   if (prefs.getBool('first_run') ?? true) {
-  //     await userRepository.deleteAll();
-  //     await prefs.setBool('first_run', false);
-  //   }
-  // }
+// Future<void> _cleanIfFirstUseAfterUninstall() async {
+//   final prefs = await SharedPreferences.getInstance();
+//
+//   if (prefs.getBool('first_run') ?? true) {
+//     await userRepository.deleteAll();
+//     await prefs.setBool('first_run', false);
+//   }
+// }
 }

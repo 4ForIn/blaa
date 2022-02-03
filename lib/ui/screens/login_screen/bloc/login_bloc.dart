@@ -9,12 +9,12 @@ part 'login_state.dart';
 /*
 Login process:
 Version 1.0.0
-- verify if email is valid (?),
+- verify if email and password are not empty,
 - authentication repository signIn() calls the user repository getUserWithEmailAndPassword()
-- user repository checks in sqflite DB if there is user with given credentials
-- if DB has the user getUserWithEmailAndPassword() returns the user
+- user repository checks in sqflite DB if there is any user with given credentials
+- if DB has the user hasCreatedUser() returns the id or null
 - authentication repository saves email and password in secured storage
-- authentication repository emits status: AuthStatus.unauthenticated to witch
+- authentication repository emits status: AuthStatus.authenticated to witch
   authentication BLoC reacts.
  */
 
@@ -30,15 +30,24 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<LoginPasswordChanged>(_onPasswordChanged);
   }
 
+  // authenticationRepository.signIn() returns current user id or null
   final AuthRepoI _aRepo;
+  static const String _emptyFieldsMsg = 'Please enter email and password';
 
   void _onSignInSubmitted(
     SignInFormSubmitted event,
     Emitter<LoginState> emit,
   ) async {
+    // check if email and password are not empty and add status: isValidated or not
+    if (state.email.isNotEmpty && state.password.isNotEmpty) {
+      emit(state.copyWith(status: LoginStatus.isValidated));
+    } else {
+      emit(state.copyWith(
+          status: LoginStatus.failure,
+          errorMsg: _emptyFieldsMsg,
+          password: ''));
+    }
     if (state.status == LoginStatus.isValidated) {
-      // when LoginPasswordChanged and LoginEmailChanged events occurs
-      // bloc verify if email or password are valid and sets status property in state
       emit(state.copyWith(status: LoginStatus.loading));
       try {
         await _aRepo.signIn(
@@ -69,8 +78,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     LoginEmailChanged event,
     Emitter<LoginState> emit,
   ) {
-    final _e = event.email;
-    // check if email is valid and add status: valid or not
+    final String? _e = event.email;
+
     emit(state.copyWith(email: _e));
   }
 
@@ -78,7 +87,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     LoginPasswordChanged event,
     Emitter<LoginState> emit,
   ) {
-    final _p = event.password;
+    final String? _p = event.password;
     // check if password is valid and add status: valid or not ?
     emit(state.copyWith(password: _p));
   }

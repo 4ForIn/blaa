@@ -8,7 +8,8 @@ import 'package:blaa/domain/repository/user_repo_i.dart';
 class UserRepo implements UserRepoI<User> {
   static final UserRepo _inst = UserRepo._();
   static User? _user;
-  final _ss = StorageSecured();
+
+  // final _ss = StorageSecured();
   final _db = SqfliteDb.instance;
 
   UserRepo._();
@@ -30,26 +31,29 @@ class UserRepo implements UserRepoI<User> {
     }
   }
 
-  // when login bloc is submitted and calls authRepo login()
+  @override
   Future<User?> getUserWithEmailAndPassword(
       String email, String password) async {
     // check in DB if there is a user with given credentials
-    throw UnimplementedError();
+    try {
+      User? _userFromDb = await _db.getUserFromDbByEmail(email);
+      return _user = _userFromDb;
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 
   @override
   Future<int?> createUser(User newUser) async {
     String _timeStamp = DateTime.now().toIso8601String();
     User _userNoId = newUser.copyWith(id: null, created: _timeStamp);
-    User _userFromDb = await _db.createUser(_userNoId);
-
-    _user = _userFromDb;
-    return Future.delayed(const Duration(milliseconds: 300), () {
-      print('created new user with email: ${newUser.email} ');
-      _user = newUser;
-      // returns user id created by database or null if error
-      return _userFromDb.id;
-    });
+    try {
+      User? _userFromDb = await _db.createUser(_userNoId);
+      _user = _userFromDb;
+      return _userFromDb?.id;
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 
   @override
@@ -57,5 +61,24 @@ class UserRepo implements UserRepoI<User> {
     // TODO: implement removeUser
     throw UnimplementedError();
     // returns removed user id null if error
+  }
+
+  // handle logIn
+  // when login bloc is submitted - calls authRepo login()
+  @override
+  Future<int?> loginUserWithEmailPassword(String email, String password) async {
+    int? _id;
+    // check in DB if there is a user with given credentials
+    // if DB has the user hasCreatedUser() returns the id or null
+    try {
+      _id = await _db.hasCreatedUser(email, password);
+      if (_id != null) {
+        // fetch user data from Db and set static User? _user;
+        await getUser(email);
+      }
+      return _id;
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 }
