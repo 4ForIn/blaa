@@ -3,24 +3,21 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-// A Mock DemoWordsRepositoryI class
-class MockDemoWordsRepo extends Mock implements DemoWordsRepo {}
-
 void main() {
   EquatableConfig.stringify = true;
-  //late DemoWordsRepo dwR;
+  late DemoWordsRepo _dwR;
   tearDown(() {});
   group('DemoWordsRepository should', () {
     setUp(() {
-      // dwR = MockDemoWordsRepo();
+      _dwR = DemoWordsRepo();
       // const List _empty = [];
     });
     test('return empty array', () {
       // arrange
-
       // act
-
+      List _resp = _dwR.getDemoWords();
       // assert
+      expect(_resp, []);
     });
   });
 }

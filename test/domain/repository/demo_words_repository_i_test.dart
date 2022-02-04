@@ -15,7 +15,6 @@ void main() {
   group('DemoWordsRepositoryI<Word> should', () {
     setUp(() {
       dwR = MockDemoWordsRepositoryI();
-      // const List _empty = [];
     });
     test('return List<Word> when getDemoWords()', () {
       // arrange

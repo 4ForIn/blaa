@@ -7,6 +7,8 @@ import 'package:blaa/domain/repository/user_repo_i.dart';
 // query the current user from the backend
 class UserRepo implements UserRepoI<User> {
   static final UserRepo _inst = UserRepo._();
+
+  // static UserRepo _inst;
   static User? _user;
 
   // final _ss = StorageSecured();
@@ -14,8 +16,11 @@ class UserRepo implements UserRepoI<User> {
 
   UserRepo._();
 
+  // UserRepo._() { _inst = this; }
+
   factory UserRepo() {
     return _inst;
+    // _inst ?? UserRepo._();
   }
 
   @override

@@ -30,20 +30,15 @@ class SqfliteDb {
   }
 
   Future<User?> createUser(User newUser) async {
+    // prevent creating multiple users with the same email
+    if(await _didUserExistsInDb(newUser.email)) {
+      throw Exception('User with ${newUser.email} already exists');
+    }
     try {
       final Database db = await instance.database;
       // newUser.created.toIso861String(); if there is a DateTime
       final int _id = await db.insert(DbConst.tableUsers, newUser.toJson());
       print('SqfliteDb user with id: $_id created');
-      /*
-     // to get created property from DB:
-    final List<Map<String, Object?>> _res = await db.query(DbConst.tableUsers,
-        columns: [DbConst.fUCreated],
-        where: '${DbConst.fUId} = ?',
-        whereArgs: [_id]);
-    final String _created = _res.first.entries
-        .firstWhere((e) => e.key == DbConst.fUCreated)
-        .value as String;*/
       return newUser.copyWith(id: _id);
     } catch (e) {
       throw Exception(e);
@@ -83,6 +78,24 @@ class SqfliteDb {
       if (res.isNotEmpty) {
         _response = User.fromJson(res.first).id;
         ;
+      }
+      return _response;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+  // check if user with given email already exists in database
+  Future<bool> _didUserExistsInDb(String email) async {
+    bool _response = false;
+    try {
+      final Database db = await instance.database;
+      const List<String> _columns = [DbConst.fUId];
+      final List<Map<String, Object?>> res = await db.query(DbConst.tableUsers,
+          columns: _columns,
+          where: '${DbConst.fUEmail} = ?',
+          whereArgs: [email]);
+      if (res.isNotEmpty) {
+        _response = true;
       }
       return _response;
     } catch (e) {
