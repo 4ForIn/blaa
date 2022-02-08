@@ -2,41 +2,39 @@ import 'package:blaa/data/model/user_m/user_m.dart';
 import 'package:blaa/data/repositories/user_repo.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 
-
-
-// class MockUserRepoI<User> extends Mock implements UserRepoI<User> {}
+// UserRepo is a singleton
+class MockUserRepo extends Mock implements UserRepo {}
 
 void main() {
   EquatableConfig.stringify = true;
-  // late MockUserRepoI<User> uRI;
-  late UserRepo uR;
   const mockUser = User(id: 1, email: 'email');
-  setUpAll(() {
-
-  });
+  late UserRepo uRMock;
+  late UserRepo uR;
+  setUpAll(() {});
   tearDown(() {});
-  group('UserRepository should', () {
+  group('UserRepository getter  should', () {
     setUp(() {
+      uRMock = MockUserRepo();
       uR = UserRepo();
     });
-    test('return User type when getUser("any")', () async {
-      // arrange
-      /*when(() => uRI.getUser("any")).thenAnswer((_) async => mockUser);
-      // act
-      User? _res = await uRI.getUser("any");
-      // assert
-      expect(_res, mockUser);
-      verify(() => uRI.getUser("any")).called(1);*/
+    test('return <User?> type', () async {
+      when(() => uRMock.user).thenAnswer((_) async => mockUser);
+      User? res = await uRMock.user;
+      expect(res, isA<User?>());
     });
-    /*test('return null type when get user', () async {
-      // arrange
-      when(() => uRI.user).thenAnswer((_) async => null);
-      // act
-      User? _res = await uRI.user;
-      // assert
-      expect(_res, null);
-      verify(() => uRI.user).called(1);
-    });*/
+    test('return null if there is no user', () async {
+      // visibleForTesting userForTest()
+      await uR.userForTest(null);
+      User? res = await uR.user;
+      expect(res, null);
+    });
+    test('return the user if there is the user ', () async {
+      // visibleForTesting userForTest()
+      await uR.userForTest(mockUser);
+      User? res = await uR.user;
+      expect(res, mockUser);
+    });
   });
 }

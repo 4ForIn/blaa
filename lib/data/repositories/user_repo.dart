@@ -1,27 +1,26 @@
 import 'package:blaa/data/model/user_m/user_m.dart';
 import 'package:blaa/data/providers/db/sqlflite_db/sqflite_db.dart';
-import 'package:blaa/data/providers/storage_secured/storage_secured.dart';
 import 'package:blaa/domain/repository/user_repo_i.dart';
+import 'package:meta/meta.dart';
 
 // implementation
 // query the current user from the backend
 class UserRepo implements UserRepoI<User> {
   static final UserRepo _inst = UserRepo._();
 
-  // static UserRepo _inst;
   static User? _user;
 
-  // final _ss = StorageSecured();
   final _db = SqfliteDb.instance;
 
   UserRepo._();
 
-  // UserRepo._() { _inst = this; }
-
   factory UserRepo() {
     return _inst;
-    // _inst ?? UserRepo._();
   }
+
+  // for Singleton class tests reason
+  @visibleForTesting
+  Future<void> userForTest(User? val) => Future(() => _user = val);
 
   @override
   Future<User?> get user => Future(() => _user);
