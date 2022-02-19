@@ -7,9 +7,10 @@
 // **************************************************************************
 // AutoRouteGenerator
 // **************************************************************************
+//
+// ignore_for_file: type=lint
 
 import 'package:auto_route/auto_route.dart' as _i2;
-import 'package:flutter/cupertino.dart' as _i11;
 import 'package:flutter/material.dart' as _i10;
 
 import '../screens/demo_screen/demo_screen.dart' as _i6;
@@ -111,42 +112,47 @@ class BlaaRouter extends _i2.RootStackRouter {
       ];
 }
 
-/// generated route for [_i1.RootView]
+/// generated route for
+/// [_i1.RootView]
 class RootView extends _i2.PageRouteInfo<void> {
   const RootView({List<_i2.PageRouteInfo>? children})
-      : super(name, path: '/', initialChildren: children);
+      : super(RootView.name, path: '/', initialChildren: children);
 
   static const String name = 'RootView';
 }
 
-/// generated route for [_i2.EmptyRouterPage]
+/// generated route for
+/// [_i2.EmptyRouterPage]
 class HomeRouter extends _i2.PageRouteInfo<void> {
   const HomeRouter({List<_i2.PageRouteInfo>? children})
-      : super(name, path: 'home', initialChildren: children);
+      : super(HomeRouter.name, path: 'home', initialChildren: children);
 
   static const String name = 'HomeRouter';
 }
 
-/// generated route for [_i2.EmptyRouterPage]
+/// generated route for
+/// [_i2.EmptyRouterPage]
 class StudyRouter extends _i2.PageRouteInfo<void> {
   const StudyRouter({List<_i2.PageRouteInfo>? children})
-      : super(name, path: 'study', initialChildren: children);
+      : super(StudyRouter.name, path: 'study', initialChildren: children);
 
   static const String name = 'StudyRouter';
 }
 
-/// generated route for [_i2.EmptyRouterPage]
+/// generated route for
+/// [_i2.EmptyRouterPage]
 class SettingsRouter extends _i2.PageRouteInfo<void> {
   const SettingsRouter({List<_i2.PageRouteInfo>? children})
-      : super(name, path: 'settings', initialChildren: children);
+      : super(SettingsRouter.name, path: 'settings', initialChildren: children);
 
   static const String name = 'SettingsRouter';
 }
 
-/// generated route for [_i3.HomeScreen]
+/// generated route for
+/// [_i3.HomeScreen]
 class HomeRoute extends _i2.PageRouteInfo<HomeRouteArgs> {
-  HomeRoute({_i11.Key? key})
-      : super(name, path: '', args: HomeRouteArgs(key: key));
+  HomeRoute({_i10.Key? key})
+      : super(HomeRoute.name, path: '', args: HomeRouteArgs(key: key));
 
   static const String name = 'HomeRoute';
 }
@@ -154,7 +160,7 @@ class HomeRoute extends _i2.PageRouteInfo<HomeRouteArgs> {
 class HomeRouteArgs {
   const HomeRouteArgs({this.key});
 
-  final _i11.Key? key;
+  final _i10.Key? key;
 
   @override
   String toString() {
@@ -162,44 +168,50 @@ class HomeRouteArgs {
   }
 }
 
-/// generated route for [_i4.StudyScreen]
+/// generated route for
+/// [_i4.StudyScreen]
 class StudyRoute extends _i2.PageRouteInfo<void> {
-  const StudyRoute() : super(name, path: '');
+  const StudyRoute() : super(StudyRoute.name, path: '');
 
   static const String name = 'StudyRoute';
 }
 
-/// generated route for [_i5.WordsListScreen]
+/// generated route for
+/// [_i5.WordsListScreen]
 class WordsListRoute extends _i2.PageRouteInfo<void> {
-  const WordsListRoute() : super(name, path: 'words');
+  const WordsListRoute() : super(WordsListRoute.name, path: 'words');
 
   static const String name = 'WordsListRoute';
 }
 
-/// generated route for [_i6.DemoScreen]
+/// generated route for
+/// [_i6.DemoScreen]
 class DemoRoute extends _i2.PageRouteInfo<void> {
-  const DemoRoute() : super(name, path: 'demo');
+  const DemoRoute() : super(DemoRoute.name, path: 'demo');
 
   static const String name = 'DemoRoute';
 }
 
-/// generated route for [_i7.SettingsScreen]
+/// generated route for
+/// [_i7.SettingsScreen]
 class SettingsRoute extends _i2.PageRouteInfo<void> {
-  const SettingsRoute() : super(name, path: '');
+  const SettingsRoute() : super(SettingsRoute.name, path: '');
 
   static const String name = 'SettingsRoute';
 }
 
-/// generated route for [_i8.LoginScreen]
+/// generated route for
+/// [_i8.LoginScreen]
 class LoginRoute extends _i2.PageRouteInfo<void> {
-  const LoginRoute() : super(name, path: 'login');
+  const LoginRoute() : super(LoginRoute.name, path: 'login');
 
   static const String name = 'LoginRoute';
 }
 
-/// generated route for [_i9.RegistrationScreen]
+/// generated route for
+/// [_i9.RegistrationScreen]
 class RegistrationRoute extends _i2.PageRouteInfo<void> {
-  const RegistrationRoute() : super(name, path: 'sign-up');
+  const RegistrationRoute() : super(RegistrationRoute.name, path: 'sign-up');
 
   static const String name = 'RegistrationRoute';
 }

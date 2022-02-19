@@ -1,11 +1,15 @@
+// ignore_for_file: avoid_print
 import 'package:blaa/data/model/user_m/user_m.dart';
-import 'package:blaa/data/model/word_m/word_m.dart';
+import 'package:blaa/data/providers/db/db_interface/user_local_database_interface.dart';
+import 'package:blaa/data/providers/db/db_interface/words_local_database_interface.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-
 import 'db_constants/db_constants.dart';
 
-class SqfliteDb {
+class SqfliteDb
+    implements
+        WordsLocalDatabaseInterface,
+        UserLocalDatabaseInterface<Map<String, dynamic>> {
   static final SqfliteDb instance = SqfliteDb._init();
   static Database? _db;
 
@@ -29,36 +33,49 @@ class SqfliteDb {
     await db.execute(DbConst.createUsersTableStatement);
   }
 
-  Future<User?> createUser(User newUser) async {
+  @override
+  Future<Map<String, dynamic>?> createUser(Map<String, dynamic> newUser) async {
     // prevent creating multiple users with the same email
-    if(await _didUserExistsInDb(newUser.email)) {
-      throw Exception('User with ${newUser.email} already exists');
+    final String _email = newUser["email"] ?? 'noUser';
+    if (await _didUserExistsInDb(_email)) {
+      throw Exception('User with this email: $_email already exists');
     }
     try {
-      final Database db = await instance.database;
+      final Database _db = await instance.database;
       // newUser.created.toIso861String(); if there is a DateTime
-      final int _id = await db.insert(DbConst.tableUsers, newUser.toJson());
+      final int _id = await _db.insert(DbConst.tableUsers, newUser);
       print('SqfliteDb user with id: $_id created');
-      return newUser.copyWith(id: _id);
+      const List<String> _allColumns = DbConst.allUsersColumns;
+      final List<Map<String, dynamic>> _res = await _db.query(
+          DbConst.tableUsers,
+          columns: _allColumns,
+          where: '${DbConst.fUId} = ?',
+          whereArgs: [_id],
+          limit: 1);
+      return _res.first;
     } catch (e) {
       throw Exception(e);
     }
   }
 
-  Future<User?> getUserFromDbByEmail(String userEmail) async {
-    User? _response;
+  @override
+  Future<Map<String, dynamic>?> getUserFromDbByEmail(String userEmail) async {
+    Map<String, dynamic>? _response;
+
     try {
-      final Database db = await instance.database;
+      final Database _db = await instance.database;
       const List<String> _allColumns = DbConst.allUsersColumns;
-      final List<Map<String, Object?>> res = await db.query(DbConst.tableUsers,
+      final List<Map<String, Object?>> _res = await _db.query(
+          DbConst.tableUsers,
           columns: _allColumns,
           where: '${DbConst.fUEmail} = ?',
-          whereArgs: [userEmail]);
-      if (res.isNotEmpty) {
-        _response = User.fromJson(res.first);
+          whereArgs: [userEmail],
+          limit: 1);
+      if (_res.isNotEmpty) {
+        _response = _res.first;
+        print(
+            'SqfliteDb getUserFromDbByEmail: $userEmail. Response id: ${_res.first["id"]}');
       }
-      print(
-          'SqfliteDb getUserFromDbByEmail: $userEmail. Response id: ${_response?.id}');
       return _response;
     } catch (e) {
       throw Exception(e);
@@ -66,6 +83,7 @@ class SqfliteDb {
   }
 
 // for login:
+  @override
   Future<int?> hasCreatedUser(String userEmail, String userPassword) async {
     int? _response;
     try {
@@ -77,13 +95,19 @@ class SqfliteDb {
           whereArgs: [userEmail, userPassword]);
       if (res.isNotEmpty) {
         _response = User.fromJson(res.first).id;
-        ;
       }
       return _response;
     } catch (e) {
       throw Exception(e);
     }
   }
+
+  @override
+  Future<void> deleteUser(int userId) {
+    // TODO: implement deleteUser
+    throw UnimplementedError();
+  }
+
   // check if user with given email already exists in database
   Future<bool> _didUserExistsInDb(String email) async {
     bool _response = false;
@@ -105,52 +129,95 @@ class SqfliteDb {
 
   // ------- words -----------
 
-  Future<Word> createWord(Word newWord) async {
-    final Database db = await instance.database;
-    // newUser.created.toIso861String(); if there is a DateTime
-    final int _id = await db.insert(DbConst.tableWords, newWord.toJson());
-    print(
-        'SqfliteDb createWord langToLearn: ${newWord.langToLearn} created with  id: $_id created');
-    /*
-
-
-    final int _id2 = await db.rawInsert(
-        'INSERT INTO table_name ("column1, col2") VALUES ("value1, val2"))');
-
-     // to get created property from DB:
-    final List<Map<String, Object?>> _res = await db.query(DbConst.tableUsers,
-        columns: [DbConst.fUCreated],
-        where: '${DbConst.fUId} = ?',
-        whereArgs: [_id]);
-    final String _created = _res.first.entries
-        .firstWhere((e) => e.key == DbConst.fUCreated)
-        .value as String;*/
-    return newWord.copyWith(id: _id);
+  @override
+  Future<Map<String, dynamic>> createWord(Map<String, dynamic> newWord) async {
+    try {
+      final Database _db = await instance.database;
+      final int _id = await _db.insert(DbConst.tableWords, newWord,
+          conflictAlgorithm: ConflictAlgorithm.replace);
+      print('SqfliteDb createWord id: $_id ');
+      final List<Map<String, dynamic>> _res = await _db.query(
+          DbConst.tableWords,
+          columns: DbConst.allWordsColumns,
+          where: '${DbConst.fWId} = ?',
+          whereArgs: [_id],
+          limit: 1);
+      final Map<String, dynamic> _resFirst = _res.first;
+      return _resFirst;
+    } catch (e) {
+      print(e.toString());
+      throw Exception('Data was not saved into database');
+    }
   }
 
-  Future<List<Word>> getWords(int userId) async {
-    List<Word> _response = [];
+  @override
+  Future<List<Map<String, dynamic>>> getWords(int userId) async {
     try {
       final Database db = await instance.database;
-      final List<String> _allColumns = DbConst.allWordsColumns;
-      final List<Map<String, Object?>> res = await db.query(DbConst.tableWords,
+      const List<String> _allColumns = DbConst.allWordsColumns;
+      final List<Map<String, dynamic>> _res = await db.query(DbConst.tableWords,
           columns: _allColumns,
-          // id is int, email is String!
           where: '${DbConst.fWUser} = ?',
           whereArgs: [userId]);
-      /*final List<Map<String, Object?>> res2 = await db.rawQuery(
-          'SELECT * FROM ${DbConst.tableWords} WHERE ${DbConst.fWUser}=?',
-          [userId]);*/
-      if (res.isNotEmpty) {
-        _response = res.map((element) => Word.fromJson(element)).toList();
-      }
-      print('SqfliteDb getWords userId: $userId:  resp: $_response');
-      return _response;
+      return _res;
     } catch (e) {
       throw Exception(e);
     }
   }
 
+  @override
+  Future<void> deleteWord(int wordId) async {
+    try {
+      final Database db = await instance.database;
+      await db.delete(DbConst.tableWords,
+          where: '${DbConst.fWId} = ?', whereArgs: [wordId]);
+    } catch (e) {
+      print('word id: $wordId was not deleted. Error: $e');
+    }
+
+    print('word id: $wordId was deleted from DB');
+  }
+
+  @override
+  Future<Map<String, dynamic>> triggerIsFavorite(int wordId) async {
+    late Map<String, dynamic> _response;
+    try {
+      final Database db = await instance.database;
+      // query fWIsFavorite = 'isFavorite' [int]
+      final List<Map<String, dynamic>> _res = await db.query(DbConst.tableWords,
+          columns: DbConst.allWordsColumns,
+          where: '${DbConst.fWId} = ?',
+          whereArgs: [wordId]);
+      Map<String, dynamic> _firstItem = _res.first;
+      _response = _firstItem;
+      final int _wordIsFavorite = _firstItem["isFavorite"];
+      // reverse isFavorite field -> isFavorite == 1 ? 0 : 1
+      final int _isFavoriteReversed = _wordIsFavorite == 0 ? 1 : 0;
+      final Map<String, dynamic> _newItem = {"isFavorite":_isFavoriteReversed};
+        // update database:
+      await db.update(DbConst.tableWords, _newItem,
+          where: '${DbConst.fWId} = ?', whereArgs: [wordId]);
+      /*String _updateSql =
+          "UPDATE ${DbConst.tableWords} SET ${DbConst.fWIsFavorite} = ? WHERE ${DbConst.fWId} = ?";
+      int resp = await db.rawUpdate(_updateSql, [_isFavoriteReversed, wordId]);*/
+      final List<Map<String, dynamic>> _updatedRes = await db.query(DbConst.tableWords,
+          columns: DbConst.allWordsColumns,
+          where: '${DbConst.fWId} = ?',
+          whereArgs: [wordId]);
+      print(
+          'word id: $wordId ( $_wordIsFavorite ) was triggerIsFavorite to ( $_isFavoriteReversed ) into DB');
+      _response = _updatedRes.first;
+      return _response;
+    } catch (e) {
+      print('word id: $wordId was not triggerIsFavorite. Error: $e');
+      throw Exception(e);
+      // return _response;
+
+    }
+    // return _response;
+  }
+
+  @override
   Future close() async {
     final Database _db = await instance.database;
     print('SqfliteDb db closed');

@@ -9,7 +9,7 @@ import '../../../fixtures/fixture_reader.dart';
 void main() {
   EquatableConfig.stringify = true;
   const Word word1 = Word(inNative: 'english', inTranslation: 'turkish');
-  tearDown(() {});
+  // tearDown(() {});
   group('Word default instance', () {
     setUp(() {});
     test('should have an id value of type null', () {
@@ -23,7 +23,7 @@ void main() {
     });
   });
   group('Word fromJson should', () {
-    setUp(() {});
+    // setUp(() {});
     test('return a valid model', () {
       // arrange
       final Map<String, dynamic> _jsonMap = json.decode(fixture('word.json'));

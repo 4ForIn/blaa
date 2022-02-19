@@ -259,7 +259,7 @@ class _$_User implements _User {
 
   @override
   final String? created;
-  @JsonKey(defaultValue: 'demo@user')
+  @JsonKey()
   @override
   final String email;
   @override
@@ -268,13 +268,13 @@ class _$_User implements _User {
   final String? imageAsString;
   @override
   final String? imageUrl;
-  @JsonKey(defaultValue: 'Polish')
+  @JsonKey()
   @override
   final String langToLearn;
-  @JsonKey(defaultValue: 'Demo')
+  @JsonKey()
   @override
   final String name;
-  @JsonKey(defaultValue: 'English')
+  @JsonKey()
   @override
   final String nativeLang;
   @override

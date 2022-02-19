@@ -303,16 +303,16 @@ class _$_Word implements _Word {
   final String inNative;
   @override
   final String inTranslation;
-  @JsonKey(defaultValue: 0)
+  @JsonKey()
   @override
   final int isFavorite;
-  @JsonKey(defaultValue: 'Polish')
+  @JsonKey()
   @override
   final String langToLearn;
-  @JsonKey(defaultValue: 'English')
+  @JsonKey()
   @override
   final String nativeLang;
-  @JsonKey(defaultValue: 0)
+  @JsonKey()
   @override
   final int points;
   @override

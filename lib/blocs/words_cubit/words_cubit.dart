@@ -49,15 +49,19 @@ class WordsCubit extends Cubit<WordsState> {
     }
   }
 
-  void addNewWord(Word item) {
+  Future<void> addNewWord(Word item) async {
     final List<Word> _currentState = state.words;
     emit(state.copyWith(status: WordsStateStatus.loading));
+    Word _newWord = item.copyWith(
+      user: state.currentUser.email,
+      nativeLang: state.currentUser.nativeLang,
+      langToLearn: state.currentUser.langToLearn,
+    );
     try {
-      Word _newWord = item.copyWith(
-          user: state.currentUser.email,
-          nativeLang: state.currentUser.nativeLang,
-          langToLearn: state.currentUser.langToLearn);
-      final List<Word> _newState = [_newWord, ..._currentState];
+      // Words Repository will store the word into local database
+      Word _response = await repository.create(_newWord);
+      print('WordsCubit addNewWord id: ${_response.id} ');
+      final List<Word> _newState = [_response, ..._currentState];
       emit(state.copyWith(status: WordsStateStatus.success, words: _newState));
     } on Exception {
       print('Added word Exception ');
@@ -81,16 +85,17 @@ class WordsCubit extends Cubit<WordsState> {
     }
   }
 
-  void triggerFavorite(Word item) {
+  Future<void> triggerFavorite(Word item) async {
     final List<Word> _currentState = state.words;
     final int _itemId = item.id!;
     // if word is favored isFavorite = 1, if it is not isFavorite = 0
     final int _reversedIsFavored = item.isFavorite == 0 ? 1 : 0;
     try {
+      final Word _response = await repository.triggerIsFavorite(_itemId);
       List<Word> _newState = _currentState
           .take(_currentState.length)
           .map((Word i) =>
-              i.id == _itemId ? i.copyWith(isFavorite: _reversedIsFavored) : i)
+              i.id == _itemId ? _response : i)
           .toList();
       emit(state.copyWith(status: WordsStateStatus.success, words: _newState));
     } on Exception {

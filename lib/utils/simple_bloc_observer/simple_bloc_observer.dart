@@ -1,5 +1,5 @@
 // ignore_for_file: avoid_print
-import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SimpleBlocObserver extends BlocObserver {
@@ -9,12 +9,12 @@ class SimpleBlocObserver extends BlocObserver {
     super.onCreate(bloc);
   }
 
-  @override
+ /* @override
   void onChange(BlocBase bloc, Change change) {
-    debugPrint(change.toString());
-    print(change);
+    // debugPrint(change.toString());
+    // print(change);
     super.onChange(bloc, change);
-  }
+  }*/
 
   @override
   void onEvent(Bloc bloc, Object? event) {
@@ -22,9 +22,9 @@ class SimpleBlocObserver extends BlocObserver {
     super.onEvent(bloc, event);
   }
 
-  @override
+  /*@override
   void onTransition(Bloc bloc, Transition transition) {
-    print(transition);
+    // print(transition);
     super.onTransition(bloc, transition);
-  }
+  }*/
 }

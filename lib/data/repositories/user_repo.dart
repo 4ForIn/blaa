@@ -27,9 +27,13 @@ class UserRepo implements UserRepoI<User> {
 
   @override
   Future<User?> getUser(String email) async {
+    User? _res;
     try {
-      User? _userFromDb = await _db.getUserFromDbByEmail(email);
-      return _user = _userFromDb;
+      Map<String, dynamic>? _userFromDb = await _db.getUserFromDbByEmail(email);
+      if (_userFromDb != null) {
+        _res = User.fromJson(_userFromDb);
+      }
+      return _user = _res;
     } catch (e) {
       throw Exception(e);
     }
@@ -38,10 +42,14 @@ class UserRepo implements UserRepoI<User> {
   @override
   Future<User?> getUserWithEmailAndPassword(
       String email, String password) async {
+    User? _res;
     // check in DB if there is a user with given credentials
     try {
-      User? _userFromDb = await _db.getUserFromDbByEmail(email);
-      return _user = _userFromDb;
+      Map<String, dynamic>? _userFromDb = await _db.getUserFromDbByEmail(email);
+      if (_userFromDb != null) {
+        _res = User.fromJson(_userFromDb);
+      }
+      return _user = _res;
     } catch (e) {
       throw Exception(e);
     }
@@ -49,12 +57,17 @@ class UserRepo implements UserRepoI<User> {
 
   @override
   Future<int?> createUser(User newUser) async {
+    int? _createdUseId;
     String _timeStamp = DateTime.now().toIso8601String();
     User _userNoId = newUser.copyWith(id: null, created: _timeStamp);
+    Map<String, dynamic> _json = _userNoId.toJson();
     try {
-      User? _userFromDb = await _db.createUser(_userNoId);
-      _user = _userFromDb;
-      return _userFromDb?.id;
+      Map<String, dynamic>? _userFromDb = await _db.createUser(_json);
+      if (_userFromDb != null) {
+        _user = User.fromJson(_userFromDb);
+        _createdUseId = _user?.id;
+      }
+      return _createdUseId;
     } catch (e) {
       throw Exception(e);
     }
@@ -64,7 +77,7 @@ class UserRepo implements UserRepoI<User> {
   Future<int?> removeUser(int id) {
     // TODO: implement removeUser
     throw UnimplementedError();
-    // returns removed user id null if error
+    // returns removed user id or null if error
   }
 
   // handle logIn

@@ -32,12 +32,14 @@ class DbConst {
   static const String idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
   static const String intNotNullType = 'INTEGER NOT NULL';
   static const String intType = 'INTEGER';
+  static const String intTypeDefault0 = 'INTEGER  DEFAULT 0';
   static const String txtNotNullType = 'TEXT NOT NULL';
   static const String txtType = 'TEXT';
+  static const String txtTypeDefaultNull = 'TEXT DEFAULT NULL';
   static const String timeStampType = 'TEXT DEFAULT CURRENT_TIMESTAMP';
 
   static const String createWordsTableStatement =
-      '''CREATE TABLE $tableWords ($fWId $idType, $fWCreated $txtNotNullType, $fWCategory $txtType, $fWClue $txtType, $fWImageAsString $txtType, $fWInNative, $txtNotNullType, $fWInTranslation $txtNotNullType, $fWIsFavorite $intNotNullType, $fWLangToLearn $txtType, $fWNativeLang $txtType, $fWPoints $intNotNullType, $fWUser $txtType)''';
+      '''CREATE TABLE $tableWords ($fWCategory $txtType, $fWCreated $txtType, $fWClue $txtType, $fWId $idType, $fWImageAsString $txtType, $fWInNative, $txtType, $fWInTranslation $txtNotNullType, $fWIsFavorite $intTypeDefault0, $fWLangToLearn $txtType, $fWNativeLang $txtType, $fWPoints $intType, $fWUser $txtType)''';
 
   static const String createUsersTableStatement =
       '''CREATE TABLE $tableUsers ($fUId $idType, $fUEmail $txtType, $fUImageAsString $txtType, $fUImageUrl $txtType, $fUCreated $txtNotNullType, $fULangToLearn $txtNotNullType, $fUName $txtType, $fUNativeLang $txtNotNullType, $fUPassword $txtType, $fUToken $txtType)''';
@@ -55,8 +57,8 @@ class DbConst {
     fUToken,
   ];
   static const List<String> allWordsColumns = [
-    fWCreated,
     fWCategory,
+    fWCreated,
     fWClue,
     fWId,
     fWImageAsString,

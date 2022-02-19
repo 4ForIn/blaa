@@ -18,7 +18,7 @@ abstract class AuthRepoI<T> {
 
   Future<void> tryToSignInAtStart();
 
-  void signOut();
+  Future<void>  signOut();
 
   Stream<T> get status;
 

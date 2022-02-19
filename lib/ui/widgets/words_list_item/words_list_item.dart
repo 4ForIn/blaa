@@ -31,7 +31,8 @@ class WordsListItem extends StatelessWidget {
       child: ListTile(
           contentPadding: const EdgeInsets.symmetric(horizontal: 10),
           leading: Hero(
-            tag: item.id!,
+            // when words are not stored to database, don't have an id
+            tag: item.id ?? -2,
             child: _buildHeroChild(),
           ),
           title: Text(item.inTranslation),

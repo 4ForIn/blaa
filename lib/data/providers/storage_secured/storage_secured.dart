@@ -1,3 +1,4 @@
+// ignore_for_file: avoid_print
 import 'dart:convert';
 
 import 'package:blaa/data/providers/storage_secured/storage_secured_interface/storage_secure_interface.dart';
@@ -64,6 +65,7 @@ class StorageSecured implements StorageSecInterface {
     return await _storage.read(key: _tokenKey);
   }
 
+  @override
   Future<void> deleteAll() async {
     return await _storage.deleteAll();
   }

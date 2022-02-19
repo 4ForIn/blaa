@@ -14,6 +14,8 @@ abstract class StorageSecInterface {
 
   Future<void> deleteEmail();
 
+  Future<void> deleteAll();
+
   Future<String?> getEmail();
 
   Future<String?> getToken();

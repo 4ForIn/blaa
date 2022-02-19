@@ -20,12 +20,11 @@
 // - to sign in with this credentials [ tryToSignIn()  ].
 
 import 'dart:async';
-
 import 'package:blaa/data/model/user_m/user_m.dart';
-import 'package:blaa/data/providers/storage_secured/storage_secured.dart';
-import 'package:blaa/data/repositories/user_repo.dart';
+import 'package:blaa/data/providers/storage_secured/storage_secured_interface/storage_secure_interface.dart';
 import 'package:blaa/domain/repository/auth_repo_i.dart';
 import 'package:blaa/domain/repository/user_repo_i.dart';
+import 'package:blaa/locator.dart';
 import 'package:blaa/utils/enums/authentication_status.dart';
 
 // enum AuthStatus { unknown, authenticated, registered, unauthenticated }
@@ -42,11 +41,11 @@ class AuthRepo implements AuthRepoI<AuthStatus> {
   final _controller = StreamController<AuthStatus>();
 
   // flutter secure storage object:
-  final StorageSecured _storage = StorageSecured();
+  final StorageSecInterface _storage = locator<StorageSecInterface>();
 
   @override
   Stream<AuthStatus> get status async* {
-    await Future<void>.delayed(const Duration(seconds: 1));
+    await Future<void>.delayed(const Duration(milliseconds: 5));
     yield AuthStatus.unauthenticated;
     yield* _controller.stream;
   }
@@ -58,7 +57,7 @@ class AuthRepo implements AuthRepoI<AuthStatus> {
     required String password,
   }) async {
     int? _currentUserId;
-    // check if in DB there is a user with given credentials
+    // check if in DB there is an user with given credentials
     // if there is it will be returned
     // save email and password in secured storage
     // _controller.add(AuthStatus.authenticated);
@@ -74,8 +73,7 @@ class AuthRepo implements AuthRepoI<AuthStatus> {
       }
     } catch (e) {
       _controller.add(AuthStatus.unauthenticated);
-      throw Exception(
-          'Logging in not finished. Error: ${e.toString()}');
+      throw Exception('Logging in not finished. Error: ${e.toString()}');
     }
     return _currentUserId;
   }
@@ -118,8 +116,8 @@ class AuthRepo implements AuthRepoI<AuthStatus> {
   }
 
   @override
-  void signOut() {
-    _storage.deleteAll();
+  Future<void>  signOut() async {
+    await _storage.deleteAll();
     _controller.add(AuthStatus.unauthenticated);
   }
 

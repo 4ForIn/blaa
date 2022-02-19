@@ -82,14 +82,14 @@ class AuthenticationBloc
     _authRepo.signOut();
   }
 
-  Future<User?> _tryGetUser(String userEmail) async {
+ /* Future<User?> _tryGetUser(String userEmail) async {
     try {
       final User? user = await _userRepo.user;
       return user;
     } catch (_) {
       return null;
     }
-  }
+  }*/
 // Future<void> _cleanIfFirstUseAfterUninstall() async {
 //   final prefs = await SharedPreferences.getInstance();
 //

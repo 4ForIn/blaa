@@ -18,15 +18,7 @@ class DemoCubit extends Cubit<DemoState> {
   void fetchWords() {
     emit(const DemoState.loading());
     try {
-      List<Word> _newState = [];
-      if (_getCurrentDemoState().isEmpty) {
-        final List<Word> _data = repository.getDemoWords();
-        _newState = [..._data];
-      } else {
-        _newState = _getCurrentDemoState();
-      }
-      emit(DemoState.success(_newState));
-      // emit(DemoState.success(state.words));
+      emit(DemoState.success(repository.getDemoWords()));
     } on Exception {
       emit(const DemoState.failure('Something went wrong. Please try again'));
 
@@ -34,10 +26,11 @@ class DemoCubit extends Cubit<DemoState> {
   }
 
   void addNewWord(Word item) {
-    //final List<Word> _currentState = _getCurrentDemoState();
+    final List<Word> _prevState = _getCurrentDemoState();
     emit(const DemoState.loading());
+    Word _itemWithId = _makeWordWithAnId(item);
     try {
-      final List<Word> _newState = [item, ...state.words];
+      final List<Word> _newState = [_itemWithId, ..._prevState];
       emit(DemoState.success(_newState));
     } on Exception {
       emit(const DemoState.failure('Error - word is not added!'));
@@ -72,5 +65,10 @@ class DemoCubit extends Cubit<DemoState> {
       emit(const DemoState.failure(
           'Error - word is not added/removed to/from favorite list!'));
     }
+  }
+  Word _makeWordWithAnId(Word i) {
+    final int _id = DateTime.now().millisecondsSinceEpoch;
+    Word _itemWithId = i.copyWith(id: _id);
+    return _itemWithId;
   }
 }
