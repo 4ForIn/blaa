@@ -9,13 +9,14 @@ class StudyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        _buildBtn(() => context.router.push(const WordsListRoute()),
+        _buildBtn(() => context.router.push(const WordsListRouter(children: [WordsListRoute()])),
             'All Your words', Icons.assignment_outlined),
         _buildBtn(() => _noPageDialog(context), 'Let\'s do exercises',
             Icons.accessibility_new),
         _buildBtn(
             // () => context.navigateTo(const HomeRouter(children: [DemoRoute()])),
-                () => context.navigateTo(const DemoRoute()),
+             //   () => context.navigateTo(const DemoRoute()),
+                () => context.navigateTo(const DemoRouter(children: [DemoRoute()])),
             'Demo',
             Icons.device_unknown),
       ],

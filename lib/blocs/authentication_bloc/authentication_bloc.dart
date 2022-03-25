@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:blaa/data/model/user_m/user_m.dart';
+import 'package:blaa/data/repositories/auth_repo.dart';
 import 'package:blaa/domain/repository/auth_repo_i.dart';
 import 'package:blaa/domain/repository/user_repo_i.dart';
-import 'package:blaa/utils/enums/authentication_status.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -74,12 +74,12 @@ class AuthenticationBloc
     }
   }
 
-  void _onAuthenticationLogoutRequested(
+  Future<void> _onAuthenticationLogoutRequested(
     AuthenticationLogoutRequested event,
     Emitter<AuthenticationState> emit,
-  ) {
+  ) async {
     print('_onAuthenticationLogoutRequested, event: $event');
-    _authRepo.signOut();
+    await _authRepo.signOut();
   }
 
  /* Future<User?> _tryGetUser(String userEmail) async {

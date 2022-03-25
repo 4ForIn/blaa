@@ -25,7 +25,7 @@ class _$WordTearOff {
       {String? category,
       String? created,
       String? clue,
-      int? id,
+      required int id,
       String? imageAsString,
       required String inNative,
       required String inTranslation,
@@ -63,7 +63,7 @@ mixin _$Word {
   String? get category => throw _privateConstructorUsedError;
   String? get created => throw _privateConstructorUsedError;
   String? get clue => throw _privateConstructorUsedError;
-  int? get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   String? get imageAsString => throw _privateConstructorUsedError;
   String get inNative => throw _privateConstructorUsedError;
   String get inTranslation => throw _privateConstructorUsedError;
@@ -86,7 +86,7 @@ abstract class $WordCopyWith<$Res> {
       {String? category,
       String? created,
       String? clue,
-      int? id,
+      int id,
       String? imageAsString,
       String inNative,
       String inTranslation,
@@ -136,7 +136,7 @@ class _$WordCopyWithImpl<$Res> implements $WordCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       imageAsString: imageAsString == freezed
           ? _value.imageAsString
           : imageAsString // ignore: cast_nullable_to_non_nullable
@@ -182,7 +182,7 @@ abstract class _$WordCopyWith<$Res> implements $WordCopyWith<$Res> {
       {String? category,
       String? created,
       String? clue,
-      int? id,
+      int id,
       String? imageAsString,
       String inNative,
       String inTranslation,
@@ -233,7 +233,7 @@ class __$WordCopyWithImpl<$Res> extends _$WordCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       imageAsString: imageAsString == freezed
           ? _value.imageAsString
           : imageAsString // ignore: cast_nullable_to_non_nullable
@@ -277,7 +277,7 @@ class _$_Word implements _Word {
       {this.category,
       this.created,
       this.clue,
-      this.id,
+      required this.id,
       this.imageAsString,
       required this.inNative,
       required this.inTranslation,
@@ -296,7 +296,7 @@ class _$_Word implements _Word {
   @override
   final String? clue;
   @override
-  final int? id;
+  final int id;
   @override
   final String? imageAsString;
   @override
@@ -379,7 +379,7 @@ abstract class _Word implements Word {
       {String? category,
       String? created,
       String? clue,
-      int? id,
+      required int id,
       String? imageAsString,
       required String inNative,
       required String inTranslation,
@@ -398,7 +398,7 @@ abstract class _Word implements Word {
   @override
   String? get clue;
   @override
-  int? get id;
+  int get id;
   @override
   String? get imageAsString;
   @override

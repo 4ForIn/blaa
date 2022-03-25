@@ -10,7 +10,7 @@ _$_Word _$$_WordFromJson(Map<String, dynamic> json) => _$_Word(
       category: json['category'] as String?,
       created: json['created'] as String?,
       clue: json['clue'] as String?,
-      id: json['id'] as int?,
+      id: json['id'] as int,
       imageAsString: json['imageAsString'] as String?,
       inNative: json['inNative'] as String,
       inTranslation: json['inTranslation'] as String,

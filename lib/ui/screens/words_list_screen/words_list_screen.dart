@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:blaa/blocs/words_cubit/words_cubit.dart';
 import 'package:blaa/data/model/word_m/word_m.dart';
+import 'package:blaa/ui/router/blaa_router.gr.dart';
 import 'package:blaa/ui/screens/words_list_screen/widgets/custom_search_delegate/custom_search_delegate.dart';
 import 'package:blaa/ui/widgets/list_ordering_wrapper/list_ordering_wrapper.dart';
 import 'package:blaa/ui/widgets/words_list_item/words_list_item.dart';
@@ -11,14 +13,12 @@ class WordsListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //  final WordsCubit _wordsCubit = BlocProvider.of<WordsCubit>(context);
-    // final TextEditingController _controller = TextEditingController();
     return CustomScrollView(slivers: [
       SliverAppBar(
         automaticallyImplyLeading: false,
         floating: true,
         snap: true,
-        title: const Text("Search App"),
+        title: const Text("Search..."),
         centerTitle: true,
         actions: <Widget>[
           IconButton(
@@ -56,13 +56,14 @@ class WordsListScreen extends StatelessWidget {
             (BuildContext context, int i) {
               Word _item = state.words[i];
               return WordsListItem(
-                key: Key('WordsListScreen-wordsListItem-${_item.id}'),
-                item: _item,
-                favHandle: () =>
-                    context.read<WordsCubit>().triggerFavorite(_item),
-                deleteHandle: () =>
-                    context.read<WordsCubit>().delete(_item.id!),
-              );
+                  key: Key('WordsListScreen-wordsListItem-${_item.id}'),
+                  item: _item,
+                  favHandle: () =>
+                      context.read<WordsCubit>().triggerFavorite(_item.id),
+                  deleteHandle: () =>
+                      context.read<WordsCubit>().delete(_item.id),
+                  onTapHandle: () => context.router
+                      .push(EditWordRoute(word: _item, id: _item.id)));
             },
             childCount: state.words.length,
           ));

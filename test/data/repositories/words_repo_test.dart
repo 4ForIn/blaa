@@ -18,7 +18,8 @@ void main() {
   late WordsRepo sut;
   final word = Word(
     created: '11855-test',
-    id: null,
+    user: 'email',
+    id: -1,
     inNative: 'inNativeTest',
     inTranslation: 'inTranslationTest',
     isFavorite: 0,
@@ -46,11 +47,11 @@ void main() {
       sut = WordsRepo();
     });
     test('getAll(1) should call database getWords(1) and returns List<Word>', () async {
-      when(() => mockDbService.getWords(1))
+      when(() => mockDbService.getWords('email'))
           .thenAnswer((_) async => <Map<String, dynamic>>[]);
-      List<Word> _res = await sut.getAll(1);
+      List<Word> _res = await sut.getAll('email');
       expect(_res, isA<List<Word>>());
-      verify(() => mockDbService.getWords(1)).called(1);
+      verify(() => mockDbService.getWords('email')).called(1);
     });
     test('delete(1) should call database  deleteWord(1) and returns void', () async {
       when(() => mockDbService.deleteWord(1)).thenAnswer((_) async {});

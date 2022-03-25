@@ -8,7 +8,6 @@ import 'package:blaa/domain/repository/auth_repo_i.dart';
 import 'package:blaa/domain/repository/demo_words_repository_i.dart';
 import 'package:blaa/domain/repository/user_repo_i.dart';
 import 'package:blaa/domain/repository/words_repo_i.dart';
-import 'package:blaa/utils/enums/authentication_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -40,7 +40,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   ) async {
     // check if email and password are not empty and add status: isValidated or not
     if (state.email.isNotEmpty && state.password.isNotEmpty) {
-      emit(state.copyWith(status: LoginStatus.isValidated));
+      emit(state.copyWith(status: LoginStatus.isValidated, errorMsg: ''));
     } else {
       emit(state.copyWith(
           status: LoginStatus.failure,
@@ -48,13 +48,18 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           password: ''));
     }
     if (state.status == LoginStatus.isValidated) {
-      emit(state.copyWith(status: LoginStatus.loading));
+      emit(state.copyWith(status: LoginStatus.loading, errorMsg: ''));
       try {
-        await _aRepo.signIn(
+        int? _userId = await _aRepo.signIn(
           email: state.email,
           password: state.password,
         );
-        emit(state.copyWith(status: LoginStatus.success));
+        if(_userId != null) {
+          emit(state.copyWith(status: LoginStatus.success, errorMsg: ''));
+        } else {
+          emit(state.copyWith(
+              status: LoginStatus.failure, errorMsg: 'Wrong credentials', password: ''));
+        }
       } catch (e) {
         emit(state.copyWith(
             status: LoginStatus.failure, errorMsg: e.toString()));

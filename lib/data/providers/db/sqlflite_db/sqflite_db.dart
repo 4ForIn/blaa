@@ -2,8 +2,9 @@
 import 'package:blaa/data/model/user_m/user_m.dart';
 import 'package:blaa/data/providers/db/db_interface/user_local_database_interface.dart';
 import 'package:blaa/data/providers/db/db_interface/words_local_database_interface.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+
 import 'db_constants/db_constants.dart';
 
 class SqfliteDb
@@ -131,6 +132,13 @@ class SqfliteDb
 
   @override
   Future<Map<String, dynamic>> createWord(Map<String, dynamic> newWord) async {
+    // remove id value for database autoincrement:
+    // it should be removed by WordsRepository
+    if (newWord['id'] != null) {
+      newWord.removeWhere((key, value) => key == 'id');
+      // newWord.update('id', (value) => 0);
+      // int? _removed = newWord.remove("id");
+    }
     try {
       final Database _db = await instance.database;
       final int _id = await _db.insert(DbConst.tableWords, newWord,
@@ -151,15 +159,30 @@ class SqfliteDb
   }
 
   @override
-  Future<List<Map<String, dynamic>>> getWords(int userId) async {
+  Future<List<Map<String, dynamic>>> getWords(String userEmail) async {
     try {
       final Database db = await instance.database;
       const List<String> _allColumns = DbConst.allWordsColumns;
       final List<Map<String, dynamic>> _res = await db.query(DbConst.tableWords,
           columns: _allColumns,
           where: '${DbConst.fWUser} = ?',
-          whereArgs: [userId]);
+          whereArgs: [userEmail]);
       return _res;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> getSingle(int id) async {
+    // Word.user is a String !!!!
+    try {
+      final Database db = await instance.database;
+      const List<String> _allColumns = DbConst.allWordsColumns;
+      final List<Map<String, dynamic>> _res = await db.query(DbConst.tableWords,
+          columns: _allColumns, where: '${DbConst.fWId} = ?', whereArgs: [id]);
+      Map<String, dynamic> _singleWord = _res.first;
+      return _singleWord;
     } catch (e) {
       throw Exception(e);
     }
@@ -193,14 +216,17 @@ class SqfliteDb
       final int _wordIsFavorite = _firstItem["isFavorite"];
       // reverse isFavorite field -> isFavorite == 1 ? 0 : 1
       final int _isFavoriteReversed = _wordIsFavorite == 0 ? 1 : 0;
-      final Map<String, dynamic> _newItem = {"isFavorite":_isFavoriteReversed};
-        // update database:
+      final Map<String, dynamic> _newItem = {"isFavorite": _isFavoriteReversed};
+      // update database:
       await db.update(DbConst.tableWords, _newItem,
-          where: '${DbConst.fWId} = ?', whereArgs: [wordId]);
+          where: '${DbConst.fWId} = ?',
+          whereArgs: [wordId],
+          conflictAlgorithm: ConflictAlgorithm.ignore);
       /*String _updateSql =
           "UPDATE ${DbConst.tableWords} SET ${DbConst.fWIsFavorite} = ? WHERE ${DbConst.fWId} = ?";
       int resp = await db.rawUpdate(_updateSql, [_isFavoriteReversed, wordId]);*/
-      final List<Map<String, dynamic>> _updatedRes = await db.query(DbConst.tableWords,
+      final List<Map<String, dynamic>> _updatedRes = await db.query(
+          DbConst.tableWords,
           columns: DbConst.allWordsColumns,
           where: '${DbConst.fWId} = ?',
           whereArgs: [wordId]);
@@ -222,5 +248,19 @@ class SqfliteDb
     final Database _db = await instance.database;
     print('SqfliteDb db closed');
     _db.close();
+  }
+
+  @override
+  Future<int> updateWord(int wordId, Map<String, dynamic> item) async {
+    try {
+      final Database _db = await instance.database;
+      int _resp = await _db.update(DbConst.tableWords, item,
+          where: '${DbConst.fWId} = ?',
+          whereArgs: [wordId],
+          conflictAlgorithm: ConflictAlgorithm.ignore);
+      return _resp;
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 }

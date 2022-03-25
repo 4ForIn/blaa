@@ -48,7 +48,7 @@ class EmptyWordsListInfo extends StatelessWidget {
             Text(' ⟪ use "+ new word" to add new one'),
             Padding(
               padding: EdgeInsets.only(top: 8.0),
-              child: Text('you can add to favorite or delete ⟫'),
+              child: Text('Add to favorite or delete ⟫'),
             ),
           ]),
           trailing: _buildTrailingIcons(context)),

@@ -24,16 +24,27 @@ void main() {
   final List<Word> _listOneWord = demo1WordList;
   setUpAll(() {});
   tearDown(() {
-    cubit.close();
+     cubit.close();
   });
   group('WordsCubit emits state:', () {
     setUp(() {
       repository = MockWordsRepositoryI();
+      when(() => repository.change).thenAnswer((_) => const Stream.empty());
+      //when(() => repository.change).thenAnswer((_) => Stream.value('change'));
       mAuthBloc = MockAuthenticationBloc();
       cubit = WordsCubit(repository, mAuthBloc);
+
     });
     blocTest<WordsCubit, WordsState>(
       'initial',
+        setUp: () {
+          //repository = MockWordsRepositoryI();
+          // when(() => repository.change).thenAnswer((_) => const Stream.empty());
+          //when(() => repository.change).thenAnswer((_) => Stream.value('change'));
+          // mAuthBloc = MockAuthenticationBloc();
+          // cubit = WordsCubit(repository, mAuthBloc);
+
+        },
       // build is like a create - BlocProvider<BlocA>(create: (_) => BlocA())
       build: () => WordsCubit(repository, mAuthBloc),
       act: (WordsCubit cubit) => cubit.emit(const WordsState()),

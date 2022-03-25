@@ -21,16 +21,14 @@ class DemoCubit extends Cubit<DemoState> {
       emit(DemoState.success(repository.getDemoWords()));
     } on Exception {
       emit(const DemoState.failure('Something went wrong. Please try again'));
-
     }
   }
 
   void addNewWord(Word item) {
     final List<Word> _prevState = _getCurrentDemoState();
     emit(const DemoState.loading());
-    Word _itemWithId = _makeWordWithAnId(item);
     try {
-      final List<Word> _newState = [_itemWithId, ..._prevState];
+      final List<Word> _newState = [item, ..._prevState];
       emit(DemoState.success(_newState));
     } on Exception {
       emit(const DemoState.failure('Error - word is not added!'));
@@ -49,16 +47,14 @@ class DemoCubit extends Cubit<DemoState> {
     }
   }
 
-  void triggerFavorite(Word item) {
+  void triggerFavorite(int id) {
     final List<Word> _currentState = _getCurrentDemoState();
-    final int _itemId = item.id!;
-    // if word is favored isFavorite = 1, if it is not isFavorite = 0
-    final int _reversedIsFavored = item.isFavorite == 0 ? 1 : 0;
     try {
       List<Word> _newState = _currentState
           .take(_currentState.length)
-          .map((Word i) =>
-              i.id == _itemId ? i.copyWith(isFavorite: _reversedIsFavored) : i)
+          .map((Word i) => i.id == id
+              ? i.copyWith(isFavorite: i.isFavorite == 0 ? 1 : 0)
+              : i)
           .toList();
       emit(DemoState.success(_newState));
     } on Exception {
@@ -66,9 +62,74 @@ class DemoCubit extends Cubit<DemoState> {
           'Error - word is not added/removed to/from favorite list!'));
     }
   }
-  Word _makeWordWithAnId(Word i) {
-    final int _id = DateTime.now().millisecondsSinceEpoch;
-    Word _itemWithId = i.copyWith(id: _id);
-    return _itemWithId;
+
+  void editInNative(int id, String newValue) {
+    final List<Word> _st = state.words;
+    try {
+      List<Word> _newState = _st
+          .take(_st.length)
+          .map((Word i) => i.id == id ? i.copyWith(inNative: newValue) : i)
+          .toList();
+      emit(DemoState.success(_newState));
+    } on Exception {
+      emit(const DemoState.failure(
+          'Error - something went wrong. Try to restart application'));
+    }
+  }
+
+  void editInTranslation(int id, String newValue) {
+    final List<Word> _st = state.words;
+    try {
+      List<Word> _newState = _st
+          .take(_st.length)
+          .map((Word i) => i.id == id ? i.copyWith(inTranslation: newValue) : i)
+          .toList();
+      emit(DemoState.success(_newState));
+    } on Exception {
+      emit(const DemoState.failure(
+          'Error - something went wrong. Try to restart application'));
+    }
+  }
+
+  void editCategory(int id, String newValue) {
+    final List<Word> _st = state.words;
+    try {
+      List<Word> _newState = _st
+          .take(_st.length)
+          .map((Word i) => i.id == id ? i.copyWith(category: newValue) : i)
+          .toList();
+      emit(DemoState.success(_newState));
+    } on Exception {
+      emit(const DemoState.failure(
+          'Error - something went wrong. Try to restart application'));
+    }
+  }
+
+  void editClue(int id, String newValue) {
+    final List<Word> _st = state.words;
+    try {
+      List<Word> _newState = _st
+          .take(_st.length)
+          .map((Word i) => i.id == id ? i.copyWith(clue: newValue) : i)
+          .toList();
+      emit(DemoState.success(_newState));
+    } on Exception {
+      emit(const DemoState.failure(
+          'Error - something went wrong. Try to restart application'));
+    }
+  }
+
+  void resetPoints(int id) {
+    final List<Word> _st = state.words;
+    try {
+      List<Word> _newState = _st
+          .take(_st.length)
+          .map((Word i) => i.id == id ? i.copyWith(points: 0) : i)
+          .toList();
+      emit(DemoState.success(_newState));
+    } on Exception {
+      emit(const DemoState.failure(
+          'Error - something went wrong. Try to restart application'));
+    }
   }
 }

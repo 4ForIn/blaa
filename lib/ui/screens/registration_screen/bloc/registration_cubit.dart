@@ -1,5 +1,5 @@
+import 'package:blaa/data/repositories/auth_repo.dart';
 import 'package:blaa/domain/repository/auth_repo_i.dart';
-import 'package:blaa/utils/enums/authentication_status.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 

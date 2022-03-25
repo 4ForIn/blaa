@@ -1,10 +1,10 @@
 import 'package:blaa/data/model/language_m/language_m.dart';
-import 'package:blaa/utils/enums/supported_lang.dart';
-
 /*
 all supported languages contains: utils/enums/supported_lang.dart
 getFullLanguageString(String shortcut) returns full language name
 getFullLanguageString(en) returns 'English'
+use a country code, for example:
+Poland: pl, USA: us, Great Britain: gbr, Bulgaria: bg
  */
 class SupportedLanguages {
   // static const String en = 'English';

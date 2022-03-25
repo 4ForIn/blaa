@@ -1,9 +1,7 @@
-import 'package:blaa/blocs/words_cubit/words_cubit.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:blaa/data/model/word_m/word_m.dart';
 import 'package:blaa/utils/constants/assets_const.dart';
 import 'package:flutter/material.dart';
-import 'package:auto_route/auto_route.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WordsListItem extends StatelessWidget {
   const WordsListItem(
@@ -30,9 +28,13 @@ class WordsListItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(10)),
       child: ListTile(
           contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+          onTap: () {
+            if (onTapHandle != null) {
+              onTapHandle!();
+            }
+          },
           leading: Hero(
-            // when words are not stored to database, don't have an id
-            tag: item.id ?? -2,
+            tag: item,
             child: _buildHeroChild(),
           ),
           title: Text(item.inTranslation),
@@ -77,8 +79,6 @@ class WordsListItem extends StatelessWidget {
                       favHandle!();
                     }
                   },
-                  // onPressed: () =>
-                  //     context.read<WordsCubit>().triggerFavorite(item),
                   icon: isFavorite
                       ? Image.asset(AssetsConst.iconHeartRed['path']!)
                       : Image.asset(AssetsConst.iconHeart['path']!))),
@@ -117,7 +117,6 @@ class WordsListItem extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () {
-                // context.read<WordsCubit>().delete(item.id),
                 if (deleteHandle != null) {
                   deleteHandle!();
                 }

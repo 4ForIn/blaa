@@ -70,4 +70,17 @@ class DbConst {
     fWPoints,
     fWUser
   ];
+  static const List<String> wordsColumnsWithoutId = [
+    fWCategory,
+    fWCreated,
+    fWClue,
+    fWImageAsString,
+    fWInNative,
+    fWInTranslation,
+    fWIsFavorite,
+    fWLangToLearn,
+    fWNativeLang,
+    fWPoints,
+    fWUser
+  ];
 }

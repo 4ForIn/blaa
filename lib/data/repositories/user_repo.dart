@@ -89,12 +89,14 @@ class UserRepo implements UserRepoI<User> {
     // if DB has the user hasCreatedUser() returns the id or null
     try {
       _id = await _db.hasCreatedUser(email, password);
+      print('User repo - login: userId: $_id');
       if (_id != null) {
         // fetch user data from Db and set static User? _user;
         await getUser(email);
       }
       return _id;
     } catch (e) {
+      print('User repo - login: exception was thrown');
       throw Exception(e);
     }
   }

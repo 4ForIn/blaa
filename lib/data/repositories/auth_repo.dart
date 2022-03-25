@@ -25,13 +25,14 @@ import 'package:blaa/data/providers/storage_secured/storage_secured_interface/st
 import 'package:blaa/domain/repository/auth_repo_i.dart';
 import 'package:blaa/domain/repository/user_repo_i.dart';
 import 'package:blaa/locator.dart';
-import 'package:blaa/utils/enums/authentication_status.dart';
 
 // enum AuthStatus { unknown, authenticated, registered, unauthenticated }
 
 // Authentication Repository (AuthRepo) implements
 // Authentication Repository Interface (AuthRepoI<T>) to fulfil Domain's contract
 // exposes a Stream of AuthStatus to notify the application when a user signs in or out.
+
+enum AuthStatus { unknown, authenticated, unauthenticated }
 
 class AuthRepo implements AuthRepoI<AuthStatus> {
   AuthRepo(this.userRepository);
@@ -65,6 +66,7 @@ class AuthRepo implements AuthRepoI<AuthStatus> {
       // if DB has the user loginUserWithEmailPassword() returns the id or null
       _currentUserId =
           await userRepository.loginUserWithEmailPassword(email, password);
+      print('Auth repo - signIn: currentUserId: $_currentUserId');
       if (_currentUserId != null) {
         await _storage.persistEmailAndToken(email, password);
         _controller.add(AuthStatus.authenticated);

@@ -1,12 +1,10 @@
+import 'package:blaa/data/repositories/auth_repo.dart';
 import 'package:blaa/domain/repository/auth_repo_i.dart';
 import 'package:blaa/ui/router/blaa_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:blaa/ui/widgets/banner/show_custom_banner.dart';
 import 'package:blaa/ui/widgets/snack/show_custom_snack.dart';
 import 'package:blaa/utils/authentication/build_input_decoration.dart';
-import 'package:blaa/utils/constants/assets_const.dart';
-import 'package:blaa/utils/enums/authentication_status.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,6 +42,9 @@ class _LoginScreenState extends State<LoginScreen> {
           authenticationRepository: context.read<AuthRepoI<AuthStatus>>()),
       child: Builder(builder: (context) {
         return BlocListener<LoginBloc, LoginState>(
+          listenWhen: (previous, current) {
+            return previous.errorMsg != current.errorMsg;
+          },
           listener: (context, state) {
             if (state.status == LoginStatus.failure) {
               showSnack(context, state.errorMsg);

@@ -37,7 +37,7 @@ dependencies:
   flutter_dotenv: ^5.0.2
   flutter_secure_storage: ^5.0.2
   freezed_annotation: ^1.0.0
-  # json_annotation: ^4.4.0
+  json_annotation: ^4.4.0
   sqflite: ^2.0.2
 
 

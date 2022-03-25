@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:blaa/blocs/authentication_bloc/authentication_bloc.dart';
-import 'package:blaa/data/dummy/dummy_words.dart';
 import 'package:blaa/data/model/user_m/user_m.dart';
 import 'package:blaa/data/model/word_m/word_m.dart';
 import 'package:blaa/domain/repository/words_repo_i.dart';
@@ -15,37 +14,50 @@ class WordsCubit extends Cubit<WordsState> {
     _authBlocSub = _ab.stream.listen((state) {
       onCurrentUserChanged(state.user);
     });
+    _repositorySub = repository.change.listen((event) {
+      fetchWords();
+    });
   }
 
   final WordsRepoI<Word> repository;
   final AuthenticationBloc _ab;
   late StreamSubscription<AuthenticationState> _authBlocSub;
-
-// default: email: 'demoUser'. nativeLang: 'English', langToLearn: 'Polish'
-  void onCurrentUserChanged(User? user) {
-    emit(state.copyWith(currentUser: user));
-  }
+  late StreamSubscription<String> _repositorySub;
 
   @override
   Future<void> close() async {
+    repository.dispose();
     _authBlocSub.cancel();
+    _repositorySub.cancel();
     return super.close();
   }
 
-  void fetchWords() {
-    List<Word> _newState = [];
-    if (state.words.isEmpty) {
-      final List<Word> _dummyList = demo5WordsList;
-      _newState = [..._dummyList];
-    }
+// default: email: 'demo@user'. nativeLang: 'English', langToLearn: 'Polish'
+  void onCurrentUserChanged(User? user) {
+    print('WordsCubit-onCurrentUserChanged -- user.email: ${user?.email}');
+    emit(state.copyWith(currentUser: user));
+    fetchWords();
+  }
+
+  Future<void> fetchWords() async {
     emit(state.copyWith(status: WordsStateStatus.loading));
-    try {
-      emit(state.copyWith(status: WordsStateStatus.success, words: _newState));
-      //  emit(WordsState.success(_getCurrentWordsState()));
-    } on Exception {
+    print('WordCubit fetch email: ${state.currentUser.email}');
+    if (state.currentUser.email == null ||
+        state.currentUser.email == 'demo@user') {
       emit(state.copyWith(
           status: WordsStateStatus.failure,
-          errorText: 'Error - no access to words list!'));
+          errorText: 'Error - no access to words list! Try to login again'));
+    } else {
+      try {
+        List<Word> _newState = await repository.getAll(state.currentUser.email);
+        emit(
+            state.copyWith(status: WordsStateStatus.success, words: _newState));
+        //  emit(WordsState.success(_getCurrentWordsState()));
+      } on Exception {
+        emit(state.copyWith(
+            status: WordsStateStatus.failure,
+            errorText: 'Error - no access to words list!'));
+      }
     }
   }
 
@@ -85,26 +97,22 @@ class WordsCubit extends Cubit<WordsState> {
     }
   }
 
-  Future<void> triggerFavorite(Word item) async {
+  Future<void> triggerFavorite(int id) async {
+    print('WC - triggerFavorite');
     final List<Word> _currentState = state.words;
-    final int _itemId = item.id!;
+    // final int _itemId = item.id;
     // if word is favored isFavorite = 1, if it is not isFavorite = 0
-    final int _reversedIsFavored = item.isFavorite == 0 ? 1 : 0;
     try {
-      final Word _response = await repository.triggerIsFavorite(_itemId);
+      final Word _response = await repository.triggerIsFavorite(id);
       List<Word> _newState = _currentState
           .take(_currentState.length)
-          .map((Word i) =>
-              i.id == _itemId ? _response : i)
+          .map((Word i) => i.id == id ? _response : i)
           .toList();
       emit(state.copyWith(status: WordsStateStatus.success, words: _newState));
     } on Exception {
       emit(state.copyWith(
           status: WordsStateStatus.failure,
-          errorText:
-              'Error - word is not added/removed to/from favorite list!'));
+          errorText: 'Error - favorite words list was NOT updated!'));
     }
   }
 }
-
-class WordsRepositoryI {}

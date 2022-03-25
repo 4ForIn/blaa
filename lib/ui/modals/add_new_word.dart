@@ -2,8 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:blaa/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:blaa/blocs/words_cubit/words_cubit.dart';
 import 'package:blaa/data/model/word_m/word_m.dart';
+import 'package:blaa/data/repositories/auth_repo.dart';
 import 'package:blaa/ui/screens/demo_screen/bloc/demo_cubit.dart';
-import 'package:blaa/utils/enums/authentication_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,11 +23,12 @@ class _AddNewWordState extends State<AddNewWord> {
 
   Word _handleSubmit() {
     Word item = Word(
-        category: _categoryCtrl.value.text,
-        clue: _clueCtrl.value.text,
-        inNative: _wordCtrl.value.text,
-        inTranslation: _translationCtrl.value.text,
-        ); // temporary
+      category: _categoryCtrl.value.text,
+      clue: _clueCtrl.value.text,
+      inNative: _wordCtrl.value.text,
+      inTranslation: _translationCtrl.value.text,
+      id: DateTime.now().millisecondsSinceEpoch,
+    ); // temporary
     context.router.pop();
     return item;
   }
@@ -43,7 +44,7 @@ class _AddNewWordState extends State<AddNewWord> {
 
   @override
   Widget build(BuildContext context) {
-    final AuthStatus _st = context.read<AuthenticationBloc>().state.status;
+    // final AuthStatus _st = context.read<AuthenticationBloc>().state.status;
     final bool _isAuthenticated =
         context.read<AuthenticationBloc>().state.status ==
                 AuthStatus.authenticated
@@ -51,45 +52,38 @@ class _AddNewWordState extends State<AddNewWord> {
             : false;
     return Form(
       key: _addNewWordModalFormKey,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _buildFormField('Polish', _wordCtrl),
-          _buildFormField('English', _translationCtrl),
-          _buildFormField('category', _categoryCtrl),
-          _buildFormField('clue', _clueCtrl),
-          const SizedBox(height: 15),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Row(
-                children: [
-                  const Text('Favorite'),
-                  Checkbox(
-                    activeColor: Colors.green.shade400,
-                    value: true,
-                    onChanged: (bool? value) {},
-                  ),
-                ],
+      child: Column(mainAxisSize: MainAxisSize.min, children: [
+        _buildFormField('Polish', _wordCtrl),
+        _buildFormField('English', _translationCtrl),
+        _buildFormField('category', _categoryCtrl),
+        _buildFormField('clue', _clueCtrl),
+        const SizedBox(height: 15),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Row(children: [
+              const Text('Favorite'),
+              Checkbox(
+                activeColor: Colors.green.shade400,
+                value: true,
+                onChanged: (bool? value) {},
               ),
-              TextButton(
-                  onPressed: () => context.router.pop(),
-                  child: const Text('Cancel')),
-              TextButton(
-                  // onPressed: () => context.read<WordsCubit>().addNewWord(
-                  //     _handleSubmit()),
-                  onPressed: () {
-                    if (_isAuthenticated) {
-                      context.read<WordsCubit>().addNewWord(_handleSubmit());
-                    } else {
-                      context.read<DemoCubit>().addNewWord(_handleSubmit());
-                    }
-                  },
-                  child: const Text('Submit')),
-            ],
-          ),
-        ],
-      ),
+            ]),
+            TextButton(
+                onPressed: () => context.router.pop(),
+                child: const Text('Cancel')),
+            TextButton(
+                onPressed: () {
+                  if (_isAuthenticated) {
+                    context.read<WordsCubit>().addNewWord(_handleSubmit());
+                  } else {
+                    context.read<DemoCubit>().addNewWord(_handleSubmit());
+                  }
+                },
+                child: const Text('Submit')),
+          ],
+        ),
+      ]),
     );
   }
 

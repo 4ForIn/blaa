@@ -8,6 +8,7 @@ class WordsState extends Equatable {
     this.status = WordsStateStatus.loading,
     this.errorText,
     this.currentUser = const User(),
+    // this.currentUser,
   });
 
   final List<Word> words;

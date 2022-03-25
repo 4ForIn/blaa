@@ -10,7 +10,7 @@ class Word with _$Word {
     String? category,
     String? created,
     String? clue,
-    int? id,
+    required int id,
     String? imageAsString,
     required String inNative,
     required String inTranslation,

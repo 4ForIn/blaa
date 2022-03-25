@@ -8,7 +8,7 @@ import '../../../fixtures/fixture_reader.dart';
 
 void main() {
   EquatableConfig.stringify = true;
-  const Word word1 = Word(inNative: 'english', inTranslation: 'turkish');
+  const Word word1 = Word(inNative: 'english', inTranslation: 'turkish', id: 1);
   // tearDown(() {});
   group('Word default instance', () {
     setUp(() {});
