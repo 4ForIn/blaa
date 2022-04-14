@@ -5,6 +5,7 @@ import 'package:blaa/ui/widgets/list_ordering_wrapper/list_ordering_wrapper.dart
 import 'package:blaa/ui/widgets/words_list_item/words_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../router/blaa_router.gr.dart';
 import 'bloc/demo_cubit.dart';
 
@@ -15,8 +16,30 @@ in this case created by user words are not saved into local database!
 Words list items are supplied from DemoCubit state.words
 To use the functionality of persist the words in the database, the user must log in!
  */
-class DemoScreen extends StatelessWidget {
+class DemoScreen extends StatefulWidget {
   const DemoScreen({Key? key}) : super(key: key);
+
+  @override
+  State<DemoScreen> createState() => _DemoScreenState();
+}
+
+class _DemoScreenState extends State<DemoScreen> {
+  late bool onlyFavoriteCheckboxValue;
+  late bool _isOrderedFromOldest;
+
+  @override
+  void initState() {
+    onlyFavoriteCheckboxValue = false;
+    _isOrderedFromOldest = false;
+    super.initState();
+  }
+
+  void _listOrdering(bool isOldestFirst) {
+    setState(() {
+      _isOrderedFromOldest = isOldestFirst;
+    });
+    context.read<DemoCubit>().orderFromOldest(_isOrderedFromOldest);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,19 +56,24 @@ class DemoScreen extends StatelessWidget {
                     ListOrderingWrapper(
                       onlyFavoriteCheckbox: Checkbox(
                         activeColor: Colors.green.shade400,
-                        value: true,
-                        onChanged: (bool? value) {},
+                        value: onlyFavoriteCheckboxValue,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            onlyFavoriteCheckboxValue =
+                                !onlyFavoriteCheckboxValue;
+                          });
+                        },
                       ),
                       fromNewestRadio: Radio(
                           activeColor: Colors.green,
-                          value: 1,
-                          groupValue: 1,
-                          onChanged: (v) {}),
+                          value: false,
+                          groupValue: _isOrderedFromOldest,
+                          onChanged: (v) => _listOrdering(v)),
                       fromOldestRadio: Radio(
                           activeColor: Colors.indigo,
-                          value: 0,
-                          groupValue: 1,
-                          onChanged: (v) {}),
+                          value: true,
+                          groupValue: _isOrderedFromOldest,
+                          onChanged: (v) => _listOrdering(v)),
                     ),
                     // const SizedBox(height: 10),
                     const Padding(
@@ -73,26 +101,34 @@ class DemoScreen extends StatelessWidget {
               );
             case DemoStateStatus.success:
               final List<Word> _list = state.words;
-              final int _c = _list.length;
+              late List<Word> _filteredList;
+              if (onlyFavoriteCheckboxValue) {
+                _filteredList = List.of(_list)
+                  ..removeWhere((e) => e.isFavorite == 0);
+              } else {
+                _filteredList = state.words;
+              }
+              final int _c = _filteredList.length;
               return ListView.builder(
                   key: const Key('DemoScreen-wordsList_builder'),
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   // if list is empty, need to show EmptyWordsListInfo - one item
                   itemCount: _c < 1 ? 1 : _c,
                   itemBuilder: (BuildContext context, int index) {
-                    if (_list.isEmpty) {
+                    if (_filteredList.isEmpty) {
                       return const EmptyWordsListInfo();
                     } else {
-                      final Word _word = _list[index];
+                      final Word _word = _filteredList[index];
                       return WordsListItem(
-                        key: Key('DemoScreen-wordsListItem-${_word.id}'),
-                        item: _word,
-                        favHandle: () =>
-                            context.read<DemoCubit>().triggerFavorite(_word.id),
-                        deleteHandle: () =>
-                            context.read<DemoCubit>().delete(_word.id),
-                          onTapHandle: () => context.router.push(SingleRoute(itemId: _word.id))
-                      );
+                          key: Key('DemoScreen-wordsListItem-${_word.id}'),
+                          item: _word,
+                          favHandle: () => context
+                              .read<DemoCubit>()
+                              .triggerFavorite(_word.id),
+                          deleteHandle: () =>
+                              context.read<DemoCubit>().delete(_word.id),
+                          onTapHandle: () => context.router
+                              .push(SingleRoute(itemId: _word.id)));
 
                       // return SingleTest(item: _word, key: _key);
                     }

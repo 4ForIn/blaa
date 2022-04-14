@@ -27,8 +27,9 @@ class DemoCubit extends Cubit<DemoState> {
   void addNewWord(Word item) {
     final List<Word> _prevState = _getCurrentDemoState();
     emit(const DemoState.loading());
+    Word item2 = item.copyWith(created: DateTime.now().toIso8601String());
     try {
-      final List<Word> _newState = [item, ..._prevState];
+      final List<Word> _newState = [item2, ..._prevState];
       emit(DemoState.success(_newState));
     } on Exception {
       emit(const DemoState.failure('Error - word is not added!'));
@@ -127,6 +128,23 @@ class DemoCubit extends Cubit<DemoState> {
           .map((Word i) => i.id == id ? i.copyWith(points: 0) : i)
           .toList();
       emit(DemoState.success(_newState));
+    } on Exception {
+      emit(const DemoState.failure(
+          'Error - something went wrong. Try to restart application'));
+    }
+  }
+  void orderFromOldest(bool isFromOldest) {
+    // compare Word.created is a String
+    // created = DateTime.now().toIso8601String();
+    // '2022-04-14T17:08:53.862'
+    final List<Word> _st = state.words;
+    if(isFromOldest) {
+      _st.sort((a, b) => a.created!.compareTo(b.created!));
+    } else {
+      _st.sort((a, b) => b.created!.compareTo(a.created!));
+    }
+    try {
+      emit(DemoState.success(_st));
     } on Exception {
       emit(const DemoState.failure(
           'Error - something went wrong. Try to restart application'));
