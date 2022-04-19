@@ -3,7 +3,7 @@ import 'package:blaa/blocs/words_cubit/words_cubit.dart';
 import 'package:blaa/data/model/word_m/word_m.dart';
 import 'package:blaa/ui/router/blaa_router.gr.dart';
 import 'package:blaa/ui/screens/words_list_screen/widgets/custom_search_delegate/custom_search_delegate.dart';
-import 'package:blaa/ui/widgets/list_ordering_wrapper/list_ordering_wrapper.dart';
+import 'package:blaa/ui/widgets/order_bar/order_bar.dart';
 import 'package:blaa/ui/widgets/words_list_item/words_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,31 +30,30 @@ class WordsListScreen extends StatelessWidget {
       ),
       SliverList(
         delegate: SliverChildListDelegate([
-          ListOrderingWrapper(
-            onlyFavoriteCheckbox: Checkbox(
-              activeColor: Colors.green.shade400,
-              value: true,
-              onChanged: (bool? value) {},
-            ),
-            fromNewestRadio: Radio(
-                activeColor: Colors.green,
-                value: 1,
-                groupValue: 1,
-                onChanged: (v) {}),
-            fromOldestRadio: Radio(
-                activeColor: Colors.indigo,
-                value: 0,
-                groupValue: 1,
-                onChanged: (v) {}),
-          ),
+          OrderBar(
+              handleOnlyFavorite:
+                  context.read<WordsCubit>().toggleShowOnlyFavored,
+              handleOrder: context.read<WordsCubit>().orderItemsListByCreated),
         ]),
       ),
       BlocBuilder<WordsCubit, WordsState>(
         builder: (context, state) {
+
+          /// TODO: check for state.status - if failure show state.errorText
+          /// if user has no permission show state.errorText
+          List<Word> _itemsToDisplay = state.words;
+          late List<Word> _filteredItems;
+          final bool _onlyFav = state.isShowOnlyFavored;
+          if (_onlyFav) {
+            _filteredItems = List.of(_itemsToDisplay)
+              ..removeWhere((e) => e.isFavorite == 0);
+          } else {
+            _filteredItems = _itemsToDisplay;
+          }
           return SliverList(
               delegate: SliverChildBuilderDelegate(
             (BuildContext context, int i) {
-              Word _item = state.words[i];
+              Word _item = _filteredItems[i];
               return WordsListItem(
                   key: Key('WordsListScreen-wordsListItem-${_item.id}'),
                   item: _item,
@@ -65,7 +64,7 @@ class WordsListScreen extends StatelessWidget {
                   onTapHandle: () => context.router
                       .push(EditWordRoute(word: _item, id: _item.id)));
             },
-            childCount: state.words.length,
+            childCount: _filteredItems.length,
           ));
         },
       )

@@ -163,10 +163,14 @@ class SqfliteDb
     try {
       final Database db = await instance.database;
       const List<String> _allColumns = DbConst.allWordsColumns;
-      final List<Map<String, dynamic>> _res = await db.query(DbConst.tableWords,
-          columns: _allColumns,
-          where: '${DbConst.fWUser} = ?',
-          whereArgs: [userEmail]);
+      final List<Map<String, dynamic>> _res = await db.query(
+        DbConst.tableWords,
+        columns: _allColumns,
+        where: '${DbConst.fWUser} = ?',
+        whereArgs: [userEmail],
+        // DESC sorts the result downward - the newest first
+        orderBy: '${DbConst.fWCreated} DESC',
+      );
       return _res;
     } catch (e) {
       throw Exception(e);
@@ -197,7 +201,6 @@ class SqfliteDb
     } catch (e) {
       print('word id: $wordId was not deleted. Error: $e');
     }
-
     print('word id: $wordId was deleted from DB');
   }
 
@@ -206,7 +209,6 @@ class SqfliteDb
     late Map<String, dynamic> _response;
     try {
       final Database db = await instance.database;
-      // query fWIsFavorite = 'isFavorite' [int]
       final List<Map<String, dynamic>> _res = await db.query(DbConst.tableWords,
           columns: DbConst.allWordsColumns,
           where: '${DbConst.fWId} = ?',
@@ -214,6 +216,7 @@ class SqfliteDb
       Map<String, dynamic> _firstItem = _res.first;
       _response = _firstItem;
       final int _wordIsFavorite = _firstItem["isFavorite"];
+      // fWIsFavorite = 'isFavorite' [int]
       // reverse isFavorite field -> isFavorite == 1 ? 0 : 1
       final int _isFavoriteReversed = _wordIsFavorite == 0 ? 1 : 0;
       final Map<String, dynamic> _newItem = {"isFavorite": _isFavoriteReversed};
@@ -226,10 +229,12 @@ class SqfliteDb
           "UPDATE ${DbConst.tableWords} SET ${DbConst.fWIsFavorite} = ? WHERE ${DbConst.fWId} = ?";
       int resp = await db.rawUpdate(_updateSql, [_isFavoriteReversed, wordId]);*/
       final List<Map<String, dynamic>> _updatedRes = await db.query(
-          DbConst.tableWords,
-          columns: DbConst.allWordsColumns,
-          where: '${DbConst.fWId} = ?',
-          whereArgs: [wordId]);
+        DbConst.tableWords,
+        columns: DbConst.allWordsColumns,
+        where: '${DbConst.fWId} = ?',
+        whereArgs: [wordId],
+        orderBy: '${DbConst.fWCreated} DESC',
+      );
       print(
           'word id: $wordId ( $_wordIsFavorite ) was triggerIsFavorite to ( $_isFavoriteReversed ) into DB');
       _response = _updatedRes.first;
@@ -237,10 +242,7 @@ class SqfliteDb
     } catch (e) {
       print('word id: $wordId was not triggerIsFavorite. Error: $e');
       throw Exception(e);
-      // return _response;
-
     }
-    // return _response;
   }
 
   @override

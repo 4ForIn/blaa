@@ -80,6 +80,7 @@ class AuthenticationBloc
   ) async {
     print('_onAuthenticationLogoutRequested, event: $event');
     await _authRepo.signOut();
+    emit(const AuthenticationState.unauthenticated());
   }
 
  /* Future<User?> _tryGetUser(String userEmail) async {

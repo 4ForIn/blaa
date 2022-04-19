@@ -38,6 +38,9 @@ class DbConst {
   static const String txtTypeDefaultNull = 'TEXT DEFAULT NULL';
   static const String timeStampType = 'TEXT DEFAULT CURRENT_TIMESTAMP';
 
+// QUERIES:
+
+  // create tables:
   static const String createWordsTableStatement =
       '''CREATE TABLE $tableWords ($fWCategory $txtType, $fWCreated $txtType, $fWClue $txtType, $fWId $idType, $fWImageAsString $txtType, $fWInNative, $txtType, $fWInTranslation $txtNotNullType, $fWIsFavorite $intTypeDefault0, $fWLangToLearn $txtType, $fWNativeLang $txtType, $fWPoints $intType, $fWUser $txtType)''';
 

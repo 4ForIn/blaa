@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:blaa/data/model/word_m/word_m.dart';
 import 'package:blaa/ui/widgets/empty_words_list_info/empty_words_list_info.dart';
 import 'package:blaa/ui/widgets/list_ordering_wrapper/list_ordering_wrapper.dart';
+import 'package:blaa/ui/widgets/order_bar/order_bar.dart';
 import 'package:blaa/ui/widgets/words_list_item/words_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,6 +41,11 @@ class _DemoScreenState extends State<DemoScreen> {
     });
     context.read<DemoCubit>().orderFromOldest(_isOrderedFromOldest);
   }
+  void _toggleShowOnlyFavorite(bool isOnly) {
+    setState(() {
+      onlyFavoriteCheckboxValue = !onlyFavoriteCheckboxValue;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,29 +59,9 @@ class _DemoScreenState extends State<DemoScreen> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8),
                   child: Column(children: [
-                    ListOrderingWrapper(
-                      onlyFavoriteCheckbox: Checkbox(
-                        activeColor: Colors.green.shade400,
-                        value: onlyFavoriteCheckboxValue,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            onlyFavoriteCheckboxValue =
-                                !onlyFavoriteCheckboxValue;
-                          });
-                        },
-                      ),
-                      fromNewestRadio: Radio(
-                          activeColor: Colors.green,
-                          value: false,
-                          groupValue: _isOrderedFromOldest,
-                          onChanged: (v) => _listOrdering(v)),
-                      fromOldestRadio: Radio(
-                          activeColor: Colors.indigo,
-                          value: true,
-                          groupValue: _isOrderedFromOldest,
-                          onChanged: (v) => _listOrdering(v)),
-                    ),
-                    // const SizedBox(height: 10),
+                    OrderBar(
+                        handleOnlyFavorite: _toggleShowOnlyFavorite,
+                        handleOrder: _listOrdering),
                     const Padding(
                         padding: EdgeInsets.only(top: 15.0),
                         child: Text(
@@ -112,7 +98,7 @@ class _DemoScreenState extends State<DemoScreen> {
               return ListView.builder(
                   key: const Key('DemoScreen-wordsList_builder'),
                   padding: const EdgeInsets.symmetric(horizontal: 10),
-                  // if list is empty, need to show EmptyWordsListInfo - one item
+                  // if list is empty, want to show EmptyWordsListInfo - one item
                   itemCount: _c < 1 ? 1 : _c,
                   itemBuilder: (BuildContext context, int index) {
                     if (_filteredList.isEmpty) {
@@ -129,8 +115,6 @@ class _DemoScreenState extends State<DemoScreen> {
                               context.read<DemoCubit>().delete(_word.id),
                           onTapHandle: () => context.router
                               .push(SingleRoute(itemId: _word.id)));
-
-                      // return SingleTest(item: _word, key: _key);
                     }
                   });
             case DemoStateStatus.failure:

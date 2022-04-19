@@ -5,6 +5,7 @@ enum WordsStateStatus { loading, success, failure }
 class WordsState extends Equatable {
   const WordsState({
     this.words = const <Word>[],
+    this.isShowOnlyFavored = false,
     this.status = WordsStateStatus.loading,
     this.errorText,
     this.currentUser = const User(),
@@ -12,18 +13,21 @@ class WordsState extends Equatable {
   });
 
   final List<Word> words;
+  final bool isShowOnlyFavored;
   final WordsStateStatus status;
   final String? errorText;
   final User currentUser;
 
   WordsState copyWith({
     List<Word>? words,
+    bool? isShowOnlyFavored,
     WordsStateStatus? status,
     String? errorText,
     User? currentUser,
   }) {
     return WordsState(
       words: words ?? this.words,
+      isShowOnlyFavored: isShowOnlyFavored ?? this.isShowOnlyFavored,
       status: status ?? this.status,
       errorText: errorText ?? this.errorText,
       currentUser: currentUser ?? this.currentUser,
@@ -31,7 +35,7 @@ class WordsState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [currentUser, errorText, words, status];
+  List<Object?> get props => [currentUser, errorText, words, isShowOnlyFavored, status];
 }
 
 /*

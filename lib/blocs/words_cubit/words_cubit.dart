@@ -35,15 +35,15 @@ class WordsCubit extends Cubit<WordsState> {
 // default: email: 'demo@user'. nativeLang: 'English', langToLearn: 'Polish'
   void onCurrentUserChanged(User? user) {
     print('WordsCubit-onCurrentUserChanged -- user.email: ${user?.email}');
-    emit(state.copyWith(currentUser: user));
+    User _currentUser = user ?? const User();
+    emit(state.copyWith(currentUser: _currentUser));
     fetchWords();
   }
 
   Future<void> fetchWords() async {
     emit(state.copyWith(status: WordsStateStatus.loading));
     print('WordCubit fetch email: ${state.currentUser.email}');
-    if (state.currentUser.email == null ||
-        state.currentUser.email == 'demo@user') {
+    if (state.currentUser.email == 'demo@user') {
       emit(state.copyWith(
           status: WordsStateStatus.failure,
           errorText: 'Error - no access to words list! Try to login again'));
@@ -52,7 +52,6 @@ class WordsCubit extends Cubit<WordsState> {
         List<Word> _newState = await repository.getAll(state.currentUser.email);
         emit(
             state.copyWith(status: WordsStateStatus.success, words: _newState));
-        //  emit(WordsState.success(_getCurrentWordsState()));
       } on Exception {
         emit(state.copyWith(
             status: WordsStateStatus.failure,
@@ -114,5 +113,22 @@ class WordsCubit extends Cubit<WordsState> {
           status: WordsStateStatus.failure,
           errorText: 'Error - favorite words list was NOT updated!'));
     }
+  }
+
+  // FILTERING:
+  void orderItemsListByCreated(bool isFromOldest) {
+    // by default database returns items ordered from the most recent
+    final List<Word> _st = state.words;
+    emit(state.copyWith(status: WordsStateStatus.loading));
+    if (isFromOldest) {
+      _st.sort((a, b) => a.created!.compareTo(b.created!));
+    } else {
+      _st.sort((a, b) => b.created!.compareTo(a.created!));
+    }
+    emit(state.copyWith(status: WordsStateStatus.success, words: _st));
+  }
+
+  void toggleShowOnlyFavored(bool isOnlyFavored) {
+    emit(state.copyWith(isShowOnlyFavored: isOnlyFavored));
   }
 }
