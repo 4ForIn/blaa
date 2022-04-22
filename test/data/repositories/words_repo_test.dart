@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:blaa/data/model/word_m/word_m.dart';
 import 'package:blaa/data/providers/db/db_interface/words_local_database_interface.dart';
@@ -27,7 +26,7 @@ void main() {
     // 'tr'
     nativeLang: SupportedLanguages.list[0].shortcut, // 'us'
   );
-  // final Map<String, dynamic> jsonMap = word.toJson();
+  final Map<String, dynamic> jsonMap = word.toJson();
   final wordWithIdAndUser = word.copyWith(id: 1, user: 'test@user');
   final Map<String, dynamic> jsonMapWithIdAndUser = wordWithIdAndUser.toJson();
   setUpAll(() {
@@ -69,7 +68,6 @@ void main() {
       expect(resp, isA<Future<Word>>());
       verify(() => mockDbService.triggerIsFavorite(1)).called(1);
     });
-
     /*
     I have no idea why this tests do not pass
     Error: type 'Null' is not a subtype of type 'Future<Map<String, dynamic>>'
@@ -94,15 +92,5 @@ void main() {
 
 
   });
-
-  group('...?', () {
-    /*setUp(() {
-      mockDbService = MockSqfliteDb();
-      locator.registerSingleton<WordsLocalDatabaseInterface>(mockDbService);
-      sut = WordsRepo();
-    });*/
-
-  });
-
   group('... ?', () {});
 }

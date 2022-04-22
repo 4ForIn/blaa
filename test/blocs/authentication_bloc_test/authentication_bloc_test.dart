@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:blaa/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:blaa/data/model/user_m/user_m.dart';
 import 'package:blaa/data/providers/storage_secured/storage_secured_interface/storage_secure_interface.dart';
@@ -79,6 +81,49 @@ void main() {
       verify: (_) {
         verify(() => _aR.signOut()).called(1);
       },
+    );
+  });
+
+  group('AuthenticationStatusChanged', () {
+    blocTest<AuthenticationBloc, AuthenticationState>(
+      'emits [unauthenticated] when status is authenticated but get user fails',
+      setUp: () {
+        when(() => _aR.status).thenAnswer(
+          (_) => Stream.value(AuthStatus.authenticated),
+        );
+        // when(() => _uR.getUser('demo@user')).thenThrow(Exception('error'));
+        // when(() => _uR.user).thenThrow(Exception('test error'));
+        when(() => _uR.user).thenAnswer((_) async => Future.value(null));
+      },
+      build: () => AuthenticationBloc(
+        aRepo: _aR,
+        uRepo: _uR,
+      ),
+      act: (bloc) => bloc.add(
+        AuthenticationStatusChanged(AuthStatus.authenticated),
+      ),
+      expect: () => const <AuthenticationState>[
+        AuthenticationState.unauthenticated(),
+      ],
+    );
+    blocTest<AuthenticationBloc, AuthenticationState>(
+      'emits [authenticated] when status is authenticated get user returns the user object',
+      setUp: () {
+        when(() => _aR.status).thenAnswer(
+              (_) => Stream.value(AuthStatus.authenticated),
+        );
+        when(() => _uR.user).thenAnswer((_) async => Future.value(_user));
+      },
+      build: () => AuthenticationBloc(
+        aRepo: _aR,
+        uRepo: _uR,
+      ),
+      act: (bloc) => bloc.add(
+        AuthenticationStatusChanged(AuthStatus.authenticated),
+      ),
+      expect: () => const <AuthenticationState>[
+        AuthenticationState.authenticated(_user),
+      ],
     );
   });
 }

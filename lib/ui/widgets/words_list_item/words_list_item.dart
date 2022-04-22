@@ -37,8 +37,8 @@ class WordsListItem extends StatelessWidget {
             tag: item,
             child: _buildHeroChild(),
           ),
-          title: Text(item.inTranslation),
-          subtitle: Text(item.inNative),
+          title: Text(item.inNative),
+          subtitle: Text(item.inTranslation),
           trailing: _buildTrailingIcons(context)),
     );
   }

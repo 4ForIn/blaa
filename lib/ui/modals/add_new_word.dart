@@ -20,6 +20,9 @@ class _AddNewWordState extends State<AddNewWord> {
   final TextEditingController _categoryCtrl = TextEditingController();
   final TextEditingController _clueCtrl = TextEditingController();
   final GlobalKey<FormState> _addNewWordModalFormKey = GlobalKey<FormState>();
+  bool _isFavorite = false;
+  String _native = 'English - demo';
+  String _toLearn = 'Polish - demo';
 
   Word _handleSubmit() {
     Word item = Word(
@@ -28,9 +31,24 @@ class _AddNewWordState extends State<AddNewWord> {
       inNative: _wordCtrl.value.text,
       inTranslation: _translationCtrl.value.text,
       id: DateTime.now().millisecondsSinceEpoch,
+      langToLearn: _toLearn,
+      nativeLang: _native,
+      isFavorite: _isFavorite == true ? 1 : 0,
     ); // temporary
     context.router.pop();
     return item;
+  }
+
+  @override
+  void initState() {
+    _isFavorite = false;
+    String? _nativeFromState =
+        context.read<AuthenticationBloc>().state.user?.nativeLang;
+    String? _toLearnFromState =
+        context.read<AuthenticationBloc>().state.user?.langToLearn;
+    _native = _nativeFromState ?? _native;
+    _toLearn = _toLearnFromState ?? _toLearn;
+    super.initState();
   }
 
   @override
@@ -53,8 +71,8 @@ class _AddNewWordState extends State<AddNewWord> {
     return Form(
       key: _addNewWordModalFormKey,
       child: Column(mainAxisSize: MainAxisSize.min, children: [
-        _buildFormField('Polish', _wordCtrl),
-        _buildFormField('English', _translationCtrl),
+        _buildFormField(_native, _wordCtrl),
+        _buildFormField(_toLearn, _translationCtrl),
         _buildFormField('category', _categoryCtrl),
         _buildFormField('clue', _clueCtrl),
         const SizedBox(height: 15),
@@ -65,8 +83,12 @@ class _AddNewWordState extends State<AddNewWord> {
               const Text('Favorite'),
               Checkbox(
                 activeColor: Colors.green.shade400,
-                value: true,
-                onChanged: (bool? value) {},
+                value: _isFavorite,
+                onChanged: (bool? value) {
+                  setState(() {
+                    _isFavorite = !_isFavorite;
+                  });
+                },
               ),
             ]),
             TextButton(

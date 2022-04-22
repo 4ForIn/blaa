@@ -39,7 +39,8 @@ class WordsRepo implements WordsRepoI<Word> {
     _json.remove("id");
     Map<String, dynamic> _res = await _database.createWord(_json);
     _ctr.add('create');
-    return Word.fromJson(_res);
+    Word _item = Word.fromJson(_res);
+    return _item;
   }
 
   @override
