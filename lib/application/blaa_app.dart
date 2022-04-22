@@ -1,7 +1,10 @@
 import 'package:blaa/blocs/bloc_providers/bloc_providers.dart';
 import 'package:blaa/blocs/bloc_repositories/bloc_repositories.dart';
 import 'package:blaa/ui/router/blaa_router.gr.dart';
+import 'package:blaa/utils/l10n/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class ApplicationBlaaa extends StatelessWidget {
   ApplicationBlaaa({Key? key}) : super(key: key);
@@ -32,6 +35,13 @@ class ApplicationBlaaa extends StatelessWidget {
                         subtitle1: const TextStyle(
                             fontFamily: 'Source Sans Pro', fontSize: 10.0),
                       )),
+              supportedLocales: L10n.all,
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
             )));
   }
 }

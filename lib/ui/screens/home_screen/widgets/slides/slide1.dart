@@ -1,5 +1,6 @@
 import 'package:blaa/utils/constants/assets_const.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Slide1 extends StatelessWidget {
   const Slide1({Key? key}) : super(key: key);
@@ -23,22 +24,23 @@ class Slide1 extends StatelessWidget {
                   flex: 1,
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                    child: Column(children: const <Widget>[
-                      Text('Let\'s start 🎉',
-                          style: TextStyle(
+                    child: Column(children: <Widget>[
+                      // 'Let\'s start 🎉'
+                      Text('${AppLocalizations.of(context)?.language} 🎉',
+                          style: const TextStyle(
                               fontSize: 40.0,
                               fontWeight: FontWeight.w300,
                               color: Color(0XFF3F3D56),
                               height: 2.0)),
                       Text(
-                          'Learn new language faster.\nUse the App to store and memorize new words.',
-                          style: TextStyle(
+                          '${AppLocalizations.of(context)?.learnNewFaster}\nUse the App to store and memorize new words.',
+                          style: const TextStyle(
                               color: Colors.grey,
                               letterSpacing: 1.2,
                               fontSize: 16.0,
                               height: 1.3),
                           textAlign: TextAlign.center),
-                      Padding(
+                      const Padding(
                           padding: EdgeInsets.only(top: 15.0),
                           child: Text(
                               'This is a learning project.\nYou can use this application for fun.',

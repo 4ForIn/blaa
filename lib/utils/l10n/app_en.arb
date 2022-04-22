@@ -1,0 +1,18 @@
+ {
+     "language": "English",
+     "@language":{
+         "description": "The current language"
+     },
+     "letsStart": "Let's start",
+     "@letsStart":{
+         "description": "lets Start"
+     },
+     "learnNewFaster": "Learn new language faster.",
+     "@learnNewFaster":{
+        "description": "learn New Faster"
+     },
+     "useAppToStore": "Use the App to store and memorize new words.",
+     "@useAppToStore":{
+       "description": "Use to store memorize"
+    }
+ }
