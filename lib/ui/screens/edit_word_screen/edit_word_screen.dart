@@ -6,6 +6,7 @@ import 'package:blaa/ui/screens/edit_word_screen/cubit/edit_word_cubit.dart';
 import 'package:blaa/utils/constants/assets_const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EditWordScreen extends StatelessWidget {
   const EditWordScreen(
@@ -240,16 +241,18 @@ class EditWordScreen extends StatelessWidget {
             return Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Category: ',
-                    style:
-                        TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                Text(
+                    '${AppLocalizations.of(context)?.category ?? 'Category'}: ',
+                    style: const TextStyle(
+                        fontSize: 12, fontWeight: FontWeight.bold)),
                 Text(_category ?? 'no category added',
                     style: const TextStyle(
                         fontSize: 14, fontWeight: FontWeight.normal)),
                 TextButton(
                     onPressed: () => editField(
                         context: context,
-                        description: 'category',
+                        description: AppLocalizations.of(context)?.category ??
+                            'Category',
                         value: _category ?? '',
                         handle: context.read<EditWordCubit>().editCategory),
                     child: const Text(
@@ -276,13 +279,14 @@ class EditWordScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Clue: ',
-                        style: TextStyle(
+                    Text('${AppLocalizations.of(context)?.clue ?? 'Clue'}: ',
+                        style: const TextStyle(
                             fontSize: 12, fontWeight: FontWeight.bold)),
                     TextButton(
                         onPressed: () => editField(
                             context: context,
-                            description: 'clue',
+                            description:
+                                AppLocalizations.of(context)?.clue ?? 'Clue',
                             value: _clue ?? '',
                             handle: context.read<EditWordCubit>().editClue),
                         child: const Text(

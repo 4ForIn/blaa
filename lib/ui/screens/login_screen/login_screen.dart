@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/login_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -37,6 +38,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final String _underDev = AppLocalizations.of(context)?.msgUnderDev ?? 'Feature under preparation';
+    final String _hello = AppLocalizations.of(context)?.welcome.toUpperCase() ?? 'WELCOME';
+    final String _signedAs = AppLocalizations.of(context)?.msgSignedInAs ?? 'You are signed in as';
+    final String _invalid = AppLocalizations.of(context)?.msgInvalid ?? 'is not valid';
+    final String _welcomeBack = AppLocalizations.of(context)?.loginWelcomeBack ?? 'Welcome back';
     return BlocProvider<LoginBloc>(
       create: (_) => LoginBloc(
           authenticationRepository: context.read<AuthRepoI<AuthStatus>>()),
@@ -50,9 +56,9 @@ class _LoginScreenState extends State<LoginScreen> {
               showSnack(context, state.errorMsg);
             }
             if (state.status == LoginStatus.forgotPass) {
-              String _msg = 'This feature is under preparation';
+              String _msg = _underDev;
               if (_emailCtrl.value.text.length < 6) {
-                _msg = 'This email: "${_emailCtrl.value.text}" is not valid.';
+                _msg = 'Email: "${_emailCtrl.value.text}" $_invalid.';
               }
               showBanner(context, _msg);
             }
@@ -63,8 +69,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 return Center(
                     child: Column(
                   children: [
-                    const Text('WELCOME'),
-                    Text('You are signed in with email: ${state.email}'),
+                    Text(_hello),
+                    Text('$_signedAs: ${state.email}'),
                     const Text('Let`s go...'),
                   ],
                 ));
@@ -76,9 +82,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       shrinkWrap: true,
                       padding: const EdgeInsets.only(left: 24.0, right: 24.0),
                       children: <Widget>[
-                        const Text('Welcome back',
+                        Text(_welcomeBack,
                             textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 18.0)),
+                            style: const TextStyle(fontSize: 18.0)),
                         const SizedBox(height: 40.0),
                         _emailField('Email', _emailCtrl),
                         const SizedBox(height: 8.0),
@@ -128,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   context.read<LoginBloc>().add(LoginPasswordChanged(pass)),
               validator: (v) {
                 if (v == null || v.length < 3) {
-                  return 'Password is to short';
+                  return AppLocalizations.of(context)?.msgShortPwd ?? 'Password is to short';
                 }
                 return null;
               },
@@ -159,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   context.read<LoginBloc>().add(LoginEmailChanged(e)),
               validator: (v) {
                 if (v == null || v.length < 4 || !v.contains('@')) {
-                  String _msg = '${_emailCtrl.value.text}" is not valid email';
+                  String _msg = '${_emailCtrl.value.text}" is not valid';
                   setState(() {
                     _passwordCtrl.clear();
                   });
@@ -181,8 +187,8 @@ class _LoginScreenState extends State<LoginScreen> {
       padding: EdgeInsets.symmetric(
           horizontal: MediaQuery.of(context).size.width * 28.0 / 100),
       child: TextButton(
-          child: const Text('Forgot password?',
-              style: TextStyle(
+          child: Text(AppLocalizations.of(context)?.loginForgotPwd ?? 'Forgot password?',
+              style: const TextStyle(
                   color: Colors.black54,
                   fontSize: 10,
                   fontStyle: FontStyle.italic)),

@@ -26,25 +26,25 @@ class Slide1 extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 30.0),
                     child: Column(children: <Widget>[
                       // 'Let\'s start 🎉'
-                      Text('${AppLocalizations.of(context)?.language} 🎉',
+                      Text('${AppLocalizations.of(context)?.slide1Start} 🎉',
                           style: const TextStyle(
                               fontSize: 40.0,
                               fontWeight: FontWeight.w300,
                               color: Color(0XFF3F3D56),
                               height: 2.0)),
                       Text(
-                          '${AppLocalizations.of(context)?.learnNewFaster}\nUse the App to store and memorize new words.',
+                          '${AppLocalizations.of(context)?.slide1LearnFaster}\n${AppLocalizations.of(context)?.slide1StoreWords}',
                           style: const TextStyle(
                               color: Colors.grey,
                               letterSpacing: 1.2,
                               fontSize: 16.0,
                               height: 1.3),
                           textAlign: TextAlign.center),
-                      const Padding(
-                          padding: EdgeInsets.only(top: 15.0),
+                      Padding(
+                          padding: const EdgeInsets.only(top: 15.0),
                           child: Text(
-                              'This is a learning project.\nYou can use this application for fun.',
-                              style: TextStyle(
+                              '${AppLocalizations.of(context)?.slide1LearningProject}.\n${AppLocalizations.of(context)?.slide1ForFun}',
+                              style: const TextStyle(
                                   color: Colors.grey,
                                   letterSpacing: 1.2,
                                   fontSize: 14.0,

@@ -7,18 +7,20 @@ import 'package:blaa/ui/widgets/order_bar/order_bar.dart';
 import 'package:blaa/ui/widgets/words_list_item/words_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WordsListScreen extends StatelessWidget {
   const WordsListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final String _search = '${AppLocalizations.of(context)?.wordsListSearch}...';
     return CustomScrollView(slivers: [
       SliverAppBar(
         automaticallyImplyLeading: false,
         floating: true,
         snap: true,
-        title: const Text("Search..."),
+        title: Text(_search),
         centerTitle: true,
         actions: <Widget>[
           IconButton(

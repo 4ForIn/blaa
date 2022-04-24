@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/registration_cubit.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
@@ -43,6 +44,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final String _hello =
+        AppLocalizations.of(context)?.welcome.toUpperCase() ?? 'WELCOME';
+    final String _toLearn = AppLocalizations.of(context)?.registerLanguage ??
+        'Language You want to learn';
+    final String _native = AppLocalizations.of(context)?.registerNative ??
+        'Your native language';
     return BlocProvider(
       create: (context) => RegistrationCubit(
           authenticationRepository: context.read<AuthRepoI<AuthStatus>>()),
@@ -59,7 +66,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 return Center(
                     child: Column(
                   children: [
-                    Text('Welcome ${state.username}'),
+                    Text('$_hello ${state.username}'),
                     const Text('You are signed in. Let`s go...'),
                   ],
                 ));
@@ -85,13 +92,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       const SizedBox(height: 8.0),
                       _passwordField('Password', _passwordCtrl),
                       const SizedBox(height: 15.0),
-                      const Text('Your native language',
-                          style: TextStyle(color: Colors.grey),
+                      Text(_native,
+                          style: const TextStyle(color: Colors.grey),
                           textAlign: TextAlign.center),
                       _buildMyLanguageDropdown(context),
                       const SizedBox(height: 8.0),
-                      const Text('Language You want to learn',
-                          style: TextStyle(color: Colors.grey),
+                      Text(_toLearn,
+                          style: const TextStyle(color: Colors.grey),
                           textAlign: TextAlign.center),
                       _buildWantLearnDropdown(context),
                       Padding(
@@ -168,7 +175,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 // the item is responsible for validation!
                 bool _emailValid = RegExp(_emailPattern).hasMatch(v);
                 if (!_emailValid || v.isEmpty) {
-                  return 'Email is invalid!';
+                  return 'Email ${AppLocalizations.of(context)?.msgInvalid ?? 'is not valid'}!';
                 } else {
                   return null;
                 }
@@ -223,7 +230,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 3.0, horizontal: 35),
         child: LanguageDropdown<String>(
-            hintText: 'My language',
+            hintText:
+                AppLocalizations.of(context)?.registerMyLang ?? 'My language',
             options: [...SupportedLanguages.names],
             value: state.nativeLang,
             onChanged: (String? newValue) {
@@ -241,14 +249,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 3.0, horizontal: 35),
         child: LanguageDropdown<String>(
-            hintText: 'I want to want to learn',
+            hintText: AppLocalizations.of(context)?.registerWantToLearn ??
+                'I want to learn',
             options: [...SupportedLanguages.names],
             value: state.langToLearn,
             onChanged: (String? newValue) {
               context.read<RegistrationCubit>().onLangToLearnChanged(newValue!);
             },
             getLabel: (String value) => value,
-            key: const Key('LanguageDropdown-I want to want to learn')),
+            key: const Key('LanguageDropdown-I want to learn')),
       );
     });
   }
@@ -267,11 +276,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   void _submitHandle(BuildContext context) {
     if (_registerFormKye.currentState!.validate()) {
       context.read<RegistrationCubit>().onFormSubmit();
-        setState(() {
-          _passwordCtrl.clear();
-          _emailCtrl.clear();
-          _nameCtrl.clear();
-        });
+      setState(() {
+        _passwordCtrl.clear();
+        _emailCtrl.clear();
+        _nameCtrl.clear();
+      });
     } else {
       print('formKey not validated');
     }

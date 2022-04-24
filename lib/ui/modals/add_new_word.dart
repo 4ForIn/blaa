@@ -6,6 +6,7 @@ import 'package:blaa/data/repositories/auth_repo.dart';
 import 'package:blaa/ui/screens/demo_screen/bloc/demo_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddNewWord extends StatefulWidget {
   const AddNewWord({Key? key}) : super(key: key);
@@ -63,6 +64,11 @@ class _AddNewWordState extends State<AddNewWord> {
   @override
   Widget build(BuildContext context) {
     // final AuthStatus _st = context.read<AuthenticationBloc>().state.status;
+    final String _cat = AppLocalizations.of(context)?.category ?? 'Category';
+    final String _clue = AppLocalizations.of(context)?.clue ?? 'Clue';
+    final String _fav = AppLocalizations.of(context)?.favorite ?? 'Favorite';
+    final String _cancel = AppLocalizations.of(context)?.cancel ?? 'Cancel';
+    final String _submit = AppLocalizations.of(context)?.submit ?? 'Submit';
     final bool _isAuthenticated =
         context.read<AuthenticationBloc>().state.status ==
                 AuthStatus.authenticated
@@ -73,14 +79,14 @@ class _AddNewWordState extends State<AddNewWord> {
       child: Column(mainAxisSize: MainAxisSize.min, children: [
         _buildFormField(_native, _wordCtrl),
         _buildFormField(_toLearn, _translationCtrl),
-        _buildFormField('category', _categoryCtrl),
-        _buildFormField('clue', _clueCtrl),
+        _buildFormField(_cat, _categoryCtrl),
+        _buildFormField(_clue, _clueCtrl),
         const SizedBox(height: 15),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Row(children: [
-              const Text('Favorite'),
+              Text(_fav),
               Checkbox(
                 activeColor: Colors.green.shade400,
                 value: _isFavorite,
@@ -92,8 +98,7 @@ class _AddNewWordState extends State<AddNewWord> {
               ),
             ]),
             TextButton(
-                onPressed: () => context.router.pop(),
-                child: const Text('Cancel')),
+                onPressed: () => context.router.pop(), child: Text(_cancel)),
             TextButton(
                 onPressed: () {
                   if (_isAuthenticated) {
@@ -102,7 +107,7 @@ class _AddNewWordState extends State<AddNewWord> {
                     context.read<DemoCubit>().addNewWord(_handleSubmit());
                   }
                 },
-                child: const Text('Submit')),
+                child: Text(_submit)),
           ],
         ),
       ]),
@@ -114,7 +119,10 @@ class _AddNewWordState extends State<AddNewWord> {
       padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15),
       child: TextFormField(
           controller: ctrl,
-          maxLines: label == 'clue' ? 2 : 1,
+          maxLines:
+              (label == 'clue' || label == AppLocalizations.of(context)?.clue)
+                  ? 2
+                  : 1,
           decoration: InputDecoration(
             floatingLabelBehavior: FloatingLabelBehavior.auto,
             contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 0),

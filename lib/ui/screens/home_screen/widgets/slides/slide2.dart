@@ -1,5 +1,6 @@
 import 'package:blaa/utils/constants/assets_const.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Slide2 extends StatelessWidget {
   const Slide2({Key? key}) : super(key: key);
@@ -37,10 +38,10 @@ class Slide2 extends StatelessWidget {
                               child: Image.asset(AssetsConst.bag['path']!,
                                   semanticLabel: AssetsConst.bag['description'],
                                   height: 60)),
-                          const Expanded(
+                          Expanded(
                               flex: 2,
-                              child: Text('for work',
-                                  style: TextStyle(
+                              child: Text('${AppLocalizations.of(context)?.slide2ForWork}',
+                                  style: const TextStyle(
                                       fontSize: 23.0,
                                       fontWeight: FontWeight.w300,
                                       color: Color(0XFF3F3D56),
@@ -58,10 +59,10 @@ class Slide2 extends StatelessWidget {
                                     semanticLabel:
                                         AssetsConst.chart['description'],
                                     height: 60)),
-                            const Expanded(
+                            Expanded(
                                 flex: 2,
-                                child: Text('up your skills',
-                                    style: TextStyle(
+                                child: Text('${AppLocalizations.of(context)?.slide2UpSkills}',
+                                    style: const TextStyle(
                                         fontSize: 23.0,
                                         fontWeight: FontWeight.w300,
                                         color: Color(0XFF3F3D56),
@@ -77,7 +78,7 @@ class Slide2 extends StatelessWidget {
                           child: Column(
                             children: [
                               Text(
-                                  'You can use the Demo mode without creating an account.\nTo use all functionality, create own account and sign in.',
+                                  '${AppLocalizations.of(context)?.slide2DemoMode}\n${AppLocalizations.of(context)?.slide2UseAllFunctionality}',
                                   style: TextStyle(
                                       color: Colors.grey.shade700,
                                       letterSpacing: 1.2,
@@ -85,7 +86,7 @@ class Slide2 extends StatelessWidget {
                                       height: 1.3),
                                   textAlign: TextAlign.center),
                               Text(
-                                  'Go to Settings and then Sign In or Sign Up.',
+                                  '${AppLocalizations.of(context)?.slide2SignIn}',
                                   style: TextStyle(
                                       color: Colors.grey.shade700,
                                       letterSpacing: 1.2,

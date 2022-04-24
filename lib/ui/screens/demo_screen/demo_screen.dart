@@ -1,12 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:blaa/data/model/word_m/word_m.dart';
 import 'package:blaa/ui/widgets/empty_words_list_info/empty_words_list_info.dart';
-import 'package:blaa/ui/widgets/list_ordering_wrapper/list_ordering_wrapper.dart';
 import 'package:blaa/ui/widgets/order_bar/order_bar.dart';
 import 'package:blaa/ui/widgets/words_list_item/words_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../router/blaa_router.gr.dart';
 import 'bloc/demo_cubit.dart';
 

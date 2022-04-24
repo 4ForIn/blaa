@@ -3,6 +3,7 @@ import 'package:blaa/ui/modals/add_new_word.dart';
 import 'package:blaa/ui/router/tabs_routes.dart';
 import 'package:blaa/utils/constants/root_scaffold_key.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RootView extends StatelessWidget {
   const RootView({Key? key}) : super(key: key);
@@ -34,10 +35,12 @@ class RootView extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 3.0),
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const <Widget>[
-                Text('new', style: TextStyle(fontSize: 11)),
-                Icon(Icons.add, size: 14),
-                Text('word', style: TextStyle(fontSize: 11))
+              children: <Widget>[
+                Text('${AppLocalizations.of(context)?.btnNew}',
+                    style: const TextStyle(fontSize: 11)),
+                const Icon(Icons.add, size: 14),
+                Text('${AppLocalizations.of(context)?.btnWord}',
+                    style: const TextStyle(fontSize: 11))
               ]),
         ),
       ),
