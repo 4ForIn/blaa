@@ -1,4 +1,5 @@
 import 'package:blaa/blocs/authentication_bloc/authentication_bloc.dart';
+import 'package:blaa/blocs/settings_cubit/settings_cubit.dart';
 import 'package:blaa/blocs/words_cubit/words_cubit.dart';
 import 'package:blaa/data/model/user_m/user_m.dart';
 import 'package:blaa/data/model/word_m/word_m.dart';
@@ -13,6 +14,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 MultiBlocProvider buildMultiBlocProvider(BuildContext context, Widget child) {
   return MultiBlocProvider(providers: <BlocProvider>[
+    BlocProvider<SettingsCubit>(
+        create: (BuildContext context) => SettingsCubit()),
     BlocProvider<AuthenticationBloc>(
       create: (BuildContext context) => AuthenticationBloc(
           aRepo: context.read<AuthRepoI<AuthStatus>>(),

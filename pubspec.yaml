@@ -41,6 +41,7 @@ dependencies:
   flutter_secure_storage: ^5.0.2
   freezed_annotation: ^1.0.0
   json_annotation: ^4.4.0
+  shared_preferences: ^2.0.13
   sqflite: ^2.0.2
 
 

@@ -15,4 +15,5 @@ void setupLocator() {
   locator
       .registerLazySingleton<UserLocalDatabaseInterface<Map<String, dynamic>>>(
           () => SqfliteDb.instance);
+  // locator.registerLazySingleton<SharedPref>(() => SharedPref());
 }

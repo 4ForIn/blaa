@@ -1,7 +1,10 @@
 import 'package:blaa/blocs/bloc_providers/bloc_providers.dart';
 import 'package:blaa/blocs/bloc_repositories/bloc_repositories.dart';
+import 'package:blaa/blocs/settings_cubit/settings_cubit.dart';
+import 'package:blaa/data/providers/shared_pref/shared_pref.dart';
 import 'package:blaa/ui/router/blaa_router.gr.dart';
 import 'package:blaa/utils/l10n/l10n.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -20,9 +23,10 @@ class ApplicationBlaaa extends StatelessWidget {
     //  MultiBlocProvider(providers: <BlocProvider>[ BlocProvider<BlocA>()])
     return buildMultiRepositoryProvider(
         context,
-        buildMultiBlocProvider(
-            context,
-            MaterialApp.router(
+        buildMultiBlocProvider(context,
+            BlocBuilder<SettingsCubit, SettingsState>(
+          builder: (context, state) {
+            return MaterialApp.router(
               debugShowCheckedModeBanner: false,
               routeInformationParser: _blaaRouter.defaultRouteParser(),
               routerDelegate: _blaaRouter.delegate(),
@@ -42,7 +46,10 @@ class ApplicationBlaaa extends StatelessWidget {
                 GlobalWidgetsLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate,
               ],
-            )));
+              locale: Locale(context.read<SettingsCubit>().state.localeCode),
+            );
+          },
+        )));
   }
 }
 /*
