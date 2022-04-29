@@ -10,23 +10,29 @@ class RootView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scope = RouterScope.of(context, watch: true);
+    final RoutingController? _hasParent = scope.controller.parent();
+    final bool _canPop = scope.controller.canPopSelfOrChildren;
     return AutoTabsScaffold(
+      extendBody: true,
       key: rootScaffoldKey,
       backgroundColor: Colors.amber,
       routes: bottomTabs,
       appBarBuilder: (_, tRouter) => AppBar(
         toolbarHeight: 40,
         elevation: 0.0,
-        leading: const AutoBackButton(
-          color: Colors.black,
-        ),
+        // leading: const AutoBackButton(
+        //   color: Colors.black,
+        // ),
+        leading: (_hasParent != null || _canPop)
+            ? IconButton(
+                onPressed: () => context.router.popTop(),
+                icon: const Icon(Icons.arrow_back_ios_new_sharp),
+              )
+            : const SizedBox(),
       ),
       bottomNavigationBuilder: (_, tRouter) {
-        return BottomNavigationBar(
-            backgroundColor: Colors.grey[300],
-            currentIndex: tRouter.activeIndex,
-            onTap: tRouter.setActiveIndex,
-            items: bottomBarItems);
+        return _buildBottomNavAppBar(tRouter);
       },
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.grey.shade400,
@@ -44,7 +50,22 @@ class RootView extends StatelessWidget {
               ]),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniStartDocked,
+    );
+  }
+
+  BottomAppBar _buildBottomNavAppBar(TabsRouter tRouter) {
+    return BottomAppBar(
+      color: Colors.grey.withAlpha(240),
+      elevation: 0,
+      shape: const CircularNotchedRectangle(),
+      child: BottomNavigationBar(
+          backgroundColor: Colors.grey.withAlpha(0),
+          elevation: 0,
+          currentIndex: tRouter.activeIndex,
+          onTap: tRouter.setActiveIndex,
+          items: bottomBarItems),
     );
   }
 

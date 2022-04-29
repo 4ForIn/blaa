@@ -11,8 +11,12 @@ const List<PageRouteInfo<dynamic>> bottomTabs = [
 ];
 const List<BottomNavigationBarItem> bottomBarItems = [
   BottomNavigationBarItem(
-    label: "Home",
-    icon: Icon(Icons.home),
+    label: "  Home",
+    // padding is for notched bottom bar - place for FAB
+    icon: Padding(
+      padding: EdgeInsets.only(left: 8.0, top: 4.0),
+      child: Icon(Icons.home),
+    ),
 
   ),
   BottomNavigationBarItem(

@@ -66,53 +66,58 @@ class _LoginScreenState extends State<LoginScreen> {
           child: BlocBuilder<LoginBloc, LoginState>(
             builder: (context, state) {
               if (state.status == LoginStatus.success) {
-                return Center(
-                    child: Column(
-                  children: [
-                    Text(_hello),
-                    Text('$_signedAs: ${state.email}'),
-                    const Text('Let`s go...'),
-                  ],
-                ));
+                return SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.75,
+                  child: Column(
+                    children: [
+                  Text(_hello),
+                  Text('$_signedAs: ${state.email}'),
+                  const Text('Let`s go...'),
+                    ],
+                  ),
+                );
               } else {
-                return Form(
-                  key: _loginFormKey,
-                  child: Center(
-                    child: ListView(
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.only(left: 24.0, right: 24.0),
-                      children: <Widget>[
-                        Text(_welcomeBack,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 18.0)),
-                        const SizedBox(height: 40.0),
-                        _emailField('Email', _emailCtrl),
-                        const SizedBox(height: 8.0),
-                        _passwordField('Password', _passwordCtrl),
-                        const SizedBox(height: 20.0),
-                        Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 16.0, horizontal: 35),
-                            child: MaterialButton(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(24)),
-                                onPressed: () {
-                                  if (_loginFormKey.currentState!.validate()) {
-                                    context
-                                        .read<LoginBloc>()
-                                        .add(const SignInFormSubmitted());
-                                    // If the form is valid, display a snack. In the real world,
-                                    // you'd often call a server or save the information in a database.
+                return SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.75,
+                  child: Form(
+                    key: _loginFormKey,
+                    child: Center(
+                      child: ListView(
+                        shrinkWrap: true,
+                        padding: const EdgeInsets.only(left: 24.0, right: 24.0),
+                        children: <Widget>[
+                          Text(_welcomeBack,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 18.0)),
+                          const SizedBox(height: 40.0),
+                          _emailField('Email', _emailCtrl),
+                          const SizedBox(height: 8.0),
+                          _passwordField('Password', _passwordCtrl),
+                          const SizedBox(height: 20.0),
+                          Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 16.0, horizontal: 35),
+                              child: MaterialButton(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(24)),
+                                  onPressed: () {
+                                    if (_loginFormKey.currentState!.validate()) {
+                                      context
+                                          .read<LoginBloc>()
+                                          .add(const SignInFormSubmitted());
+                                      // If the form is valid, display a snack. In the real world,
+                                      // you'd often call a server or save the information in a database.
 
-                                  }
-                                },
-                                padding: const EdgeInsets.all(12),
-                                color: Colors.lightBlueAccent,
-                                child: const Text('Sign In',
-                                    style: TextStyle(color: Colors.white)))),
-                        _buildForgotPasswordBtn(context),
-                        _buildSignUpBtn(context)
-                      ],
+                                    }
+                                  },
+                                  padding: const EdgeInsets.all(12),
+                                  color: Colors.lightBlueAccent,
+                                  child: const Text('Sign In',
+                                      style: TextStyle(color: Colors.white)))),
+                          _buildForgotPasswordBtn(context),
+                          _buildSignUpBtn(context)
+                        ],
+                      ),
                     ),
                   ),
                 );
