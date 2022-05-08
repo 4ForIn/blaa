@@ -25,16 +25,19 @@ class RegistrationCubit extends Cubit<RegistrationState> {
   final AuthRepoI<AuthStatus> authenticationRepository;
 
   void onUsernameChanged(String value) {
+    print(value);
     emit(state.copyWith(
         username: value, formStatus: FormSubmissionStatus.initial));
   }
 
   void onEmailChanged(String value) {
+    print(value);
     emit(
         state.copyWith(email: value, formStatus: FormSubmissionStatus.initial));
   }
 
   void onPasswordChanged(String value) {
+    print(value);
     emit(state.copyWith(
         password: value, formStatus: FormSubmissionStatus.initial));
   }
@@ -73,24 +76,24 @@ class RegistrationCubit extends Cubit<RegistrationState> {
               password: ''));
         } else {
           emit(state.copyWith(
-              formStatus: FormSubmissionStatus.failed,
-              errorMessage:
-                  'New user was not created. Fill out the entire form properly',
-              password: ''));
+            formStatus: FormSubmissionStatus.failed,
+            errorMessage:
+                'New user was not created. Fill out the entire form properly',
+          ));
         }
       } catch (e) {
         // authenticationRepository.signUp throws Exceptions
         print(e);
         emit(state.copyWith(
-            formStatus: FormSubmissionStatus.failed,
-            errorMessage: e.toString(),
-            password: ''));
+          formStatus: FormSubmissionStatus.failed,
+          errorMessage: e.toString(),
+        ));
       }
     } else {
       emit(state.copyWith(
-          formStatus: FormSubmissionStatus.failed,
-          errorMessage: 'Fill out the entire form properly',
-          password: ''));
+        formStatus: FormSubmissionStatus.failed,
+        errorMessage: 'Fill out the entire form properly',
+      ));
     }
   }
 }

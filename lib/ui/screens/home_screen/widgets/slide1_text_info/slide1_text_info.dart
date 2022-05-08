@@ -12,14 +12,14 @@ class Slide1TextInfo extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 30.0),
       child: Column(children: <Widget>[
         Flexible(
-          flex: 2,
+          flex: 1,
           fit: FlexFit.tight,
           child: Text('${AppLocalizations.of(context)?.slide1Start} 🎉',
               style: const TextStyle(
-                  fontSize: 40.0,
+                  fontSize: 35.0,
                   fontWeight: FontWeight.w300,
                   color: Color(0XFF3F3D56),
-                  height: 2.0)),
+                  height: 1.0)),
         ),
         Flexible(
           flex: 1,
@@ -47,7 +47,7 @@ class Slide1TextInfo extends StatelessWidget {
                       height: 1.1),
                   textAlign: TextAlign.center)),
         ),
-        const Expanded(flex: 1,child: SizedBox())
+        // const Expanded(flex: 1,child: SizedBox())
       ]),
     );
   }

@@ -17,55 +17,73 @@ class ListOrderingWrapper extends StatelessWidget {
       Expanded(
           flex: 3,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(0.0, 4.0, 4.0, 0.0),
+            padding: const EdgeInsets.fromLTRB(4.0, 4.0, 10.0, 0.0),
             child: DecoratedBox(
               decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-                border: Border.all(),
-              ),
+                  borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                  border: Border.all()),
               child: Row(children: [
                 const Expanded(
                     flex: 4,
                     child: Padding(
                       padding: EdgeInsets.only(left: 4.0),
-                      child: Text('Only favorites'),
+                      child: Text('Favorites'),
                     )),
                 Expanded(
-                    flex: 1,
                     child: Padding(
                         padding: const EdgeInsets.only(right: 2.0),
                         child: onlyFavoriteCheckbox))
               ]),
             ),
           )),
+      // const Expanded(child: SizedBox()),
       const Expanded(
-        flex: 2,
-        child: Text.rich(
-          TextSpan(
-              style: TextStyle(fontWeight: FontWeight.bold),
-              text: 'First:  ',
-              children: <InlineSpan>[
-                TextSpan(
-                    style: TextStyle(
-                      fontWeight: FontWeight.normal,
-                      color: Colors.green,
-                    ),
-                    text: 'newest'),
-              ]),
-        ),
+        child: Text('First: ', style: TextStyle(fontWeight: FontWeight.bold)),
       ),
-      Padding(
-          padding: const EdgeInsets.only(right: 5.0), child: fromNewestRadio),
-      const Expanded(
-          flex: 1,
-          child: Padding(
-            padding: EdgeInsets.only(left: 4.0),
-            child: Text(
-              'oldest',
-              style: TextStyle(color: Colors.indigo),
-            ),
+
+      // ----------------
+      Expanded(
+          flex: 2,
+          child: Row(
+            children: [
+              const Expanded(child: SizedBox()),
+              const Expanded(
+                  flex: 3,
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 4.0),
+                    child: Text(
+                      'new',
+                      style: TextStyle(color: Colors.indigo),
+                    ),
+                  )),
+              Expanded(
+                child: Padding(
+                    padding: const EdgeInsets.only(right: 5.0),
+                    child: fromNewestRadio),
+              ),
+              const Expanded(child: SizedBox()),
+            ],
           )),
-      Expanded(flex: 1, child: fromOldestRadio)
+
+      /// --------------------
+      Expanded(
+          flex: 2,
+          child: Row(
+            children: [
+              const Expanded(child: SizedBox()),
+              const Expanded(
+                  flex: 3,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 4.0),
+                    child: Text(
+                      'old',
+                      style: TextStyle(color: Colors.indigo),
+                    ),
+                  )),
+              Expanded(child: fromOldestRadio),
+              const Expanded(child: SizedBox()),
+            ],
+          )),
     ]);
   }
 }

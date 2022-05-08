@@ -14,7 +14,7 @@ class RootView extends StatelessWidget {
     final RoutingController? _hasParent = scope.controller.parent();
     final bool _canPop = scope.controller.canPopSelfOrChildren;
     return AutoTabsScaffold(
-      extendBody: true,
+      // extendBody: true,
       key: rootScaffoldKey,
       backgroundColor: Colors.amber,
       routes: bottomTabs,

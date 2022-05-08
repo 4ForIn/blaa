@@ -9,6 +9,7 @@ import 'package:blaa/domain/repository/demo_words_repository_i.dart';
 import 'package:blaa/domain/repository/user_repo_i.dart';
 import 'package:blaa/domain/repository/words_repo_i.dart';
 import 'package:blaa/ui/screens/demo_screen/bloc/demo_cubit.dart';
+import 'package:blaa/ui/screens/edit_word_screen/cubit/edit_word_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,6 +33,10 @@ MultiBlocProvider buildMultiBlocProvider(BuildContext context, Widget child) {
     ),
     BlocProvider<DemoCubit>(
         create: (BuildContext context) =>
-            DemoCubit(context.read<DemoWordsRepositoryI<Word>>())..fetchWords())
+            DemoCubit(context.read<DemoWordsRepositoryI<Word>>())
+              ..fetchWords()),
+    BlocProvider<EditWordCubit>(
+        create: (BuildContext context) =>
+            EditWordCubit(context.read<WordsRepoI<Word>>())),
   ], child: child);
 }

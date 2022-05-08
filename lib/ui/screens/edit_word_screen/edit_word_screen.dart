@@ -16,40 +16,41 @@ class EditWordScreen extends StatelessWidget {
   // id is only for auto_route @PathParam()
   final int id;
   final Word word;
+  // offset is needed to place the widget in the middle when horizontal layout (two rows)
+  static final ScrollController ctr = ScrollController(initialScrollOffset: 100.0);
 
   @override
   Widget build(BuildContext context) {
-    final WordsRepoI<Word> _repository = context.read<WordsRepoI<Word>>();
-    return BlocProvider(
-      create: (context) => EditWordCubit(_repository, word),
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.all(5.0),
-        child: Hero(
-          transitionOnUserGestures: true,
-          tag: word,
-          child: Container(
-            // height: 400,
-            padding: const EdgeInsets.all(10.0),
-            child: Card(
-              color: Colors.grey[300],
-              elevation: 40,
-              shadowColor: Colors.grey[700],
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0)),
-              margin: const EdgeInsets.fromLTRB(30, 90, 30, 10),
-              child: Column(
-                children: [
-                  buildHead(),
-                  const SizedBox(height: 10),
-                  _buildInLanguageToLearnField(),
-                  _buildInNativeLanguageField(),
-                  const SizedBox(height: 10),
-                  _buildMoreSection(),
-                  const SizedBox(height: 4),
-                  _buildId(word.id.toString()),
-                  const SizedBox(height: 6)
-                ],
-              ),
+    // final WordsRepoI<Word> _repository = context.read<WordsRepoI<Word>>();
+    context.read<EditWordCubit>().setItem(word);
+    return SingleChildScrollView(
+      controller: ctr,
+      padding: const EdgeInsets.all(5.0),
+      child: Hero(
+        transitionOnUserGestures: true,
+        tag: word,
+        child: Container(
+          // height: 400,
+          padding: const EdgeInsets.all(10.0),
+          child: Card(
+            color: Colors.grey[300],
+            elevation: 40,
+            shadowColor: Colors.grey[700],
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0)),
+            margin: const EdgeInsets.fromLTRB(30, 90, 30, 10),
+            child: Column(
+              children: [
+                buildHead(),
+                const SizedBox(height: 10),
+                _buildInLanguageToLearnField(),
+                _buildInNativeLanguageField(),
+                const SizedBox(height: 10),
+                _buildMoreSection(),
+                const SizedBox(height: 4),
+                _buildId(word.id.toString()),
+                const SizedBox(height: 6)
+              ],
             ),
           ),
         ),

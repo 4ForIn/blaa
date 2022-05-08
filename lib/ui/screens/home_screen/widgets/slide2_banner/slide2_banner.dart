@@ -9,7 +9,7 @@ class Slide2Banner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Expanded(flex: 1, child: SizedBox()),
+        // const Expanded(flex: 1, child: SizedBox()),
         Expanded(
           flex: 2,
           child: Container(
@@ -76,7 +76,7 @@ class Slide2Banner extends StatelessWidget {
             ),
           ),
         ),
-        const Expanded(flex: 2, child: SizedBox())
+        const Expanded(flex: 1, child: SizedBox())
       ],
     );
   }

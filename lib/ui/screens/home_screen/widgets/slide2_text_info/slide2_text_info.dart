@@ -11,8 +11,9 @@ class Slide2TextInfo extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 30.0),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          const Expanded(flex: 1, child: SizedBox()),
+          // const Expanded(child: SizedBox()),
           Expanded(
             flex: 2,
             // fit: FlexFit.tight,
@@ -26,8 +27,6 @@ class Slide2TextInfo extends StatelessWidget {
                 textAlign: TextAlign.center),
           ),
           Expanded(
-            flex: 1,
-            // fit: FlexFit.tight,
             child: Text('${AppLocalizations.of(context)?.slide2SignIn}',
                 style: TextStyle(
                     color: Colors.grey.shade700,
@@ -36,7 +35,7 @@ class Slide2TextInfo extends StatelessWidget {
                     height: 1.3),
                 textAlign: TextAlign.center),
           ),
-          const Expanded(flex: 1, child: SizedBox())
+          // const Expanded(child: SizedBox())
         ],
       ),
     );

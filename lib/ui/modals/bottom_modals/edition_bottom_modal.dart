@@ -39,10 +39,10 @@ class _EditionBottomModalState extends State<EditionBottomModal> {
             children: <Widget>[
               Expanded(flex: 1, child: Text('Edit ${widget.description}:')),
               Expanded(
-                flex: 2,
+                flex: 3,
                 child: TextFormField(
+                    textAlign: TextAlign.center,
                     controller: _ctr,
-                    maxLines: 2,
                     autofocus: true,
                     autovalidateMode: AutovalidateMode.always,
                     validator: (v) {

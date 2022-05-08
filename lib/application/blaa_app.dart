@@ -1,7 +1,6 @@
 import 'package:blaa/blocs/bloc_providers/bloc_providers.dart';
 import 'package:blaa/blocs/bloc_repositories/bloc_repositories.dart';
 import 'package:blaa/blocs/settings_cubit/settings_cubit.dart';
-import 'package:blaa/data/providers/shared_pref/shared_pref.dart';
 import 'package:blaa/ui/router/blaa_router.gr.dart';
 import 'package:blaa/utils/l10n/l10n.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
